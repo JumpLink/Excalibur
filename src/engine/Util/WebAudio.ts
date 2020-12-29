@@ -24,8 +24,8 @@ export class WebAudio {
    * right after a user interaction event.
    * @source https://paulbakaus.com/tutorials/html5/web-audio-on-ios/
    */
-  static unlock(): Promise<boolean> {
-    const promise = new Promise<boolean>((resolve, reject) => {
+  static unlock(): Promise<boolean | void> {
+    const promise = new Promise<boolean | void>((resolve, reject) => {
       if (WebAudio._UNLOCKED || !AudioContextFactory.create()) {
         return resolve(true);
       }
@@ -69,7 +69,6 @@ export class WebAudio {
         }
       );
     });
-
 
     return promise;
   }

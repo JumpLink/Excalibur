@@ -231,7 +231,7 @@ export class Loader extends Class implements Loadable<Loadable<any>[]> {
     } else {
       this._playButtonShown = true;
       this._playButton.style.display = 'block';
-      const promise = new Promise((resolve) => {
+      const promise = new Promise<void>((resolve) => {
         this._playButton.addEventListener('click', () => resolve());
         this._playButton.addEventListener('touchend', () => resolve());
         this._playButton.addEventListener('pointerup', () => resolve());
@@ -271,10 +271,14 @@ export class Loader extends Class implements Loadable<Loadable<any>[]> {
    * that resolves when loading of all is complete
    */
   public async load(): Promise<Loadable<any>[]> {
-    await Promise.all(this._resourceList.map(r => r.load().finally(() => {
-      // capture progress
-      this._numLoaded++;
-    })));
+    await Promise.all(
+      this._resourceList.map((r) =>
+        r.load().finally(() => {
+          // capture progress
+          this._numLoaded++;
+        })
+      )
+    );
 
     // short delay in showing the button for aesthetics
     await delay(200);
@@ -285,8 +289,7 @@ export class Loader extends Class implements Loadable<Loadable<any>[]> {
     await WebAudio.unlock();
     this.hidePlayButton();
 
-    return this.data = this._resourceList;
-
+    return (this.data = this._resourceList);
   }
 
   public markResourceComplete(): void {

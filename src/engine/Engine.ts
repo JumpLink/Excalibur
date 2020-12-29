@@ -630,7 +630,7 @@ O|===|* >________________>\n\
    * @param y          y game coordinate to play the animation
    * @deprecated
    */
-  @obsolete({message: 'Will be removed in excalibur v0.26.0'})
+  @obsolete({ message: 'Will be removed in excalibur v0.26.0' })
   public playAnimation(animation: Animation, x: number, y: number) {
     this._animations.push(new AnimationNode(animation, x, y));
   }
@@ -1209,7 +1209,7 @@ O|===|* >________________>\n\
    * @param loader  Some [[Loadable]] such as a [[Loader]] collection, [[Sound]], or [[Texture]].
    */
   public load(loader: Loadable<any>): Promise<any> {
-    const complete = new Promise<any>((resolve) => {
+    const complete = new Promise<void>((resolve) => {
       this._isLoading = true;
 
       loader.load().then(() => {
@@ -1234,7 +1234,7 @@ O|===|* >________________>\n\
  * @internal
  * @deprecated
  */
-@obsolete({message: 'Will be removed in excalibur v0.26.0'})
+@obsolete({ message: 'Will be removed in excalibur v0.26.0' })
 class AnimationNode {
   constructor(public animation: Animation, public x: number, public y: number) {}
 }
