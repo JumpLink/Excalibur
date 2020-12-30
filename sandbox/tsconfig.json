@@ -2,7 +2,7 @@
   "compilerOptions": {
     "sourceMap": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "ES6",
     "module": "es2015",
     "removeComments": false,
     "skipLibCheck": true,

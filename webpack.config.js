@@ -10,6 +10,7 @@ module.exports = {
   mode: 'development',
   devtool: 'source-map',
   entry: './index.ts',
+  target: 'web',
   context: path.resolve(__dirname, 'src/engine'),
   output: {
     path: path.resolve(__dirname, 'build/dist'),

@@ -19,7 +19,7 @@ export class Logger {
   private static _INSTANCE: Logger = null;
   private _appenders: Appender[] = [];
 
-  constructor() {
+  protected constructor() {
     if (Logger._INSTANCE) {
       throw new Error('Logger is a singleton');
     }

@@ -61,7 +61,7 @@
     "radix": "error",
     "max-len": ["error", { "code": 140 }],
     "semi": ["error", "always"],
-    "comma-dangle": ["error", "never"],
+    "comma-dangle": ["off"],
     "no-trailing-spaces": "error",
     "eqeqeq": ["error", "smart"],
     "no-irregular-whitespace": "error",

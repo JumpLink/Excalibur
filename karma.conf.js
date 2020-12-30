@@ -7,13 +7,13 @@ module.exports = (config) => {
   config.set({
     singleRun: true,
     frameworks: ['jasmine'],
-    files: [  
-            'src/spec/_boot.ts', 
-            { pattern: 'src/spec/images/**/*.mp3', included: false, served: true },
-            { pattern: 'src/spec/images/**/*.png', included: false, served: true },
-            { pattern: 'src/spec/images/**/*.gif', included: false, served: true },
-            { pattern: 'src/spec/images/**/*.txt', included: false, served: true }
-           ],
+    files: [
+      'src/spec/_boot.ts',
+      { pattern: 'src/spec/images/**/*.mp3', included: false, served: true },
+      { pattern: 'src/spec/images/**/*.png', included: false, served: true },
+      { pattern: 'src/spec/images/**/*.gif', included: false, served: true },
+      { pattern: 'src/spec/images/**/*.txt', included: false, served: true }
+    ],
     mime: { 'text/x-typescript': ['ts', 'tsx'] },
     preprocessors: {
       './src/spec/_boot.ts': ['webpack']
@@ -24,7 +24,7 @@ module.exports = (config) => {
       resolve: {
         extensions: ['.ts', '.js'],
         alias: {
-          "@excalibur": path.resolve(__dirname, './src/engine/')
+          '@excalibur': path.resolve(__dirname, './src/engine/')
         }
       },
       module: {
@@ -65,17 +65,14 @@ module.exports = (config) => {
       }
     },
     webpackMiddleware: {
-    // webpack-dev-middleware configuration
-    // i. e.
-        stats: 'normal'
+      // webpack-dev-middleware configuration
+      // i. e.
+      stats: 'normal'
     },
     reporters: ['progress', 'coverage-istanbul'],
 
     coverageReporter: {
-      reporters: [
-          { type: 'html', dir: 'coverage/' }, 
-          { type: 'lcovonly', dir: 'coverage/', file: 'lcov.info' }, 
-          { type: 'text-summary' }]
+      reporters: [{ type: 'html', dir: 'coverage/' }, { type: 'lcovonly', dir: 'coverage/', file: 'lcov.info' }, { type: 'text-summary' }]
     },
     coverageIstanbulReporter: {
       // reports can be any that are listed here: https://github.com/istanbuljs/istanbuljs/tree/aae256fb8b9a3d19414dcf069c592e88712c32c6/packages/istanbul-reports/lib
@@ -88,8 +85,8 @@ module.exports = (config) => {
     browsers: ['ChromeHeadless_with_audio'],
     customLaunchers: {
       ChromeHeadless_with_audio: {
-          base: 'ChromeHeadless',
-          flags: ['--autoplay-policy=no-user-gesture-required', '--mute-audio']
+        base: 'ChromeHeadless',
+        flags: ['--autoplay-policy=no-user-gesture-required', '--mute-audio']
       },
       ChromeHeadless_with_debug: {
         base: 'ChromeHeadless',
