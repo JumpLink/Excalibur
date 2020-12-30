@@ -300,7 +300,9 @@ export class Loader extends Class implements Loadable<Loadable<any>[]> {
    * Returns the progess of the loader as a number between [0, 1] inclusive.
    */
   public get progress(): number {
-    return this._resourceCount > 0 ? clamp(this._numLoaded, 0, this._resourceCount) / this._resourceCount : 1;
+    return this._resourceCount > 0
+      ? clamp(this._numLoaded, 0, this._resourceCount) / this._resourceCount
+      : 1;
   }
 
   /**
@@ -321,8 +323,12 @@ export class Loader extends Class implements Loadable<Loadable<any>[]> {
         this._playButtonRootElement.style.left = `${this.playButtonPosition.x}px`;
         this._playButtonRootElement.style.top = `${this.playButtonPosition.y}px`;
       } else {
-        this._playButtonRootElement.style.left = `${left + canvasWidth / 2 - buttonWidth / 2}px`;
-        this._playButtonRootElement.style.top = `${top + canvasHeight / 2 - buttonHeight / 2 + 100}px`;
+        this._playButtonRootElement.style.left = `${
+          left + canvasWidth / 2 - buttonWidth / 2
+        }px`;
+        this._playButtonRootElement.style.top = `${
+          top + canvasHeight / 2 - buttonHeight / 2 + 100
+        }px`;
       }
     }
 
@@ -342,9 +348,29 @@ export class Loader extends Class implements Loadable<Loadable<any>[]> {
     const oldAntialias = this._engine.getAntialiasing();
     this._engine.setAntialiasing(true);
     if (!this.logoPosition) {
-      ctx.drawImage(this._image, 0, 0, this.logoWidth, this.logoHeight, logoX, logoY - imageHeight - 20, width, imageHeight);
+      ctx.drawImage(
+        this._image,
+        0,
+        0,
+        this.logoWidth,
+        this.logoHeight,
+        logoX,
+        logoY - imageHeight - 20,
+        width,
+        imageHeight
+      );
     } else {
-      ctx.drawImage(this._image, 0, 0, this.logoWidth, this.logoHeight, logoX, logoY, width, imageHeight);
+      ctx.drawImage(
+        this._image,
+        0,
+        0,
+        this.logoWidth,
+        this.logoHeight,
+        logoX,
+        logoY,
+        width,
+        imageHeight
+      );
     }
 
     // loading box
@@ -361,7 +387,15 @@ export class Loader extends Class implements Loadable<Loadable<any>[]> {
     }
 
     ctx.lineWidth = 2;
-    DrawUtil.roundRect(ctx, loadingX, loadingY, width, 20, 10, this.loadingBarColor);
+    DrawUtil.roundRect(
+      ctx,
+      loadingX,
+      loadingY,
+      width,
+      20,
+      10,
+      this.loadingBarColor
+    );
     const progress = width * this.progress;
     const margin = 5;
     const progressWidth = progress - margin * 2;

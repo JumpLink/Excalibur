@@ -26,5 +26,5 @@ export enum CollisionType {
    * not be pushed or moved by each other, they will not interact except to throw
    * collision events.
    */
-  Fixed = 'Fixed'
+  Fixed = 'Fixed',
 }

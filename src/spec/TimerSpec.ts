@@ -9,13 +9,13 @@ describe('A Timer', () => {
   beforeEach(() => {
     engine = TestUtils.engine({
       width: 600,
-      height: 400
+      height: 400,
     });
     timer = new ex.Timer({
       interval: 500,
-      fcn: function() {
+      fcn: function () {
         /*do nothing*/
-      }
+      },
     });
     scene = new ex.Scene(engine);
     engine.currentScene = scene;
@@ -24,18 +24,18 @@ describe('A Timer', () => {
   it('has a unique id', () => {
     const newtimer = new ex.Timer({
       interval: 500,
-      fcn: function() {
+      fcn: function () {
         /*do nothing*/
-      }
+      },
     });
     expect(timer.id).not.toBe(newtimer.id);
     expect(timer.id).toBe(newtimer.id - 1);
 
     const newtimer2 = new ex.Timer({
       interval: 500,
-      fcn: function() {
+      fcn: function () {
         /*do nothing*/
-      }
+      },
     });
     expect(timer.id).not.toBe(newtimer2.id);
     expect(timer.id).toBe(newtimer2.id - 2);
@@ -54,10 +54,10 @@ describe('A Timer', () => {
     let count = 0;
     timer = new ex.Timer({
       interval: 500,
-      fcn: function() {
+      fcn: function () {
         count++;
       },
-      repeats: true
+      repeats: true,
     });
 
     timer.update(501);
@@ -71,11 +71,11 @@ describe('A Timer', () => {
     // count the number of fires
     timer = new ex.Timer({
       interval: 500,
-      fcn: function() {
+      fcn: function () {
         const dummy = 0;
       },
       repeats: true,
-      numberOfRepeats: 2
+      numberOfRepeats: 2,
     });
 
     timer.update(501);
@@ -95,10 +95,10 @@ describe('A Timer', () => {
     let count = 0;
     timer = new ex.Timer({
       interval: 500,
-      fcn: function() {
+      fcn: function () {
         count++;
       },
-      repeats: true
+      repeats: true,
     });
     scene.addTimer(timer);
 
@@ -132,10 +132,10 @@ describe('A Timer', () => {
     let count = 0;
     timer = new ex.Timer({
       interval: 500,
-      fcn: function() {
+      fcn: function () {
         count++;
       },
-      repeats: true
+      repeats: true,
     });
     scene.addTimer(timer);
 
@@ -160,10 +160,10 @@ describe('A Timer', () => {
     // non-repeating timer
     timer = new ex.Timer({
       interval: 500,
-      fcn: function() {
+      fcn: function () {
         count++;
       },
-      repeats: false
+      repeats: false,
     });
     scene.add(timer);
 
@@ -188,10 +188,10 @@ describe('A Timer', () => {
     // non-repeating timer
     timer = new ex.Timer({
       interval: 500,
-      fcn: function() {
+      fcn: function () {
         count++;
       },
-      repeats: false
+      repeats: false,
     });
     scene.add(timer);
 
@@ -216,10 +216,10 @@ describe('A Timer', () => {
     // non-repeating timer
     timer = new ex.Timer({
       interval: 500,
-      fcn: function() {
+      fcn: function () {
         count++;
       },
-      repeats: true
+      repeats: true,
     });
     scene.add(timer);
 
@@ -240,11 +240,11 @@ describe('A Timer', () => {
     // non-repeating timer
     timer = new ex.Timer({
       interval: 500,
-      fcn: function() {
+      fcn: function () {
         const dummy = 0;
       },
       repeats: true,
-      numberOfRepeats: 3
+      numberOfRepeats: 3,
     });
     scene.add(timer);
 
@@ -277,7 +277,7 @@ describe('A Timer', () => {
       fcn: () => {
         count++;
       },
-      repeats: true
+      repeats: true,
     });
     scene.add(timer);
 
@@ -298,7 +298,7 @@ describe('A Timer', () => {
       fcn: () => {
         count++;
       },
-      repeats: true
+      repeats: true,
     });
     scene.add(timer);
 
@@ -319,7 +319,7 @@ describe('A Timer', () => {
     // arrange
     const timer = new ex.Timer({
       interval: 100,
-      repeats: true
+      repeats: true,
     });
     scene.add(timer);
     scene.update(engine, 100);
@@ -341,7 +341,7 @@ describe('A Timer', () => {
     // arrange
     const timer = new ex.Timer({
       interval: 100,
-      repeats: true
+      repeats: true,
     });
 
     scene.add(timer);
@@ -370,7 +370,7 @@ describe('A Timer', () => {
     // arrange
     const timer = new ex.Timer({
       interval: 100,
-      repeats: true
+      repeats: true,
     });
 
     scene.add(timer);

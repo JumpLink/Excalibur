@@ -40,17 +40,26 @@ describe('The engine', () => {
   it('should show the play button by default', (done) => {
     reset();
     engine = TestUtils.engine({
-      suppressPlayButton: false
+      suppressPlayButton: false,
     });
     (<any>engine)._suppressPlayButton = false;
     engine.currentScene = scene;
 
     loop = mock.loop(engine);
 
-    engine.start(new ex.Loader([new ex.Texture('base/src/spec/images/SpriteSpec/icon.png', true)]));
+    engine.start(
+      new ex.Loader([
+        new ex.Texture('base/src/spec/images/SpriteSpec/icon.png', true),
+      ])
+    );
     setTimeout(() => {
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/EngineSpec/engine-load-complete.png').then(([canvas, image]) => {
-        expect(document.getElementById('excalibur-play')).toBeDefined('Play button should exist in the document');
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/EngineSpec/engine-load-complete.png'
+      ).then(([canvas, image]) => {
+        expect(document.getElementById('excalibur-play')).toBeDefined(
+          'Play button should exist in the document'
+        );
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -60,7 +69,7 @@ describe('The engine', () => {
   it('should not show the play button when suppressPlayButton is turned on', (done) => {
     reset();
     engine = TestUtils.engine({
-      suppressPlayButton: true
+      suppressPlayButton: true,
     });
     engine.currentScene = scene;
     engine.currentScene.add(
@@ -68,20 +77,29 @@ describe('The engine', () => {
         pos: new ex.Vector(250, 250),
         width: 20,
         height: 20,
-        color: ex.Color.Red
+        color: ex.Color.Red,
       })
     );
 
     loop = mock.loop(engine);
 
-    engine.start(new ex.Loader([new ex.Texture('base/src/spec/images/SpriteSpec/icon.png', true)])).then(() => {
-      setTimeout(() => {
-        ensureImagesLoaded(engine.canvas, 'src/spec/images/EngineSpec/engine-suppress-play.png').then(([canvas, image]) => {
-          expect(canvas).toEqualImage(image);
-          done();
-        });
-      }, 600);
-    });
+    engine
+      .start(
+        new ex.Loader([
+          new ex.Texture('base/src/spec/images/SpriteSpec/icon.png', true),
+        ])
+      )
+      .then(() => {
+        setTimeout(() => {
+          ensureImagesLoaded(
+            engine.canvas,
+            'src/spec/images/EngineSpec/engine-suppress-play.png'
+          ).then(([canvas, image]) => {
+            expect(canvas).toEqualImage(image);
+            done();
+          });
+        }, 600);
+      });
   });
 
   it('should emit a preframe event', () => {
@@ -207,7 +225,7 @@ describe('The engine', () => {
   it('should accept a displayMode of Position', () => {
     engine = TestUtils.engine({
       displayMode: ex.DisplayMode.Position,
-      position: 'top'
+      position: 'top',
     });
     expect(engine.displayMode).toEqual(ex.DisplayMode.Position);
   });
@@ -215,7 +233,7 @@ describe('The engine', () => {
   it('should accept strings to position the window', () => {
     engine = TestUtils.engine({
       displayMode: ex.DisplayMode.Position,
-      position: 'top'
+      position: 'top',
     });
     expect(engine.canvas.style.top).toEqual('0px');
   });
@@ -227,7 +245,7 @@ describe('The engine', () => {
       suppressConsoleBootMessage: true,
       suppressMinimumBrowserFeatureDetection: true,
       displayMode: ex.DisplayMode.Position,
-      position: { top: 1, left: '5em' }
+      position: { top: 1, left: '5em' },
     });
 
     expect(game.canvas.style.top).toEqual('1px');
@@ -239,7 +257,7 @@ describe('The engine', () => {
       width: 800,
       suppressConsoleBootMessage: true,
       suppressMinimumBrowserFeatureDetection: true,
-      backgroundColor: ex.Color.White
+      backgroundColor: ex.Color.White,
     });
 
     expect(game.backgroundColor.toString()).toEqual(ex.Color.White.toString());
@@ -250,10 +268,12 @@ describe('The engine', () => {
       height: 600,
       width: 800,
       suppressConsoleBootMessage: true,
-      suppressMinimumBrowserFeatureDetection: true
+      suppressMinimumBrowserFeatureDetection: true,
     });
 
-    expect(game.backgroundColor.toString()).toEqual(ex.Color.fromHex('#2185d0').toString());
+    expect(game.backgroundColor.toString()).toEqual(
+      ex.Color.fromHex('#2185d0').toString()
+    );
   });
 
   it('should detect hidpi when the device pixel ratio is greater than 1', (done) => {
@@ -268,7 +288,7 @@ describe('The engine', () => {
     engine = TestUtils.engine({
       width: 100,
       height: 100,
-      suppressHiDPIScaling: false
+      suppressHiDPIScaling: false,
     });
     // Act
     engine.start().then(() => {
@@ -293,7 +313,7 @@ describe('The engine', () => {
     engine = TestUtils.engine({
       width: 100,
       height: 100,
-      suppressHiDPIScaling: false
+      suppressHiDPIScaling: false,
     });
 
     engine.start().then(() => {
@@ -311,7 +331,7 @@ describe('The engine', () => {
     engine = TestUtils.engine({
       width: 100,
       height: 100,
-      suppressHiDPIScaling: true
+      suppressHiDPIScaling: true,
     });
 
     engine.start().then(() => {
@@ -329,7 +349,7 @@ describe('The engine', () => {
       height: 600,
       width: 800,
       enableCanvasTransparency: false,
-      suppressConsoleBootMessage: true
+      suppressConsoleBootMessage: true,
     });
     expect(game.enableCanvasTransparency).toBe(false);
   });
@@ -338,7 +358,7 @@ describe('The engine', () => {
     const game = new ex.Engine({
       height: 600,
       width: 800,
-      suppressConsoleBootMessage: true
+      suppressConsoleBootMessage: true,
     });
     expect(game.enableCanvasTransparency).toBe(true);
   });
@@ -348,7 +368,11 @@ describe('The engine', () => {
     const scene = new ex.Scene();
     engine.addScene('dup', scene);
     engine.addScene('dup', scene);
-    expect(ex.Logger.getInstance().warn).toHaveBeenCalledWith('Scene', 'dup', 'already exists overwriting');
+    expect(ex.Logger.getInstance().warn).toHaveBeenCalledWith(
+      'Scene',
+      'dup',
+      'already exists overwriting'
+    );
   });
 
   it('can have scenes removed by reference', () => {
@@ -382,7 +406,11 @@ describe('The engine', () => {
   it('will log an error if the scene does not exist', () => {
     spyOn(ex.Logger.getInstance(), 'error');
     engine.goToScene('madeUp');
-    expect(ex.Logger.getInstance().error).toHaveBeenCalledWith('Scene', 'madeUp', 'does not exist!');
+    expect(ex.Logger.getInstance().error).toHaveBeenCalledWith(
+      'Scene',
+      'madeUp',
+      'does not exist!'
+    );
   });
 
   describe('lifecycle overrides', () => {

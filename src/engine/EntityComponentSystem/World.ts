@@ -10,7 +10,9 @@ import { SystemManager } from './SystemManager';
 export class World<ContextType> {
   public queryManager: QueryManager = new QueryManager(this);
   public entityManager: EntityManager = new EntityManager(this);
-  public systemManager: SystemManager<ContextType> = new SystemManager<ContextType>(this);
+  public systemManager: SystemManager<ContextType> = new SystemManager<ContextType>(
+    this
+  );
 
   /**
    * The context type is passed to the system updates

@@ -67,7 +67,10 @@ describe('Action', () => {
       const color = ex.Color.Azure;
       const sut = new ex.Actor(null, null, null, null, color);
 
-      expect(sut.color).not.toBe(color, 'Color is not expected to be same instance');
+      expect(sut.color).not.toBe(
+        color,
+        'Color is not expected to be same instance'
+      );
     });
 
     it('is cloned from property setter', () => {
@@ -76,7 +79,10 @@ describe('Action', () => {
 
       sut.color = color;
 
-      expect(sut.color).not.toBe(color, 'Color is not expected to be same instance');
+      expect(sut.color).not.toBe(
+        color,
+        'Color is not expected to be same instance'
+      );
     });
   });
 
@@ -397,7 +403,11 @@ describe('Action', () => {
     it('can be rotated to an angle at a speed via LongestPath', () => {
       expect(actor.rotation).toBe(0);
 
-      actor.actions.rotateTo(Math.PI / 2, Math.PI / 2, ex.RotationType.LongestPath);
+      actor.actions.rotateTo(
+        Math.PI / 2,
+        Math.PI / 2,
+        ex.RotationType.LongestPath
+      );
 
       actor.update(engine, 1000);
       //rotation is currently incremented by rx delta ,so will be negative while moving counterclockwise
@@ -414,7 +424,11 @@ describe('Action', () => {
     it('can be rotated to an angle at a speed via Clockwise', () => {
       expect(actor.rotation).toBe(0);
 
-      actor.actions.rotateTo((3 * Math.PI) / 2, Math.PI / 2, ex.RotationType.Clockwise);
+      actor.actions.rotateTo(
+        (3 * Math.PI) / 2,
+        Math.PI / 2,
+        ex.RotationType.Clockwise
+      );
 
       actor.update(engine, 2000);
       expect(actor.rotation).toBe(Math.PI);
@@ -430,7 +444,11 @@ describe('Action', () => {
     it('can be rotated to an angle at a speed via CounterClockwise', () => {
       expect(actor.rotation).toBe(0);
 
-      actor.actions.rotateTo(Math.PI / 2, Math.PI / 2, ex.RotationType.CounterClockwise);
+      actor.actions.rotateTo(
+        Math.PI / 2,
+        Math.PI / 2,
+        ex.RotationType.CounterClockwise
+      );
       actor.update(engine, 2000);
       expect(actor.rotation).toBe(-Math.PI);
 
@@ -484,7 +502,11 @@ describe('Action', () => {
     it('can be rotated to an angle by a certain time via LongestPath', () => {
       expect(actor.rotation).toBe(0);
 
-      actor.actions.rotateBy(Math.PI / 2, Math.PI / 2, ex.RotationType.LongestPath);
+      actor.actions.rotateBy(
+        Math.PI / 2,
+        Math.PI / 2,
+        ex.RotationType.LongestPath
+      );
 
       actor.update(engine, 1000);
       expect(actor.rotation).toBe((-1 * Math.PI) / 2);
@@ -500,7 +522,11 @@ describe('Action', () => {
     it('can be rotated to an angle by a certain time via Clockwise', () => {
       expect(actor.rotation).toBe(0);
 
-      actor.actions.rotateBy(Math.PI / 2, Math.PI / 2, ex.RotationType.Clockwise);
+      actor.actions.rotateBy(
+        Math.PI / 2,
+        Math.PI / 2,
+        ex.RotationType.Clockwise
+      );
 
       actor.update(engine, 500);
       expect(actor.rotation).toBe(Math.PI / 4);
@@ -516,7 +542,11 @@ describe('Action', () => {
     it('can be rotated to an angle by a certain time via CounterClockwise', () => {
       expect(actor.rotation).toBe(0);
 
-      actor.actions.rotateBy(Math.PI / 2, Math.PI / 2, ex.RotationType.LongestPath);
+      actor.actions.rotateBy(
+        Math.PI / 2,
+        Math.PI / 2,
+        ex.RotationType.LongestPath
+      );
 
       actor.update(engine, 1000);
       expect(actor.rotation).toBe((-1 * Math.PI) / 2);

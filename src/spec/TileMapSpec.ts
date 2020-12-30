@@ -2,7 +2,11 @@ import { ExcaliburMatchers, ensureImagesLoaded } from 'excalibur-jasmine';
 import * as ex from '@excalibur';
 import { TestUtils } from './util/TestUtils';
 
-const drawWithTransform = (ctx: CanvasRenderingContext2D, tm: ex.TileMap, delta: number = 1) => {
+const drawWithTransform = (
+  ctx: CanvasRenderingContext2D,
+  tm: ex.TileMap,
+  delta: number = 1
+) => {
   ctx.save();
   ctx.translate(tm.pos.x, tm.pos.y);
   ctx.rotate(tm.rotation);
@@ -18,10 +22,13 @@ describe('A TileMap', () => {
     jasmine.addMatchers(ExcaliburMatchers);
     engine = TestUtils.engine({
       width: 800,
-      height: 200
+      height: 200,
     });
 
-    texture = new ex.Texture('base/src/spec/images/TileMapSpec/Blocks.png', true);
+    texture = new ex.Texture(
+      'base/src/spec/images/TileMapSpec/Blocks.png',
+      true
+    );
   });
   afterEach(() => {
     engine.stop();
@@ -39,7 +46,7 @@ describe('A TileMap', () => {
       cellWidth: 64,
       cellHeight: 48,
       rows: 4,
-      cols: 20
+      cols: 20,
     });
 
     expect(tm.x).toBe(0);
@@ -58,7 +65,7 @@ describe('A TileMap', () => {
         cellWidth: 64,
         cellHeight: 48,
         rows: 3,
-        cols: 7
+        cols: 7,
       });
       const spriteTiles = new ex.SpriteSheet(texture, 1, 1, 64, 48);
       tm.registerSpriteSheet('default', spriteTiles);
@@ -69,7 +76,10 @@ describe('A TileMap', () => {
 
       drawWithTransform(engine.ctx, tm, 100);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/TileMapSpec/TileMap.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/TileMapSpec/TileMap.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -84,7 +94,7 @@ describe('A TileMap', () => {
         cellWidth: 64,
         cellHeight: 48,
         rows: 20,
-        cols: 20
+        cols: 20,
       });
       const spriteTiles = new ex.SpriteSheet(texture, 1, 1, 64, 48);
       tm.registerSpriteSheet('default', spriteTiles);
@@ -96,7 +106,10 @@ describe('A TileMap', () => {
       tm.update(engine, 100);
       drawWithTransform(engine.ctx, tm, 100);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/TileMapSpec/TileMapCulling.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/TileMapSpec/TileMapCulling.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -112,7 +125,7 @@ describe('A TileMap', () => {
         cellWidth: 64,
         cellHeight: 48,
         rows: 10,
-        cols: 10
+        cols: 10,
       });
       tm.data.forEach(function (cell: ex.Cell) {
         cell.solid = true;

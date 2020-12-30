@@ -6,7 +6,12 @@ import { obsolete } from '../Util/Decorators';
  */
 // tslint:disable-next-line
 export interface EasingFunction {
-  (currentTime: number, startValue: number, endValue: number, duration: number): number;
+  (
+    currentTime: number,
+    startValue: number,
+    endValue: number,
+    duration: number
+  ): number;
 }
 
 /**
@@ -61,8 +66,9 @@ export class EasingFunctions {
   }
 
   @obsolete({
-    message: 'Alias for incorrect spelling used in older versions, will be removed in v0.25.0',
-    alternateMethod: 'CreateReversibleEasingFunction'
+    message:
+      'Alias for incorrect spelling used in older versions, will be removed in v0.25.0',
+    alternateMethod: 'CreateReversibleEasingFunction',
   })
   public static CreateReversableEasingFunction(easing: EasingFunction) {
     return EasingFunctions.CreateReversibleEasingFunction(easing);
@@ -70,19 +76,32 @@ export class EasingFunctions {
 
   public static CreateVectorEasingFunction(easing: EasingFunction) {
     return (time: number, start: Vector, end: Vector, duration: number) => {
-      return new Vector(easing(time, start.x, end.x, duration), easing(time, start.y, end.y, duration));
+      return new Vector(
+        easing(time, start.x, end.x, duration),
+        easing(time, start.y, end.y, duration)
+      );
     };
   }
 
   public static Linear: EasingFunction = EasingFunctions.CreateReversibleEasingFunction(
-    (currentTime: number, startValue: number, endValue: number, duration: number) => {
+    (
+      currentTime: number,
+      startValue: number,
+      endValue: number,
+      duration: number
+    ) => {
       endValue = endValue - startValue;
       return (endValue * currentTime) / duration + startValue;
     }
   );
 
   public static EaseInQuad = EasingFunctions.CreateReversibleEasingFunction(
-    (currentTime: number, startValue: number, endValue: number, duration: number) => {
+    (
+      currentTime: number,
+      startValue: number,
+      endValue: number,
+      duration: number
+    ) => {
       endValue = endValue - startValue;
       currentTime /= duration;
 
@@ -91,7 +110,12 @@ export class EasingFunctions {
   );
 
   public static EaseOutQuad: EasingFunction = EasingFunctions.CreateReversibleEasingFunction(
-    (currentTime: number, startValue: number, endValue: number, duration: number) => {
+    (
+      currentTime: number,
+      startValue: number,
+      endValue: number,
+      duration: number
+    ) => {
       endValue = endValue - startValue;
       currentTime /= duration;
       return -endValue * currentTime * (currentTime - 2) + startValue;
@@ -99,7 +123,12 @@ export class EasingFunctions {
   );
 
   public static EaseInOutQuad: EasingFunction = EasingFunctions.CreateReversibleEasingFunction(
-    (currentTime: number, startValue: number, endValue: number, duration: number) => {
+    (
+      currentTime: number,
+      startValue: number,
+      endValue: number,
+      duration: number
+    ) => {
       endValue = endValue - startValue;
       currentTime /= duration / 2;
 
@@ -108,12 +137,19 @@ export class EasingFunctions {
       }
       currentTime--;
 
-      return (-endValue / 2) * (currentTime * (currentTime - 2) - 1) + startValue;
+      return (
+        (-endValue / 2) * (currentTime * (currentTime - 2) - 1) + startValue
+      );
     }
   );
 
   public static EaseInCubic: EasingFunction = EasingFunctions.CreateReversibleEasingFunction(
-    (currentTime: number, startValue: number, endValue: number, duration: number) => {
+    (
+      currentTime: number,
+      startValue: number,
+      endValue: number,
+      duration: number
+    ) => {
       endValue = endValue - startValue;
       currentTime /= duration;
       return endValue * currentTime * currentTime * currentTime + startValue;
@@ -121,23 +157,40 @@ export class EasingFunctions {
   );
 
   public static EaseOutCubic: EasingFunction = EasingFunctions.CreateReversibleEasingFunction(
-    (currentTime: number, startValue: number, endValue: number, duration: number) => {
+    (
+      currentTime: number,
+      startValue: number,
+      endValue: number,
+      duration: number
+    ) => {
       endValue = endValue - startValue;
       currentTime /= duration;
       currentTime--;
-      return endValue * (currentTime * currentTime * currentTime + 1) + startValue;
+      return (
+        endValue * (currentTime * currentTime * currentTime + 1) + startValue
+      );
     }
   );
 
   public static EaseInOutCubic: EasingFunction = EasingFunctions.CreateReversibleEasingFunction(
-    (currentTime: number, startValue: number, endValue: number, duration: number) => {
+    (
+      currentTime: number,
+      startValue: number,
+      endValue: number,
+      duration: number
+    ) => {
       endValue = endValue - startValue;
       currentTime /= duration / 2;
       if (currentTime < 1) {
-        return (endValue / 2) * currentTime * currentTime * currentTime + startValue;
+        return (
+          (endValue / 2) * currentTime * currentTime * currentTime + startValue
+        );
       }
       currentTime -= 2;
-      return (endValue / 2) * (currentTime * currentTime * currentTime + 2) + startValue;
+      return (
+        (endValue / 2) * (currentTime * currentTime * currentTime + 2) +
+        startValue
+      );
     }
   );
 }

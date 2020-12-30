@@ -62,9 +62,12 @@ describe('A generic Resource', () => {
       });
     });
 
-
     it('should load a text resource', (done) => {
-      const text = new ex.Resource('base/src/spec/images/ResourceSpec/textresource.txt', 'text', true);
+      const text = new ex.Resource(
+        'base/src/spec/images/ResourceSpec/textresource.txt',
+        'text',
+        true
+      );
       text.load().then((data) => {
         expect(data).not.toBeNull();
         done();

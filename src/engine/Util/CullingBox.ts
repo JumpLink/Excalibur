@@ -49,20 +49,36 @@ export class CullingBox {
     const topLeftScreen = engine.worldToScreenCoordinates(this._topLeft);
     const topRightScreen = engine.worldToScreenCoordinates(this._topRight);
     const bottomLeftScreen = engine.worldToScreenCoordinates(this._bottomLeft);
-    const bottomRightScreen = engine.worldToScreenCoordinates(this._bottomRight);
+    const bottomRightScreen = engine.worldToScreenCoordinates(
+      this._bottomRight
+    );
     this._xCoords = [];
     this._yCoords = [];
 
-    this._xCoords.push(topLeftScreen.x, topRightScreen.x, bottomLeftScreen.x, bottomRightScreen.x);
-    this._yCoords.push(topLeftScreen.y, topRightScreen.y, bottomLeftScreen.y, bottomRightScreen.y);
+    this._xCoords.push(
+      topLeftScreen.x,
+      topRightScreen.x,
+      bottomLeftScreen.x,
+      bottomRightScreen.x
+    );
+    this._yCoords.push(
+      topLeftScreen.y,
+      topRightScreen.y,
+      bottomLeftScreen.y,
+      bottomRightScreen.y
+    );
 
     this._xMin = Math.min.apply(null, this._xCoords);
     this._yMin = Math.min.apply(null, this._yCoords);
     this._xMax = Math.max.apply(null, this._xCoords);
     this._yMax = Math.max.apply(null, this._yCoords);
 
-    const minWorld = engine.screenToWorldCoordinates(new Vector(this._xMin, this._yMin));
-    const maxWorld = engine.screenToWorldCoordinates(new Vector(this._xMax, this._yMax));
+    const minWorld = engine.screenToWorldCoordinates(
+      new Vector(this._xMin, this._yMin)
+    );
+    const maxWorld = engine.screenToWorldCoordinates(
+      new Vector(this._xMax, this._yMax)
+    );
     this._xMinWorld = minWorld.x;
     this._yMinWorld = minWorld.y;
     this._xMaxWorld = maxWorld.x;
@@ -72,7 +88,7 @@ export class CullingBox {
       new Vector(this._xMin, this._yMin), // top left
       new Vector(this._xMax, this._yMin), // top right
       new Vector(this._xMin, this._yMax), // bottom left
-      new Vector(this._xMax, this._yMax) // bottom right
+      new Vector(this._xMax, this._yMax), // bottom right
     ];
 
     // sprite can be wider than canvas screen (and still visible within canvas)
@@ -80,7 +96,8 @@ export class CullingBox {
     if (
       boundingPoints[0].x < 0 &&
       boundingPoints[1].x > engine.canvas.clientWidth &&
-      (boundingPoints[0].y > 0 || boundingPoints[2].y < engine.canvas.clientHeight)
+      (boundingPoints[0].y > 0 ||
+        boundingPoints[2].y < engine.canvas.clientHeight)
     ) {
       return false;
     }
@@ -90,7 +107,8 @@ export class CullingBox {
     if (
       boundingPoints[0].y < 0 &&
       boundingPoints[2].y > engine.canvas.clientHeight &&
-      (boundingPoints[1].x > 0 || boundingPoints[0].x < engine.canvas.clientWidth)
+      (boundingPoints[1].x > 0 ||
+        boundingPoints[0].x < engine.canvas.clientWidth)
     ) {
       return false;
     }
@@ -114,7 +132,12 @@ export class CullingBox {
     // bounding rectangle
     ctx.beginPath();
     ctx.strokeStyle = Color.White.toString();
-    ctx.rect(this._xMinWorld, this._yMinWorld, this._xMaxWorld - this._xMinWorld, this._yMaxWorld - this._yMinWorld);
+    ctx.rect(
+      this._xMinWorld,
+      this._yMinWorld,
+      this._xMaxWorld - this._xMinWorld,
+      this._yMaxWorld - this._yMinWorld
+    );
     ctx.stroke();
 
     ctx.fillStyle = Color.Red.toString();

@@ -16,7 +16,7 @@ describe('An Event Dispatcher', () => {
 
   it('can publish events', () => {
     let eventFired = false;
-    pubsub.on('event', function() {
+    pubsub.on('event', function () {
       eventFired = true;
     });
     pubsub.emit('event', null);
@@ -28,7 +28,7 @@ describe('An Event Dispatcher', () => {
     const target = new ex.Actor();
 
     pubsub = new ex.EventDispatcher(target);
-    pubsub.on('event', function() {
+    pubsub.on('event', function () {
       targetContext = this;
     });
     pubsub.emit('event', null);
@@ -37,7 +37,7 @@ describe('An Event Dispatcher', () => {
 
   it('has an emit alias for publish', () => {
     let eventFired = false;
-    pubsub.on('event', function() {
+    pubsub.on('event', function () {
       eventFired = true;
     });
     pubsub.emit('event', null);
@@ -53,7 +53,9 @@ describe('An Event Dispatcher', () => {
     }
 
     eventHistory = [];
-    subscriptions.forEach((i) => pubsub.on('event', () => eventHistory.push(i)));
+    subscriptions.forEach((i) =>
+      pubsub.on('event', () => eventHistory.push(i))
+    );
     pubsub.emit('event', null);
     expect(eventHistory).toEqual(subscriptions);
 
@@ -61,7 +63,9 @@ describe('An Event Dispatcher', () => {
     subscriptions.push(subscriptions.shift());
 
     eventHistory = [];
-    subscriptions.forEach((i) => pubsub.on('event', () => eventHistory.push(i)));
+    subscriptions.forEach((i) =>
+      pubsub.on('event', () => eventHistory.push(i))
+    );
     pubsub.emit('event', null);
     expect(eventHistory).toEqual(subscriptions);
   });
@@ -114,6 +118,9 @@ describe('An Event Dispatcher', () => {
     pubsub.emit('onlyonce', null);
     pubsub.emit('onlyonce', null);
 
-    expect(callCount).toBe(1, 'There should only be one call to the handler with once.');
+    expect(callCount).toBe(
+      1,
+      'There should only be one call to the handler with once.'
+    );
   });
 });

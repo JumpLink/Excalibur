@@ -170,12 +170,34 @@ describe('An Easing Function', () => {
   });
 
   it('can be used with vectors', () => {
-    const vectorEasing = ex.EasingFunctions.CreateVectorEasingFunction(ex.EasingFunctions.Linear);
+    const vectorEasing = ex.EasingFunctions.CreateVectorEasingFunction(
+      ex.EasingFunctions.Linear
+    );
 
-    const zeroTime = vectorEasing(0, new ex.Vector(10, 10), new ex.Vector(20, 20), 100);
-    const quarterTime = vectorEasing(25, new ex.Vector(10, 10), new ex.Vector(20, 20), 100);
-    const threeQuarterTime = vectorEasing(75, new ex.Vector(10, 10), new ex.Vector(20, 20), 100);
-    const finalTime = vectorEasing(100, new ex.Vector(10, 10), new ex.Vector(20, 20), 100);
+    const zeroTime = vectorEasing(
+      0,
+      new ex.Vector(10, 10),
+      new ex.Vector(20, 20),
+      100
+    );
+    const quarterTime = vectorEasing(
+      25,
+      new ex.Vector(10, 10),
+      new ex.Vector(20, 20),
+      100
+    );
+    const threeQuarterTime = vectorEasing(
+      75,
+      new ex.Vector(10, 10),
+      new ex.Vector(20, 20),
+      100
+    );
+    const finalTime = vectorEasing(
+      100,
+      new ex.Vector(10, 10),
+      new ex.Vector(20, 20),
+      100
+    );
 
     expect(zeroTime.x).toBe(10);
     expect(zeroTime.y).toBe(10);

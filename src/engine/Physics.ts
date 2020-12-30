@@ -11,7 +11,7 @@ import { obsolete } from './Util/Decorators';
  */
 export enum CollisionResolutionStrategy {
   Box,
-  RigidBody
+  RigidBody,
 }
 
 /**
@@ -23,14 +23,14 @@ export enum CollisionResolutionStrategy {
  */
 export enum BroadphaseStrategy {
   Naive,
-  DynamicAABBTree
+  DynamicAABBTree,
 }
 
 /**
  * Possible numerical integrators for position and velocity
  */
 export enum Integrator {
-  Euler
+  Euler,
 }
 
 /**
@@ -73,7 +73,8 @@ export class Physics {
    * potential collision pairs which is O(nlog(n)) faster. The other possible strategy is the [[BroadphaseStrategy.Naive]] strategy
    * which loops over every object for every object in the scene to identify collision pairs which is O(n^2) slower.
    */
-  public static broadphaseStrategy: BroadphaseStrategy = BroadphaseStrategy.DynamicAABBTree;
+  public static broadphaseStrategy: BroadphaseStrategy =
+    BroadphaseStrategy.DynamicAABBTree;
 
   /**
    * Globally switches the debug information for the broadphase strategy
@@ -111,7 +112,8 @@ export class Physics {
    * More advanced rigid body physics are enabled by setting [[CollisionResolutionStrategy.RigidBody]] which allows for complicated
    * simulated physical interactions.
    */
-  public static collisionResolutionStrategy: CollisionResolutionStrategy = CollisionResolutionStrategy.Box;
+  public static collisionResolutionStrategy: CollisionResolutionStrategy =
+    CollisionResolutionStrategy.Box;
   /**
    * The default mass to use if none is specified
    */
@@ -156,8 +158,9 @@ export class Physics {
   public static dynamicTreeVelocityMultiplier = 2;
 
   @obsolete({
-    message: 'Alias for incorrect spelling used in older versions, will be removed in v0.25.0',
-    alternateMethod: 'dynamicTreeVelocityMultiplier'
+    message:
+      'Alias for incorrect spelling used in older versions, will be removed in v0.25.0',
+    alternateMethod: 'dynamicTreeVelocityMultiplier',
   })
   public static get dynamicTreeVelocityMultiplyer() {
     return Physics.dynamicTreeVelocityMultiplier;

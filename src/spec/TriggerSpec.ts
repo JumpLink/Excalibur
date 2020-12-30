@@ -32,7 +32,7 @@ describe('A Trigger', () => {
       pos: new ex.Vector(0, 100),
       width: 100,
       height: 100,
-      repeat: 1
+      repeat: 1,
     });
     const actor = new ex.Actor(0, 0, 10, 10);
     actor.body.collider.type = ex.CollisionType.Active;
@@ -67,7 +67,7 @@ describe('A Trigger', () => {
       pos: new ex.Vector(0, 100),
       width: 100,
       height: 100,
-      repeat: 3
+      repeat: 3,
     });
     const actor = new ex.Actor(0, 0, 10, 10);
     actor.body.collider.type = ex.CollisionType.Active;
@@ -103,7 +103,7 @@ describe('A Trigger', () => {
     const trigger = new ex.Trigger({
       pos: new ex.Vector(0, 100),
       width: 100,
-      height: 100
+      height: 100,
     });
 
     trigger.body.collider.type = ex.CollisionType.Passive;
@@ -135,7 +135,7 @@ describe('A Trigger', () => {
     const trigger = new ex.Trigger({
       pos: new ex.Vector(0, 100),
       width: 100,
-      height: 100
+      height: 100,
     });
 
     const actor = new ex.Actor(0, 0, 10, 10);
@@ -164,7 +164,7 @@ describe('A Trigger', () => {
     const trigger = new ex.Trigger({
       pos: new ex.Vector(0, 100),
       width: 100,
-      height: 100
+      height: 100,
     });
 
     engine.add(trigger);
@@ -185,7 +185,7 @@ describe('A Trigger', () => {
       pos: new ex.Vector(200, 200),
       visible: true,
       width: 100,
-      height: 100
+      height: 100,
     });
 
     engine.add(trigger);
@@ -207,7 +207,7 @@ describe('A Trigger', () => {
       visible: true,
       width: 100,
       height: 100,
-      filter: () => false
+      filter: () => false,
     });
 
     const actor = new ex.Actor(0, 100, 10, 10);
@@ -232,7 +232,7 @@ describe('A Trigger', () => {
       visible: true,
       width: 100,
       height: 100,
-      filter: () => true
+      filter: () => true,
     });
 
     const actor = new ex.Actor(0, 100, 10, 10);
@@ -261,7 +261,7 @@ describe('A Trigger', () => {
       visible: true,
       width: 100,
       height: 100,
-      target: actor
+      target: actor,
     });
 
     engine.add(trigger);

@@ -23,7 +23,7 @@ describe('Feature Flags', () => {
       'some-flag-2',
       'some-flag-3',
       'some-flag-4',
-      'some-flag-5'
+      'some-flag-5',
     ]);
   });
 
@@ -33,7 +33,7 @@ describe('Feature Flags', () => {
     expect(ex.Flags.isEnabled('some-flag')).toBeTrue();
   });
 
-  it('should let you disable flags',( ) => {
+  it('should let you disable flags', () => {
     ex.Flags.disable('some-other-flag');
 
     expect(ex.Flags.isEnabled('some-other-flag')).toBeFalse();
@@ -55,7 +55,9 @@ describe('Feature Flags', () => {
 
     expect(() => {
       ex.Flags.enable('some-flag');
-    }).toThrowError('Feature flags can only be enabled before Engine constructor time');
+    }).toThrowError(
+      'Feature flags can only be enabled before Engine constructor time'
+    );
   });
 
   it('should not allow flags to be disabled after being frozen', () => {
@@ -63,7 +65,9 @@ describe('Feature Flags', () => {
 
     expect(() => {
       ex.Flags.disable('some-flag');
-    }).toThrowError('Feature flags can only be disabled before Engine constructor time');
+    }).toThrowError(
+      'Feature flags can only be disabled before Engine constructor time'
+    );
   });
 
   it('should be frozen after engine construction', () => {
@@ -71,11 +75,10 @@ describe('Feature Flags', () => {
       ex.Flags.disable('some-flag');
     }).not.toThrow();
 
-    const engine = new ex.Engine({ suppressConsoleBootMessage: true});
+    const engine = new ex.Engine({ suppressConsoleBootMessage: true });
 
     expect(() => {
       ex.Flags.disable('some-flag');
     }).toThrow();
   });
-
 });

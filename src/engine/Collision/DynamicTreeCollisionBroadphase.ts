@@ -41,7 +41,10 @@ export class DynamicTreeCollisionBroadphase implements CollisionBroadphase {
     this._dynamicCollisionTree.untrackBody(target);
   }
 
-  private _shouldGenerateCollisionPair(colliderA: Collider, colliderB: Collider) {
+  private _shouldGenerateCollisionPair(
+    colliderA: Collider,
+    colliderB: Collider
+  ) {
     // if the collision pair has been calculated already short circuit
     const hash = Pair.calculatePairHash(colliderA, colliderB);
     if (this._collisionHash[hash]) {
@@ -54,7 +57,11 @@ export class DynamicTreeCollisionBroadphase implements CollisionBroadphase {
   /**
    * Detects potential collision pairs in a broadphase approach with the dynamic aabb tree strategy
    */
-  public broadphase(targets: Body[], delta: number, stats?: FrameStats): Pair[] {
+  public broadphase(
+    targets: Body[],
+    delta: number,
+    stats?: FrameStats
+  ): Pair[] {
     const seconds = delta / 1000;
 
     // Retrieve the list of potential colliders, exclude killed, prevented, and self
@@ -103,8 +110,14 @@ export class DynamicTreeCollisionBroadphase implements CollisionBroadphase {
           collider.body.acc.size * 0.5 * seconds * seconds; // acc term
 
         // Find the minimum dimension
-        const minDimension = Math.min(collider.bounds.height, collider.bounds.width);
-        if (Physics.disableMinimumSpeedForFastBody || updateDistance > minDimension / 2) {
+        const minDimension = Math.min(
+          collider.bounds.height,
+          collider.bounds.width
+        );
+        if (
+          Physics.disableMinimumSpeedForFastBody ||
+          updateDistance > minDimension / 2
+        ) {
           if (stats) {
             stats.physics.fastBodies++;
           }
@@ -113,7 +126,9 @@ export class DynamicTreeCollisionBroadphase implements CollisionBroadphase {
           // objects resting on a surface may be slightly penetrating in the current position
           const updateVec = collider.body.pos.sub(collider.body.oldPos);
           const centerPoint = collider.shape.center;
-          const furthestPoint = collider.shape.getFurthestPoint(collider.body.vel);
+          const furthestPoint = collider.shape.getFurthestPoint(
+            collider.body.vel
+          );
           const origin: Vector = furthestPoint.sub(updateVec);
 
           const ray: Ray = new Ray(origin, collider.body.vel);
@@ -122,19 +137,30 @@ export class DynamicTreeCollisionBroadphase implements CollisionBroadphase {
           ray.pos = ray.pos.add(ray.dir.scale(-2 * Physics.surfaceEpsilon));
           let minBody: Body;
           let minTranslate: Vector = new Vector(Infinity, Infinity);
-          this._dynamicCollisionTree.rayCastQuery(ray, updateDistance + Physics.surfaceEpsilon * 2, (other: Body) => {
-            if (collider.body !== other && other.collider.shape && Pair.canCollide(collider, other.collider)) {
-              const hitPoint = other.collider.shape.rayCast(ray, updateDistance + Physics.surfaceEpsilon * 10);
-              if (hitPoint) {
-                const translate = hitPoint.sub(origin);
-                if (translate.size < minTranslate.size) {
-                  minTranslate = translate;
-                  minBody = other;
+          this._dynamicCollisionTree.rayCastQuery(
+            ray,
+            updateDistance + Physics.surfaceEpsilon * 2,
+            (other: Body) => {
+              if (
+                collider.body !== other &&
+                other.collider.shape &&
+                Pair.canCollide(collider, other.collider)
+              ) {
+                const hitPoint = other.collider.shape.rayCast(
+                  ray,
+                  updateDistance + Physics.surfaceEpsilon * 10
+                );
+                if (hitPoint) {
+                  const translate = hitPoint.sub(origin);
+                  if (translate.size < minTranslate.size) {
+                    minTranslate = translate;
+                    minBody = other;
+                  }
                 }
               }
+              return false;
             }
-            return false;
-          });
+          );
 
           if (minBody && Vector.isValid(minTranslate)) {
             const pair = new Pair(collider, minBody.collider);
@@ -180,7 +206,11 @@ export class DynamicTreeCollisionBroadphase implements CollisionBroadphase {
   /**
    * Perform collision resolution given a strategy (rigid body or box) and move objects out of intersect.
    */
-  public resolve(pairs: Pair[], delta: number, strategy: CollisionResolutionStrategy): Pair[] {
+  public resolve(
+    pairs: Pair[],
+    delta: number,
+    strategy: CollisionResolutionStrategy
+  ): Pair[] {
     for (const pair of pairs) {
       pair.resolve(strategy);
 
@@ -207,8 +237,14 @@ export class DynamicTreeCollisionBroadphase implements CollisionBroadphase {
       if (!this._lastFramePairsHash[p.id]) {
         const actor1 = p.colliderA;
         const actor2 = p.colliderB;
-        actor1.emit('collisionstart', new CollisionStartEvent(actor1, actor2, p));
-        actor2.emit('collisionstart', new CollisionStartEvent(actor2, actor1, p));
+        actor1.emit(
+          'collisionstart',
+          new CollisionStartEvent(actor1, actor2, p)
+        );
+        actor2.emit(
+          'collisionstart',
+          new CollisionStartEvent(actor2, actor1, p)
+        );
       }
     }
 

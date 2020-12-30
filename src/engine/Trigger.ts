@@ -4,7 +4,12 @@ import { ActionQueue } from './Actions/Action';
 import { EventDispatcher } from './EventDispatcher';
 import { Actor, isActor } from './Actor';
 import { Vector } from './Algebra';
-import { ExitTriggerEvent, EnterTriggerEvent, CollisionEndEvent, CollisionStartEvent } from './Events';
+import {
+  ExitTriggerEvent,
+  EnterTriggerEvent,
+  CollisionEndEvent,
+  CollisionStartEvent,
+} from './Events';
 import * as Util from './Util/Util';
 import { CollisionType } from './Collision/CollisionType';
 
@@ -39,7 +44,7 @@ const triggerDefaults: Partial<TriggerOptions> = {
     return;
   },
   filter: () => true,
-  repeat: -1
+  repeat: -1,
 };
 
 /**

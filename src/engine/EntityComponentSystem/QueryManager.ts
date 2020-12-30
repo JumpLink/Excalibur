@@ -53,7 +53,9 @@ export class QueryManager {
    */
   public removeComponent(entity: Entity, component: Component) {
     for (const queryType in this._queries) {
-      if (this._queries[queryType].matches(entity.types.concat([component.type]))) {
+      if (
+        this._queries[queryType].matches(entity.types.concat([component.type]))
+      ) {
         this._queries[queryType].removeEntity(entity);
       }
     }
@@ -73,7 +75,9 @@ export class QueryManager {
    * Creates a populated query and returns, if the query already exists that will be returned instead of a new instance
    * @param types
    */
-  public createQuery<T extends Component = Component>(types: readonly string[]): Query<T> {
+  public createQuery<T extends Component = Component>(
+    types: readonly string[]
+  ): Query<T> {
     const maybeExistingQuery = this.getQuery<T>(types);
     if (maybeExistingQuery) {
       return maybeExistingQuery;
@@ -87,7 +91,9 @@ export class QueryManager {
    * Retrieves an existing query by types if it exists otherwise returns null
    * @param types
    */
-  public getQuery<T extends Component = Component>(types: readonly string[]): Query<T> {
+  public getQuery<T extends Component = Component>(
+    types: readonly string[]
+  ): Query<T> {
     const key = buildTypeKey(types);
     if (this._queries[key]) {
       return this._queries[key] as Query<T>;

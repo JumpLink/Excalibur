@@ -35,7 +35,11 @@ export class WebAudioInstance implements Audio {
       // https://developer.mozilla.org/en-US/docs/Web/API/AudioParam/setTargetAtTime
       // After each .1 seconds timestep, the target value will ~63.2% closer to the target value.
       // This exponential ramp provides a more pleasant transition in gain
-      this._volumeNode.gain.setTargetAtTime(value, this._audioContext.currentTime, 0.1);
+      this._volumeNode.gain.setTargetAtTime(
+        value,
+        this._audioContext.currentTime,
+        0.1
+      );
     } else {
       this._volumeNode.gain.value = value;
     }
@@ -56,7 +60,9 @@ export class WebAudioInstance implements Audio {
   }
 
   private get _playbackRate(): number {
-    return this._instance ? 1 / (this._instance.playbackRate.value || 1.0) : null;
+    return this._instance
+      ? 1 / (this._instance.playbackRate.value || 1.0)
+      : null;
   }
 
   private _isPlaying = false;
@@ -189,7 +195,8 @@ export class WebAudioInstance implements Audio {
   }
 
   private _setPauseOffset() {
-    this._currentOffset = ((new Date().getTime() - this._startTime) * this._playbackRate) / 1000; // in seconds
+    this._currentOffset =
+      ((new Date().getTime() - this._startTime) * this._playbackRate) / 1000; // in seconds
   }
 
   private _createNewBufferSource() {

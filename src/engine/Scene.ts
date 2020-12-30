@@ -10,7 +10,7 @@ import {
   PostDrawEvent,
   PreDebugDrawEvent,
   PostDebugDrawEvent,
-  GameEvent
+  GameEvent,
 } from './Events';
 import { Logger } from './Util/Log';
 import { Timer } from './Timer';
@@ -21,7 +21,13 @@ import { TileMap } from './TileMap';
 import { Camera } from './Camera';
 import { Actor } from './Actor';
 import { Class } from './Class';
-import { CanInitialize, CanActivate, CanDeactivate, CanUpdate, CanDraw } from './Interfaces/LifecycleEvents';
+import {
+  CanInitialize,
+  CanActivate,
+  CanDeactivate,
+  CanUpdate,
+  CanDraw,
+} from './Interfaces/LifecycleEvents';
 import * as Util from './Util/Util';
 import * as Events from './Events';
 import * as ActorUtils from './Util/Actors';
@@ -38,7 +44,9 @@ import { World } from './EntityComponentSystem/World';
  *
  * Typical usages of a scene include: levels, menus, loading screens, etc.
  */
-export class Scene extends Class implements CanInitialize, CanActivate, CanDeactivate, CanUpdate, CanDraw {
+export class Scene
+  extends Class
+  implements CanInitialize, CanActivate, CanDeactivate, CanUpdate, CanDraw {
   /**
    * Gets or sets the current camera for the scene
    */
@@ -80,10 +88,13 @@ export class Scene extends Class implements CanInitialize, CanActivate, CanDeact
    */
   @obsolete({
     message: 'Will be removed in excalibur v0.26.0',
-    alternateMethod: 'ScreenElements now are normal actors with a Transform Coordinate Plane of Screen'
+    alternateMethod:
+      'ScreenElements now are normal actors with a Transform Coordinate Plane of Screen',
   })
   public get screenElements(): ScreenElement[] {
-    return this.actors.filter((a) => a instanceof ScreenElement) as ScreenElement[];
+    return this.actors.filter(
+      (a) => a instanceof ScreenElement
+    ) as ScreenElement[];
   }
 
   private _isInitialized: boolean = false;
@@ -106,44 +117,131 @@ export class Scene extends Class implements CanInitialize, CanActivate, CanDeact
     }
   }
 
-  public on(eventName: Events.initialize, handler: (event: InitializeEvent<Scene>) => void): void;
-  public on(eventName: Events.activate, handler: (event: ActivateEvent) => void): void;
-  public on(eventName: Events.deactivate, handler: (event: DeactivateEvent) => void): void;
-  public on(eventName: Events.preupdate, handler: (event: PreUpdateEvent<Scene>) => void): void;
-  public on(eventName: Events.postupdate, handler: (event: PostUpdateEvent<Scene>) => void): void;
-  public on(eventName: Events.predraw, handler: (event: PreDrawEvent) => void): void;
-  public on(eventName: Events.postdraw, handler: (event: PostDrawEvent) => void): void;
-  public on(eventName: Events.predebugdraw, handler: (event: PreDebugDrawEvent) => void): void;
-  public on(eventName: Events.postdebugdraw, handler: (event: PostDebugDrawEvent) => void): void;
+  public on(
+    eventName: Events.initialize,
+    handler: (event: InitializeEvent<Scene>) => void
+  ): void;
+  public on(
+    eventName: Events.activate,
+    handler: (event: ActivateEvent) => void
+  ): void;
+  public on(
+    eventName: Events.deactivate,
+    handler: (event: DeactivateEvent) => void
+  ): void;
+  public on(
+    eventName: Events.preupdate,
+    handler: (event: PreUpdateEvent<Scene>) => void
+  ): void;
+  public on(
+    eventName: Events.postupdate,
+    handler: (event: PostUpdateEvent<Scene>) => void
+  ): void;
+  public on(
+    eventName: Events.predraw,
+    handler: (event: PreDrawEvent) => void
+  ): void;
+  public on(
+    eventName: Events.postdraw,
+    handler: (event: PostDrawEvent) => void
+  ): void;
+  public on(
+    eventName: Events.predebugdraw,
+    handler: (event: PreDebugDrawEvent) => void
+  ): void;
+  public on(
+    eventName: Events.postdebugdraw,
+    handler: (event: PostDebugDrawEvent) => void
+  ): void;
   public on(eventName: string, handler: (event: GameEvent<any>) => void): void;
   public on(eventName: string, handler: (event: any) => void): void {
     super.on(eventName, handler);
   }
 
-  public once(eventName: Events.initialize, handler: (event: InitializeEvent<Scene>) => void): void;
-  public once(eventName: Events.activate, handler: (event: ActivateEvent) => void): void;
-  public once(eventName: Events.deactivate, handler: (event: DeactivateEvent) => void): void;
-  public once(eventName: Events.preupdate, handler: (event: PreUpdateEvent<Scene>) => void): void;
-  public once(eventName: Events.postupdate, handler: (event: PostUpdateEvent<Scene>) => void): void;
-  public once(eventName: Events.predraw, handler: (event: PreDrawEvent) => void): void;
-  public once(eventName: Events.postdraw, handler: (event: PostDrawEvent) => void): void;
-  public once(eventName: Events.predebugdraw, handler: (event: PreDebugDrawEvent) => void): void;
-  public once(eventName: Events.postdebugdraw, handler: (event: PostDebugDrawEvent) => void): void;
-  public once(eventName: string, handler: (event: GameEvent<any>) => void): void;
+  public once(
+    eventName: Events.initialize,
+    handler: (event: InitializeEvent<Scene>) => void
+  ): void;
+  public once(
+    eventName: Events.activate,
+    handler: (event: ActivateEvent) => void
+  ): void;
+  public once(
+    eventName: Events.deactivate,
+    handler: (event: DeactivateEvent) => void
+  ): void;
+  public once(
+    eventName: Events.preupdate,
+    handler: (event: PreUpdateEvent<Scene>) => void
+  ): void;
+  public once(
+    eventName: Events.postupdate,
+    handler: (event: PostUpdateEvent<Scene>) => void
+  ): void;
+  public once(
+    eventName: Events.predraw,
+    handler: (event: PreDrawEvent) => void
+  ): void;
+  public once(
+    eventName: Events.postdraw,
+    handler: (event: PostDrawEvent) => void
+  ): void;
+  public once(
+    eventName: Events.predebugdraw,
+    handler: (event: PreDebugDrawEvent) => void
+  ): void;
+  public once(
+    eventName: Events.postdebugdraw,
+    handler: (event: PostDebugDrawEvent) => void
+  ): void;
+  public once(
+    eventName: string,
+    handler: (event: GameEvent<any>) => void
+  ): void;
   public once(eventName: string, handler: (event: any) => void): void {
     super.once(eventName, handler);
   }
 
-  public off(eventName: Events.initialize, handler?: (event: InitializeEvent<Scene>) => void): void;
-  public off(eventName: Events.activate, handler?: (event: ActivateEvent) => void): void;
-  public off(eventName: Events.deactivate, handler?: (event: DeactivateEvent) => void): void;
-  public off(eventName: Events.preupdate, handler?: (event: PreUpdateEvent<Scene>) => void): void;
-  public off(eventName: Events.postupdate, handler?: (event: PostUpdateEvent<Scene>) => void): void;
-  public off(eventName: Events.predraw, handler?: (event: PreDrawEvent) => void): void;
-  public off(eventName: Events.postdraw, handler?: (event: PostDrawEvent) => void): void;
-  public off(eventName: Events.predebugdraw, handler?: (event: PreDebugDrawEvent) => void): void;
-  public off(eventName: Events.postdebugdraw, handler?: (event: PostDebugDrawEvent) => void): void;
-  public off(eventName: string, handler?: (event: GameEvent<any>) => void): void;
+  public off(
+    eventName: Events.initialize,
+    handler?: (event: InitializeEvent<Scene>) => void
+  ): void;
+  public off(
+    eventName: Events.activate,
+    handler?: (event: ActivateEvent) => void
+  ): void;
+  public off(
+    eventName: Events.deactivate,
+    handler?: (event: DeactivateEvent) => void
+  ): void;
+  public off(
+    eventName: Events.preupdate,
+    handler?: (event: PreUpdateEvent<Scene>) => void
+  ): void;
+  public off(
+    eventName: Events.postupdate,
+    handler?: (event: PostUpdateEvent<Scene>) => void
+  ): void;
+  public off(
+    eventName: Events.predraw,
+    handler?: (event: PreDrawEvent) => void
+  ): void;
+  public off(
+    eventName: Events.postdraw,
+    handler?: (event: PostDrawEvent) => void
+  ): void;
+  public off(
+    eventName: Events.predebugdraw,
+    handler?: (event: PreDebugDrawEvent) => void
+  ): void;
+  public off(
+    eventName: Events.postdebugdraw,
+    handler?: (event: PostDebugDrawEvent) => void
+  ): void;
+  public off(
+    eventName: string,
+    handler?: (event: GameEvent<any>) => void
+  ): void;
   public off(eventName: string, handler?: (event: any) => void): void {
     super.off(eventName, handler);
   }
@@ -248,7 +346,10 @@ export class Scene extends Class implements CanInitialize, CanActivate, CanDeact
       this._initializeChildren();
 
       this._logger.debug('Scene.onInitialize', this, engine);
-      this.eventDispatcher.emit('initialize', new InitializeEvent(engine, this));
+      this.eventDispatcher.emit(
+        'initialize',
+        new InitializeEvent(engine, this)
+      );
       this._isInitialized = true;
     }
   }
@@ -370,7 +471,11 @@ export class Scene extends Class implements CanInitialize, CanActivate, CanDeact
     if (this._broadphase && Physics.enabled) {
       const beforeBroadphase = Date.now();
       this._broadphase.update(this._bodies, delta);
-      let pairs = this._broadphase.broadphase(this._bodies, delta, engine.stats.currFrame);
+      let pairs = this._broadphase.broadphase(
+        this._bodies,
+        delta,
+        engine.stats.currFrame
+      );
       const afterBroadphase = Date.now();
 
       const beforeNarrowphase = Date.now();
@@ -380,7 +485,11 @@ export class Scene extends Class implements CanInitialize, CanActivate, CanDeact
         // Run the narrowphase
         pairs = this._broadphase.narrowphase(pairs, engine.stats.currFrame);
         // Run collision resolution strategy
-        pairs = this._broadphase.resolve(pairs, collisionDelta, Physics.collisionResolutionStrategy);
+        pairs = this._broadphase.resolve(
+          pairs,
+          collisionDelta,
+          Physics.collisionResolutionStrategy
+        );
 
         this._broadphase.runCollisionStartEnd(pairs);
 
@@ -388,11 +497,14 @@ export class Scene extends Class implements CanInitialize, CanActivate, CanDeact
       }
 
       const afterNarrowphase = Date.now();
-      engine.stats.currFrame.physics.broadphase = afterBroadphase - beforeBroadphase;
-      engine.stats.currFrame.physics.narrowphase = afterNarrowphase - beforeNarrowphase;
+      engine.stats.currFrame.physics.broadphase =
+        afterBroadphase - beforeBroadphase;
+      engine.stats.currFrame.physics.narrowphase =
+        afterNarrowphase - beforeNarrowphase;
     }
 
-    engine.stats.currFrame.actors.killed = this._killQueue.length + this._triggerKillQueue.length;
+    engine.stats.currFrame.actors.killed =
+      this._killQueue.length + this._triggerKillQueue.length;
 
     this._processKillQueue(this._killQueue, this.actors);
     this._processKillQueue(this._triggerKillQueue, this.triggers);
@@ -562,7 +674,10 @@ export class Scene extends Class implements CanInitialize, CanActivate, CanDeact
    * @todo Should this be `ScreenElement` only?
    * @deprecated
    */
-  @obsolete({message: 'Will be removed in excalibur v0.26.0', alternateMethod: 'Use Scene.add'})
+  @obsolete({
+    message: 'Will be removed in excalibur v0.26.0',
+    alternateMethod: 'Use Scene.add',
+  })
   public addScreenElement(actor: Actor) {
     this.add(actor);
   }
@@ -571,7 +686,10 @@ export class Scene extends Class implements CanInitialize, CanActivate, CanDeact
    * Removes an actor as a piece of UI
    * @deprecated
    */
-  @obsolete({message: 'Will be removed in excalibur v0.26.0', alternateMethod: 'Use Scene.remove'})
+  @obsolete({
+    message: 'Will be removed in excalibur v0.26.0',
+    alternateMethod: 'Use Scene.remove',
+  })
   public removeScreenElement(actor: Actor) {
     this.remove(actor);
   }
@@ -580,7 +698,10 @@ export class Scene extends Class implements CanInitialize, CanActivate, CanDeact
    * Adds a [[TileMap]] to the scene, once this is done the TileMap will be drawn and updated.
    * @deprecated
    */
-  @obsolete({message: 'Will be removed in excalibur v0.26.0', alternateMethod: 'Use Scene.add'})
+  @obsolete({
+    message: 'Will be removed in excalibur v0.26.0',
+    alternateMethod: 'Use Scene.add',
+  })
   public addTileMap(tileMap: TileMap) {
     this.tileMaps.push(tileMap);
     this.world.add(tileMap);
@@ -590,7 +711,10 @@ export class Scene extends Class implements CanInitialize, CanActivate, CanDeact
    * Removes a [[TileMap]] from the scene, it will no longer be drawn or updated.
    * @deprecated
    */
-  @obsolete({message: 'Will be removed in excalibur v0.26.0', alternateMethod: 'Use Scene.remove'})
+  @obsolete({
+    message: 'Will be removed in excalibur v0.26.0',
+    alternateMethod: 'Use Scene.remove',
+  })
   public removeTileMap(tileMap: TileMap) {
     const index = this.tileMaps.indexOf(tileMap);
     if (index > -1) {

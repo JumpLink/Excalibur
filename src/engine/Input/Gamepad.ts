@@ -1,5 +1,11 @@
 import { Class } from './../Class';
-import { GameEvent, GamepadConnectEvent, GamepadDisconnectEvent, GamepadButtonEvent, GamepadAxisEvent } from '../Events';
+import {
+  GameEvent,
+  GamepadConnectEvent,
+  GamepadDisconnectEvent,
+  GamepadButtonEvent,
+  GamepadAxisEvent,
+} from '../Events';
 import * as Events from '../Events';
 
 /**
@@ -87,13 +93,29 @@ export class Gamepads extends Class {
     const buttonLength = pad.buttons.filter((value) => {
       return typeof value !== undefined;
     }).length;
-    return axesLength >= this._minimumConfiguration.axis && buttonLength >= this._minimumConfiguration.buttons && pad.connected;
+    return (
+      axesLength >= this._minimumConfiguration.axis &&
+      buttonLength >= this._minimumConfiguration.buttons &&
+      pad.connected
+    );
   }
 
-  public on(eventName: Events.connect, handler: (event: GamepadConnectEvent) => void): void;
-  public on(eventName: Events.disconnect, handler: (event: GamepadDisconnectEvent) => void): void;
-  public on(eventName: Events.button, handler: (event: GamepadButtonEvent) => void): void;
-  public on(eventName: Events.axis, handler: (event: GamepadAxisEvent) => void): void;
+  public on(
+    eventName: Events.connect,
+    handler: (event: GamepadConnectEvent) => void
+  ): void;
+  public on(
+    eventName: Events.disconnect,
+    handler: (event: GamepadDisconnectEvent) => void
+  ): void;
+  public on(
+    eventName: Events.button,
+    handler: (event: GamepadButtonEvent) => void
+  ): void;
+  public on(
+    eventName: Events.axis,
+    handler: (event: GamepadAxisEvent) => void
+  ): void;
   public on(eventName: string, handler: (event: GameEvent<any>) => void): void;
   public on(eventName: string, handler: (event: any) => void): void {
     this._enableAndUpdate(); // implicitly enable
@@ -121,21 +143,30 @@ export class Gamepads extends Class {
         const gamepad = this.at(i);
         // If was connected, but now isn't emit the disconnect event
         if (gamepad.connected) {
-          this.eventDispatcher.emit('disconnect', new GamepadDisconnectEvent(i, gamepad));
+          this.eventDispatcher.emit(
+            'disconnect',
+            new GamepadDisconnectEvent(i, gamepad)
+          );
         }
         // Reset connection status
         gamepad.connected = false;
         continue;
       } else {
         if (!this.at(i).connected && this._isGamepadValid(gamepads[i])) {
-          this.eventDispatcher.emit('connect', new GamepadConnectEvent(i, this.at(i)));
+          this.eventDispatcher.emit(
+            'connect',
+            new GamepadConnectEvent(i, this.at(i))
+          );
         }
         // Set connection status
         this.at(i).connected = true;
       }
 
       // Only supported in Chrome
-      if (gamepads[i].timestamp && gamepads[i].timestamp === this._gamePadTimeStamps[i]) {
+      if (
+        gamepads[i].timestamp &&
+        gamepads[i].timestamp === this._gamePadTimeStamps[i]
+      ) {
         continue;
       }
 
@@ -155,7 +186,10 @@ export class Gamepads extends Class {
             if (value !== this._oldPads[i].getButton(bi)) {
               if (gamepads[i].buttons[bi].pressed) {
                 this.at(i).updateButton(bi, value);
-                this.at(i).eventDispatcher.emit('button', new GamepadButtonEvent(bi, value, this.at(i)));
+                this.at(i).eventDispatcher.emit(
+                  'button',
+                  new GamepadButtonEvent(bi, value, this.at(i))
+                );
               } else {
                 this.at(i).updateButton(bi, 0);
               }
@@ -171,7 +205,10 @@ export class Gamepads extends Class {
           value = gamepads[i].axes[ai];
           if (value !== this._oldPads[i].getAxes(ai)) {
             this.at(i).updateAxes(ai, value);
-            this.at(i).eventDispatcher.emit('axis', new GamepadAxisEvent(ai, value, this.at(i)));
+            this.at(i).eventDispatcher.emit(
+              'axis',
+              new GamepadAxisEvent(ai, value, this.at(i))
+            );
           }
         }
       }
@@ -203,7 +240,10 @@ export class Gamepads extends Class {
     this._enableAndUpdate();
     const result: Gamepad[] = [];
     for (let i = 0; i < this._pads.length; i++) {
-      if (this._isGamepadValid(this.at(i).navigatorGamepad) && this.at(i).connected) {
+      if (
+        this._isGamepadValid(this.at(i).navigatorGamepad) &&
+        this.at(i).connected
+      ) {
         result.push(this.at(i));
       }
     }
@@ -376,7 +416,7 @@ export enum Buttons {
   /**
    * D-pad right
    */
-  DpadRight = 15
+  DpadRight = 15,
 }
 
 /**
@@ -398,7 +438,7 @@ export enum Axes {
   /**
    * Right analogue stick Y direction
    */
-  RightStickY = 3
+  RightStickY = 3,
 }
 
 /**

@@ -108,8 +108,12 @@ export const ClosestLineJumpTable = {
     const rayTowardsOther = new Ray(polygonA.worldPos, otherDirection);
     const rayTowardsThis = new Ray(otherWorldPos, thisDirection);
 
-    const thisPoint = polygonA.rayCast(rayTowardsOther).add(rayTowardsOther.dir.scale(0.1));
-    const otherPoint = polygonB.rayCast(rayTowardsThis).add(rayTowardsThis.dir.scale(0.1));
+    const thisPoint = polygonA
+      .rayCast(rayTowardsOther)
+      .add(rayTowardsOther.dir.scale(0.1));
+    const otherPoint = polygonB
+      .rayCast(rayTowardsThis)
+      .add(rayTowardsThis.dir.scale(0.1));
 
     const thisFace = polygonA.getClosestFace(thisPoint);
     const otherFace = polygonB.getClosestFace(otherPoint);
@@ -132,7 +136,9 @@ export const ClosestLineJumpTable = {
 
     const rayTowardsOther = new Ray(polygon.worldPos, otherDirection);
 
-    const thisPoint = polygon.rayCast(rayTowardsOther).add(rayTowardsOther.dir.scale(0.1));
+    const thisPoint = polygon
+      .rayCast(rayTowardsOther)
+      .add(rayTowardsOther.dir.scale(0.1));
 
     const thisFace = polygon.getClosestFace(thisPoint);
 
@@ -156,9 +162,14 @@ export const ClosestLineJumpTable = {
     const otherWorldPos = circle.worldPos;
     const otherDirection = otherWorldPos.sub(polygon.worldPos);
 
-    const rayTowardsOther = new Ray(polygon.worldPos, otherDirection.normalize());
+    const rayTowardsOther = new Ray(
+      polygon.worldPos,
+      otherDirection.normalize()
+    );
 
-    const thisPoint = polygon.rayCast(rayTowardsOther).add(rayTowardsOther.dir.scale(0.1));
+    const thisPoint = polygon
+      .rayCast(rayTowardsOther)
+      .add(rayTowardsOther.dir.scale(0.1));
 
     const thisFace = polygon.getClosestFace(thisPoint);
 
@@ -167,7 +178,9 @@ export const ClosestLineJumpTable = {
     const u = thisFace.face.getEdge();
 
     // Time of minimum distance
-    let t = (u.x * (otherWorldPos.x - p0.x) + u.y * (otherWorldPos.y - p0.y)) / (u.x * u.x + u.y * u.y);
+    let t =
+      (u.x * (otherWorldPos.x - p0.x) + u.y * (otherWorldPos.y - p0.y)) /
+      (u.x * u.x + u.y * u.y);
 
     // If time of minimum is past the edge clamp
     if (t > 1) {
@@ -177,11 +190,22 @@ export const ClosestLineJumpTable = {
     }
 
     // Minimum distance
-    const d = Math.sqrt(Math.pow(p0.x + u.x * t - otherWorldPos.x, 2) + Math.pow(p0.y + u.y * t - otherWorldPos.y, 2)) - circle.radius;
+    const d =
+      Math.sqrt(
+        Math.pow(p0.x + u.x * t - otherWorldPos.x, 2) +
+          Math.pow(p0.y + u.y * t - otherWorldPos.y, 2)
+      ) - circle.radius;
 
-    const circlex = ((p0.x + u.x * t - otherWorldPos.x) * circle.radius) / (circle.radius + d);
-    const circley = ((p0.y + u.y * t - otherWorldPos.y) * circle.radius) / (circle.radius + d);
-    return new Line(u.scale(t).add(p0), new Vector(otherWorldPos.x + circlex, otherWorldPos.y + circley));
+    const circlex =
+      ((p0.x + u.x * t - otherWorldPos.x) * circle.radius) /
+      (circle.radius + d);
+    const circley =
+      ((p0.y + u.y * t - otherWorldPos.y) * circle.radius) /
+      (circle.radius + d);
+    return new Line(
+      u.scale(t).add(p0),
+      new Vector(otherWorldPos.x + circlex, otherWorldPos.y + circley)
+    );
   },
 
   CircleCircleClosestLine(circleA: Circle, circleB: Circle) {
@@ -213,7 +237,9 @@ export const ClosestLineJumpTable = {
     const u = edgeVector;
 
     // Time of minimum distance
-    let t = (u.x * (circleWorlPos.x - p0.x) + u.y * (circleWorlPos.y - p0.y)) / (u.x * u.x + u.y * u.y);
+    let t =
+      (u.x * (circleWorlPos.x - p0.x) + u.y * (circleWorlPos.y - p0.y)) /
+      (u.x * u.x + u.y * u.y);
 
     // If time of minimum is past the edge clamp to edge
     if (t > 1) {
@@ -223,11 +249,22 @@ export const ClosestLineJumpTable = {
     }
 
     // Minimum distance
-    const d = Math.sqrt(Math.pow(p0.x + u.x * t - circleWorlPos.x, 2) + Math.pow(p0.y + u.y * t - circleWorlPos.y, 2)) - circle.radius;
+    const d =
+      Math.sqrt(
+        Math.pow(p0.x + u.x * t - circleWorlPos.x, 2) +
+          Math.pow(p0.y + u.y * t - circleWorlPos.y, 2)
+      ) - circle.radius;
 
-    const circlex = ((p0.x + u.x * t - circleWorlPos.x) * circle.radius) / (circle.radius + d);
-    const circley = ((p0.y + u.y * t - circleWorlPos.y) * circle.radius) / (circle.radius + d);
-    return new Line(u.scale(t).add(p0), new Vector(circleWorlPos.x + circlex, circleWorlPos.y + circley));
+    const circlex =
+      ((p0.x + u.x * t - circleWorlPos.x) * circle.radius) /
+      (circle.radius + d);
+    const circley =
+      ((p0.y + u.y * t - circleWorlPos.y) * circle.radius) /
+      (circle.radius + d);
+    return new Line(
+      u.scale(t).add(p0),
+      new Vector(circleWorlPos.x + circlex, circleWorlPos.y + circley)
+    );
   },
 
   EdgeEdgeClosestLine(edgeA: Edge, edgeB: Edge) {
@@ -246,5 +283,5 @@ export const ClosestLineJumpTable = {
     const v = edgeVectorB;
 
     return ClosestLine(p0, u, q0, v);
-  }
+  },
 };

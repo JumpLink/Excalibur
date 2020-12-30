@@ -250,7 +250,10 @@ describe('A scene', () => {
       initialized = true;
     });
     scene.on('activate', (evt: ex.ActivateEvent) => {
-      expect(initialized).toBe(true, 'Initialization should happen before activation');
+      expect(initialized).toBe(
+        true,
+        'Initialization should happen before activation'
+      );
       done();
     });
 
@@ -263,7 +266,10 @@ describe('A scene', () => {
     let actorInitialized = false;
     scene.on('initialize', (evt) => {
       sceneInitialized = true;
-      expect(actorInitialized).toBe(true, 'Actor should be initialized before scene initialization');
+      expect(actorInitialized).toBe(
+        true,
+        'Actor should be initialized before scene initialization'
+      );
     });
     const actor = new ex.Actor();
     actor.on('initialize', (evt) => {
@@ -271,7 +277,10 @@ describe('A scene', () => {
     });
 
     scene.on('activate', (evt) => {
-      expect(actorInitialized).toBe(true, 'Actor should be initialized before scene is activated');
+      expect(actorInitialized).toBe(
+        true,
+        'Actor should be initialized before scene is activated'
+      );
       done();
     });
 
@@ -305,7 +314,10 @@ describe('A scene', () => {
       sceneInit = true;
     };
     actor.onInitialize = () => {
-      expect(sceneInit).toBe(true, 'Scene should be initialized first before any actors');
+      expect(sceneInit).toBe(
+        true,
+        'Scene should be initialized first before any actors'
+      );
     };
 
     engine.goToScene('root');
@@ -397,11 +409,17 @@ describe('A scene', () => {
     actor.on('postupdate', () => {
       updated = true;
 
-      expect(initialized).toBe(true, 'Actor was not initialized before calling update');
+      expect(initialized).toBe(
+        true,
+        'Actor was not initialized before calling update'
+      );
     });
     actor.on('postdraw', () => {
       expect(updated).toBe(true, 'Actor was not updated before calling draw');
-      expect(initialized).toBe(true, 'Actor was not initialized before calling draw');
+      expect(initialized).toBe(
+        true,
+        'Actor was not initialized before calling draw'
+      );
     });
 
     // create Timer
@@ -410,15 +428,21 @@ describe('A scene', () => {
       fcn: () => {
         scene.add(actor);
       },
-      repeats: false
+      repeats: false,
     });
 
     scene.add(timer);
     scene.update(engine, 11);
     scene.draw(engine.ctx, 11);
 
-    expect(scene.actors.indexOf(actor)).toBeGreaterThan(-1, 'Actor was not added to scene');
-    expect(initialized).toBe(true, 'Actor was not initialized after timer callback');
+    expect(scene.actors.indexOf(actor)).toBeGreaterThan(
+      -1,
+      'Actor was not added to scene'
+    );
+    expect(initialized).toBe(
+      true,
+      'Actor was not initialized after timer callback'
+    );
     expect(updated).toBe(true, 'Actor was not updated after timer callback');
   });
 
@@ -432,11 +456,20 @@ describe('A scene', () => {
     actor.on('postupdate', () => {
       updated = true;
 
-      expect(initialized).toBe(true, 'ScreenElement was not initialized before calling update');
+      expect(initialized).toBe(
+        true,
+        'ScreenElement was not initialized before calling update'
+      );
     });
     actor.on('postdraw', () => {
-      expect(updated).toBe(true, 'ScreenElement was not updated before calling draw');
-      expect(initialized).toBe(true, 'ScreenElement was not initialized before calling draw');
+      expect(updated).toBe(
+        true,
+        'ScreenElement was not updated before calling draw'
+      );
+      expect(initialized).toBe(
+        true,
+        'ScreenElement was not initialized before calling draw'
+      );
     });
 
     // create Timer
@@ -445,16 +478,25 @@ describe('A scene', () => {
       fcn: () => {
         scene.add(actor);
       },
-      repeats: false
+      repeats: false,
     });
 
     scene.add(timer);
     scene.update(engine, 11);
     scene.draw(engine.ctx, 11);
 
-    expect(scene.actors.indexOf(actor)).toBeGreaterThan(-1, 'ScreenElement was not added to scene');
-    expect(initialized).toBe(true, 'ScreenElement was not initialized after timer callback');
-    expect(updated).toBe(true, 'ScreenElement was not updated after timer callback');
+    expect(scene.actors.indexOf(actor)).toBeGreaterThan(
+      -1,
+      'ScreenElement was not added to scene'
+    );
+    expect(initialized).toBe(
+      true,
+      'ScreenElement was not initialized after timer callback'
+    );
+    expect(updated).toBe(
+      true,
+      'ScreenElement was not updated after timer callback'
+    );
   });
 
   it('will kill the actor if the actor is removed from the scene', () => {
@@ -503,14 +545,17 @@ describe('A scene', () => {
       fcn: () => {
         scene.add(tilemap);
       },
-      repeats: false
+      repeats: false,
     });
 
     scene.add(timer);
     scene.update(engine, 11);
     scene.draw(engine.ctx, 11);
 
-    expect(scene.tileMaps.indexOf(tilemap)).toBeGreaterThan(-1, 'TileMap was not added to scene');
+    expect(scene.tileMaps.indexOf(tilemap)).toBeGreaterThan(
+      -1,
+      'TileMap was not added to scene'
+    );
     expect(updated).toBe(true, 'TileMap was not updated after timer callback');
   });
 

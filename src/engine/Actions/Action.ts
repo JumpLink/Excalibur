@@ -29,7 +29,12 @@ export class EaseTo implements Action {
     x: number,
     y: number,
     duration: number,
-    public easingFcn: (currentTime: number, startValue: number, endValue: number, duration: number) => number
+    public easingFcn: (
+      currentTime: number,
+      startValue: number,
+      endValue: number,
+      duration: number
+    ) => number
   ) {
     this._lerpDuration = duration;
     this._lerpEnd = new Vector(x, y);
@@ -54,17 +59,39 @@ export class EaseTo implements Action {
       if (this._lerpEnd.x < this._lerpStart.x) {
         newX =
           this._lerpStart.x -
-          (this.easingFcn(this._currentLerpTime, this._lerpEnd.x, this._lerpStart.x, this._lerpDuration) - this._lerpEnd.x);
+          (this.easingFcn(
+            this._currentLerpTime,
+            this._lerpEnd.x,
+            this._lerpStart.x,
+            this._lerpDuration
+          ) -
+            this._lerpEnd.x);
       } else {
-        newX = this.easingFcn(this._currentLerpTime, this._lerpStart.x, this._lerpEnd.x, this._lerpDuration);
+        newX = this.easingFcn(
+          this._currentLerpTime,
+          this._lerpStart.x,
+          this._lerpEnd.x,
+          this._lerpDuration
+        );
       }
 
       if (this._lerpEnd.y < this._lerpStart.y) {
         newY =
           this._lerpStart.y -
-          (this.easingFcn(this._currentLerpTime, this._lerpEnd.y, this._lerpStart.y, this._lerpDuration) - this._lerpEnd.y);
+          (this.easingFcn(
+            this._currentLerpTime,
+            this._lerpEnd.y,
+            this._lerpStart.y,
+            this._lerpDuration
+          ) -
+            this._lerpEnd.y);
       } else {
-        newY = this.easingFcn(this._currentLerpTime, this._lerpStart.y, this._lerpEnd.y, this._lerpDuration);
+        newY = this.easingFcn(
+          this._currentLerpTime,
+          this._lerpStart.y,
+          this._lerpEnd.y,
+          this._lerpDuration
+        );
       }
       // Given the lerp position figure out the velocity in pixels per second
       this.actor.vel.x = (newX - this.actor.pos.x) / (delta / 1000);
@@ -79,7 +106,11 @@ export class EaseTo implements Action {
     }
   }
   public isComplete(actor: Actor): boolean {
-    return this._stopped || new Vector(actor.pos.x, actor.pos.y).distance(this._lerpStart) >= this._distance;
+    return (
+      this._stopped ||
+      new Vector(actor.pos.x, actor.pos.y).distance(this._lerpStart) >=
+        this._distance
+    );
   }
 
   public reset(): void {
@@ -129,7 +160,11 @@ export class MoveTo implements Action {
   }
 
   public isComplete(actor: Actor): boolean {
-    return this._stopped || new Vector(actor.pos.x, actor.pos.y).distance(this._start) >= this._distance;
+    return (
+      this._stopped ||
+      new Vector(actor.pos.x, actor.pos.y).distance(this._start) >=
+        this._distance
+    );
   }
 
   public stop(): void {
@@ -162,7 +197,9 @@ export class MoveBy implements Action {
     this._speed = speed;
     this._offset = new Vector(offsetX, offsetY);
     if (speed <= 0) {
-      Logger.getInstance().error('Attempted to moveBy with speed less than or equal to zero : ' + speed);
+      Logger.getInstance().error(
+        'Attempted to moveBy with speed less than or equal to zero : ' + speed
+      );
       throw new Error('Speed must be greater than 0 pixels per second');
     }
   }
@@ -220,7 +257,10 @@ export class Follow implements Action {
     this._actorToFollow = actorToFollow;
     this._current = new Vector(this._actor.pos.x, this._actor.pos.y);
     this._end = new Vector(actorToFollow.pos.x, actorToFollow.pos.y);
-    this._maximumDistance = followDistance !== undefined ? followDistance : this._current.distance(this._end);
+    this._maximumDistance =
+      followDistance !== undefined
+        ? followDistance
+        : this._current.distance(this._end);
     this._speed = 0;
   }
 
@@ -231,7 +271,10 @@ export class Follow implements Action {
       this._dir = this._end.sub(this._current).normalize();
     }
 
-    const actorToFollowSpeed = Math.sqrt(Math.pow(this._actorToFollow.vel.x, 2) + Math.pow(this._actorToFollow.vel.y, 2));
+    const actorToFollowSpeed = Math.sqrt(
+      Math.pow(this._actorToFollow.vel.x, 2) +
+        Math.pow(this._actorToFollow.vel.y, 2)
+    );
     if (actorToFollowSpeed !== 0) {
       this._speed = actorToFollowSpeed;
     }
@@ -309,7 +352,10 @@ export class Meet implements Action {
       this._dir = this._end.sub(this._current).normalize();
     }
 
-    const actorToMeetSpeed = Math.sqrt(Math.pow(this._actorToMeet.vel.x, 2) + Math.pow(this._actorToMeet.vel.y, 2));
+    const actorToMeetSpeed = Math.sqrt(
+      Math.pow(this._actorToMeet.vel.x, 2) +
+        Math.pow(this._actorToMeet.vel.y, 2)
+    );
     if (actorToMeetSpeed !== 0 && !this._speedWasSpecified) {
       this._speed = actorToMeetSpeed;
     }
@@ -363,7 +409,12 @@ export class RotateTo implements Action {
   private _shortestPathIsPositive: boolean;
   private _started = false;
   private _stopped = false;
-  constructor(actor: Actor, angleRadians: number, speed: number, rotationType?: RotationType) {
+  constructor(
+    actor: Actor,
+    angleRadians: number,
+    speed: number,
+    rotationType?: RotationType
+  ) {
     this._actor = actor;
     this._end = angleRadians;
     this._speed = speed;
@@ -384,7 +435,8 @@ export class RotateTo implements Action {
         this._longDistance = distance2;
       }
 
-      this._shortestPathIsPositive = (this._start - this._end + Util.TwoPI) % Util.TwoPI >= Math.PI;
+      this._shortestPathIsPositive =
+        (this._start - this._end + Util.TwoPI) % Util.TwoPI >= Math.PI;
 
       switch (this._rotationType) {
         case RotationType.ShortestPath:
@@ -463,7 +515,12 @@ export class RotateBy implements Action {
   private _shortestPathIsPositive: boolean;
   private _started = false;
   private _stopped = false;
-  constructor(actor: Actor, angleRadiansOffset: number, speed: number, rotationType?: RotationType) {
+  constructor(
+    actor: Actor,
+    angleRadiansOffset: number,
+    speed: number,
+    rotationType?: RotationType
+  ) {
     this._actor = actor;
     this._speed = speed;
     this._offset = angleRadiansOffset;
@@ -486,7 +543,8 @@ export class RotateBy implements Action {
         this._longDistance = distance2;
       }
 
-      this._shortestPathIsPositive = (this._start - this._end + Util.TwoPI) % Util.TwoPI >= Math.PI;
+      this._shortestPathIsPositive =
+        (this._start - this._end + Util.TwoPI) % Util.TwoPI >= Math.PI;
 
       switch (this._rotationType) {
         case RotationType.ShortestPath:
@@ -548,7 +606,10 @@ export class RotateBy implements Action {
   }
 }
 
-@obsolete({ message: 'ex.Action.ScaleTo will be removed in v0.25.0', alternateMethod: 'Set width and hight directly' })
+@obsolete({
+  message: 'ex.Action.ScaleTo will be removed in v0.25.0',
+  alternateMethod: 'Set width and hight directly',
+})
 export class ScaleTo implements Action {
   private _actor: Actor;
   public x: number;
@@ -563,7 +624,13 @@ export class ScaleTo implements Action {
   private _distanceY: number;
   private _started = false;
   private _stopped = false;
-  constructor(actor: Actor, scaleX: number, scaleY: number, speedX: number, speedY: number) {
+  constructor(
+    actor: Actor,
+    scaleX: number,
+    scaleY: number,
+    speedX: number,
+    speedY: number
+  ) {
     this._actor = actor;
     this._endX = scaleX;
     this._endY = scaleY;
@@ -605,7 +672,8 @@ export class ScaleTo implements Action {
   public isComplete(): boolean {
     return (
       this._stopped ||
-      (Math.abs(this._actor.scale.y - this._startX) >= this._distanceX && Math.abs(this._actor.scale.y - this._startY) >= this._distanceY)
+      (Math.abs(this._actor.scale.y - this._startX) >= this._distanceX &&
+        Math.abs(this._actor.scale.y - this._startY) >= this._distanceY)
     );
   }
 
@@ -620,7 +688,10 @@ export class ScaleTo implements Action {
   }
 }
 
-@obsolete({ message: 'ex.Action.ScaleBy will be removed in v0.25.0', alternateMethod: 'Set width and hight directly' })
+@obsolete({
+  message: 'ex.Action.ScaleBy will be removed in v0.25.0',
+  alternateMethod: 'Set width and hight directly',
+})
 export class ScaleBy implements Action {
   private _actor: Actor;
   public x: number;
@@ -636,7 +707,12 @@ export class ScaleBy implements Action {
   private _stopped = false;
   private _speedX: number;
   private _speedY: number;
-  constructor(actor: Actor, scaleOffsetX: number, scaleOffsetY: number, speed: number) {
+  constructor(
+    actor: Actor,
+    scaleOffsetX: number,
+    scaleOffsetY: number,
+    speed: number
+  ) {
     this._actor = actor;
     this._offset = new Vector(scaleOffsetX, scaleOffsetY);
     this._speedX = this._speedY = speed;
@@ -729,7 +805,12 @@ export class Blink implements Action {
   private _duration: number;
   private _stopped: boolean = false;
   private _started: boolean = false;
-  constructor(actor: Actor, timeVisible: number, timeNotVisible: number, numBlinks: number = 1) {
+  constructor(
+    actor: Actor,
+    timeVisible: number,
+    timeNotVisible: number,
+    numBlinks: number = 1
+  ) {
     this._actor = actor;
     this._timeVisible = timeVisible;
     this._timeNotVisible = timeNotVisible;
@@ -804,7 +885,10 @@ export class Fade implements Action {
     }
 
     if (this._speed > 0) {
-      this._actor.opacity += (this._multiplier * (Math.abs(this._actor.opacity - this._endOpacity) * delta)) / this._speed;
+      this._actor.opacity +=
+        (this._multiplier *
+          (Math.abs(this._actor.opacity - this._endOpacity) * delta)) /
+        this._speed;
     }
 
     this._speed -= delta;
@@ -813,11 +897,16 @@ export class Fade implements Action {
       this._actor.opacity = this._endOpacity;
     }
 
-    Logger.getInstance().debug('[Action fade] Actor opacity:', this._actor.opacity);
+    Logger.getInstance().debug(
+      '[Action fade] Actor opacity:',
+      this._actor.opacity
+    );
   }
 
   public isComplete(): boolean {
-    return this._stopped || Math.abs(this._actor.opacity - this._endOpacity) < 0.05;
+    return (
+      this._stopped || Math.abs(this._actor.opacity - this._endOpacity) < 0.05
+    );
   }
 
   public stop(): void {

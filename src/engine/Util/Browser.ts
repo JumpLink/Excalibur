@@ -12,7 +12,10 @@ export class BrowserComponent<T extends NativeEventable> {
       this.off(eventName, this._nativeHandlers[eventName]);
     }
     this._nativeHandlers[eventName] = this._decorate(handler);
-    this.nativeComponent.addEventListener(eventName, this._nativeHandlers[eventName]);
+    this.nativeComponent.addEventListener(
+      eventName,
+      this._nativeHandlers[eventName]
+    );
   }
   off(eventName: string, handler?: (event: any) => void): void {
     if (!handler) {
@@ -50,7 +53,10 @@ export class BrowserComponent<T extends NativeEventable> {
 export class BrowserEvents {
   private _windowComponent: BrowserComponent<Window>;
   private _documentComponent: BrowserComponent<Document>;
-  constructor(private _windowGlobal: Window, private _documentGlobal: Document) {
+  constructor(
+    private _windowGlobal: Window,
+    private _documentGlobal: Document
+  ) {
     this._windowComponent = new BrowserComponent(this._windowGlobal);
     this._documentComponent = new BrowserComponent(this._documentGlobal);
   }

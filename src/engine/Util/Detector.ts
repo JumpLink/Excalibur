@@ -7,7 +7,7 @@ import { Logger } from './Log';
 const REPORTED_FEATURES: { [key: string]: string } = {
   webgl: 'WebGL',
   webaudio: 'WebAudio',
-  gamepadapi: 'Gamepad API'
+  gamepadapi: 'Gamepad API',
 };
 
 /**
@@ -67,7 +67,10 @@ export class Detector {
    */
   public logBrowserFeatures(): void {
     let msg = '%cSUPPORTED BROWSER FEATURES\n==========================%c\n';
-    const args = ['font-weight: bold; color: navy', 'font-weight: normal; color: inherit'];
+    const args = [
+      'font-weight: bold; color: navy',
+      'font-weight: normal; color: inherit',
+    ];
 
     const supported: any = this.getBrowserFeatures();
     for (const feature of Object.keys(REPORTED_FEATURES)) {
@@ -133,20 +136,20 @@ export class Detector {
       // IIFE to check gamepadapi support
       gamepadapi: (() => {
         return !!(<any>navigator).getGamepads;
-      })()
+      })(),
     };
   }
 
   // critical browser features required for ex to run
   private _criticalTests: CriticalTests = {
     // Test canvas/2d context support
-    canvasSupport: function() {
+    canvasSupport: function () {
       const elem = document.createElement('canvas');
       return !!(elem.getContext && elem.getContext('2d'));
     },
 
     // Test array buffer support ex uses for downloading binary data
-    arrayBufferSupport: function() {
+    arrayBufferSupport: function () {
       const xhr = new XMLHttpRequest();
       xhr.open('GET', '/');
       try {
@@ -158,27 +161,29 @@ export class Detector {
     },
 
     // Test data urls ex uses for sprites
-    dataUrlSupport: function() {
+    dataUrlSupport: function () {
       const canvas = document.createElement('canvas');
       return canvas.toDataURL('image/png').indexOf('data:image/png') === 0;
     },
 
     // Test object url support for loading
-    objectUrlSupport: function() {
-      return 'URL' in window && 'revokeObjectURL' in URL && 'createObjectURL' in URL;
+    objectUrlSupport: function () {
+      return (
+        'URL' in window && 'revokeObjectURL' in URL && 'createObjectURL' in URL
+      );
     },
 
     // RGBA support for colors
-    rgbaSupport: function() {
+    rgbaSupport: function () {
       const style = document.createElement('a').style;
       style.cssText = 'background-color:rgba(150,255,150,.5)';
       return ('' + style.backgroundColor).indexOf('rgba') > -1;
-    }
+    },
   };
 
   // warnings excalibur performance will be degraded
   private _warningTest: WarningTests = {
-    webAudioSupport: function() {
+    webAudioSupport: function () {
       return !!(
         (<any>window).AudioContext ||
         (<any>window).webkitAudioContext ||
@@ -187,10 +192,10 @@ export class Detector {
         (<any>window).oAudioContext
       );
     },
-    webglSupport: function() {
+    webglSupport: function () {
       const elem = document.createElement('canvas');
       return !!(elem.getContext && elem.getContext('webgl'));
-    }
+    },
   };
 
   public test(): boolean {
@@ -199,7 +204,10 @@ export class Detector {
     for (const test in this._criticalTests) {
       if (!this._criticalTests[<keyof CriticalTests>test].call(this)) {
         this.failedTests.push(test);
-        Logger.getInstance().error('Critical browser feature missing, Excalibur requires:', test);
+        Logger.getInstance().error(
+          'Critical browser feature missing, Excalibur requires:',
+          test
+        );
         failedCritical = true;
       }
     }
@@ -210,7 +218,10 @@ export class Detector {
     // Warning tests do not for ex to return false to compatibility
     for (const warning in this._warningTest) {
       if (!this._warningTest[<keyof WarningTests>warning]()) {
-        Logger.getInstance().warn('Warning browser feature missing, Excalibur will have reduced performance:', warning);
+        Logger.getInstance().warn(
+          'Warning browser feature missing, Excalibur will have reduced performance:',
+          warning
+        );
       }
     }
 

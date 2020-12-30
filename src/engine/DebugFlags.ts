@@ -13,10 +13,14 @@ export class ColorBlindFlags {
   }
 
   public correct(colorBlindness: ColorBlindness) {
-    this._engine.postProcessors.push(new ColorBlindCorrector(this._engine, false, colorBlindness));
+    this._engine.postProcessors.push(
+      new ColorBlindCorrector(this._engine, false, colorBlindness)
+    );
   }
 
   public simulate(colorBlindness: ColorBlindness) {
-    this._engine.postProcessors.push(new ColorBlindCorrector(this._engine, true, colorBlindness));
+    this._engine.postProcessors.push(
+      new ColorBlindCorrector(this._engine, true, colorBlindness)
+    );
   }
 }

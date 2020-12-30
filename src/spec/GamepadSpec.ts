@@ -13,7 +13,7 @@ describe('A gamepad', () => {
 
     nav = mock.navigator();
 
-    spyOn(navigator, 'getGamepads').and.callFake(function(): any[] {
+    spyOn(navigator, 'getGamepads').and.callFake(function (): any[] {
       return nav.getGamepads();
     });
   });
@@ -45,9 +45,12 @@ describe('A gamepad', () => {
   it('should fire an event on disconnect', () => {
     let fired = false;
     engine.input.gamepads.enabled = true;
-    engine.input.gamepads.on('disconnect', (padEvent: ex.GamepadConnectEvent) => {
-      fired = true;
-    });
+    engine.input.gamepads.on(
+      'disconnect',
+      (padEvent: ex.GamepadConnectEvent) => {
+        fired = true;
+      }
+    );
 
     nav.setGamepads(0, 4, 16);
 
@@ -69,9 +72,12 @@ describe('A gamepad', () => {
 
   it('should be implicitly enabled when an event is added', () => {
     expect(engine.input.gamepads.enabled).toBe(false);
-    engine.input.gamepads.on('disconnect', (padEvent: ex.GamepadConnectEvent) => {
-      // do something awesome
-    });
+    engine.input.gamepads.on(
+      'disconnect',
+      (padEvent: ex.GamepadConnectEvent) => {
+        // do something awesome
+      }
+    );
     expect(engine.input.gamepads.enabled).toBe(true);
   });
 
@@ -83,7 +89,10 @@ describe('A gamepad', () => {
 
   it('should be implicitly enabled when a minimum config is add', () => {
     expect(engine.input.gamepads.enabled).toBe(false);
-    engine.input.gamepads.setMinimumGamepadConfiguration({ axis: 2, buttons: 4 });
+    engine.input.gamepads.setMinimumGamepadConfiguration({
+      axis: 2,
+      buttons: 4,
+    });
     expect(engine.input.gamepads.enabled).toBe(true);
   });
 
@@ -98,7 +107,10 @@ describe('A gamepad', () => {
     nav.setGamepads(1, 0, 16); // invalid 0 < 4 axis
     nav.setGamepads(2, 4, 2); // invalid 2 buttons < 4 buttons
     nav.setGamepads(3, 2, 4); // valid 2=2 axis and 4=4 axis
-    engine.input.gamepads.setMinimumGamepadConfiguration({ axis: 2, buttons: 4 });
+    engine.input.gamepads.setMinimumGamepadConfiguration({
+      axis: 2,
+      buttons: 4,
+    });
 
     const validGamepads = engine.input.gamepads.getValidGamepads();
     expect(validGamepads.length).toBe(2);

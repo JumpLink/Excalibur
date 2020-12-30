@@ -12,7 +12,7 @@ describe('Perlin Noise', () => {
       octaves: 15,
       frequency: 2,
       amplitude: 0.5,
-      persistance: 0.5
+      persistance: 0.5,
     });
   });
 
@@ -35,7 +35,7 @@ describe('Perlin Noise', () => {
       persistance: 11,
       amplitude: 12,
       frequency: 13,
-      octaves: 14
+      octaves: 14,
     });
 
     expect(generator.persistance).toBe(11);
@@ -48,7 +48,9 @@ describe('Perlin Noise', () => {
     for (let i = 0; i < 100; i++) {
       expect(generator.noise(i)).toBe(generator.noise(i + 1));
       expect(generator.noise(i, i)).toBe(generator.noise(i + 1, i + 1));
-      expect(generator.noise(i, i, i)).toBe(generator.noise(i + 1, i + 1, i + 1));
+      expect(generator.noise(i, i, i)).toBe(
+        generator.noise(i + 1, i + 1, i + 1)
+      );
     }
   });
 
@@ -68,7 +70,10 @@ describe('Perlin Noise', () => {
     const drawer = new ex.PerlinDrawer2D(generator);
     drawer.draw(perlinCtx, 0, 0, 150, 150);
 
-    ensureImagesLoaded(perlinCanvas, 'src/spec/images/PerlinSpec/perlin.png').then(([canvas, image]) => {
+    ensureImagesLoaded(
+      perlinCanvas,
+      'src/spec/images/PerlinSpec/perlin.png'
+    ).then(([canvas, image]) => {
       expect(canvas).toEqualImage(image);
       done();
     });
@@ -78,9 +83,11 @@ describe('Perlin Noise', () => {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 90000;
     const drawer = new ex.PerlinDrawer2D(generator);
     const image = drawer.image(150, 150);
-    ensureImagesLoaded(image, 'src/spec/images/PerlinSpec/perlin.png').then(([canvas, image]) => {
-      expect(canvas).toEqualImage(image);
-      done();
-    });
+    ensureImagesLoaded(image, 'src/spec/images/PerlinSpec/perlin.png').then(
+      ([canvas, image]) => {
+        expect(canvas).toEqualImage(image);
+        done();
+      }
+    );
   });
 });

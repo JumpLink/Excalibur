@@ -3,7 +3,12 @@ import { Actor } from '../Actor';
 import { Collider } from './Collider';
 import { CollisionType } from './CollisionType';
 import { Physics } from '../Physics';
-import { PreCollisionEvent, PostCollisionEvent, CollisionStartEvent, CollisionEndEvent } from '../Events';
+import {
+  PreCollisionEvent,
+  PostCollisionEvent,
+  CollisionStartEvent,
+  CollisionEndEvent,
+} from '../Events';
 import { Clonable } from '../Interfaces/Clonable';
 import { Shape } from './Shape';
 import { TransformComponent } from '../EntityComponentSystem/Components/TransformComponent';
@@ -35,7 +40,11 @@ export class Body implements Clonable<Body> {
 
     this.actor = actor;
     if (!collider && actor) {
-      this.collider = this.useBoxCollider(actor.width, actor.height, actor.anchor);
+      this.collider = this.useBoxCollider(
+        actor.width,
+        actor.height,
+        actor.anchor
+      );
     } else {
       this.collider = collider;
     }
@@ -51,7 +60,7 @@ export class Body implements Clonable<Body> {
   public clone() {
     return new Body({
       actor: null,
-      collider: this.collider.clone()
+      collider: this.collider.clone(),
     });
   }
 
@@ -229,7 +238,9 @@ export class Body implements Clonable<Body> {
     }
 
     this.vel.addEqual(totalAcc.scale(seconds));
-    this.pos.addEqual(this.vel.scale(seconds)).addEqual(totalAcc.scale(0.5 * seconds * seconds));
+    this.pos
+      .addEqual(this.vel.scale(seconds))
+      .addEqual(totalAcc.scale(0.5 * seconds * seconds));
 
     this.rx += this.torque * (1.0 / this.collider.inertia) * seconds;
     this.rotation += this.rx * seconds;
@@ -254,7 +265,12 @@ export class Body implements Clonable<Body> {
    *
    * By default, the box is center is at (0, 0) which means it is centered around the actors anchor.
    */
-  public useBoxCollider(width?: number, height?: number, anchor: Vector = Vector.Half, center: Vector = Vector.Zero): Collider {
+  public useBoxCollider(
+    width?: number,
+    height?: number,
+    anchor: Vector = Vector.Half,
+    center: Vector = Vector.Zero
+  ): Collider {
     if (width === null || width === undefined) {
       width = this.actor ? this.actor.width : 0;
     }
@@ -275,7 +291,10 @@ export class Body implements Clonable<Body> {
    *
    * By default, the box is center is at (0, 0) which means it is centered around the actors anchor.
    */
-  public usePolygonCollider(points: Vector[], center: Vector = Vector.Zero): Collider {
+  public usePolygonCollider(
+    points: Vector[],
+    center: Vector = Vector.Zero
+  ): Collider {
     this.collider.shape = Shape.Polygon(points, false, center);
     return this.collider;
   }
@@ -285,7 +304,10 @@ export class Body implements Clonable<Body> {
    *
    * By default, the box is center is at (0, 0) which means it is centered around the actors anchor.
    */
-  public useCircleCollider(radius: number, center: Vector = Vector.Zero): Collider {
+  public useCircleCollider(
+    radius: number,
+    center: Vector = Vector.Zero
+  ): Collider {
     this.collider.shape = Shape.Circle(radius, center);
     return this.collider;
   }
@@ -306,22 +328,48 @@ export class Body implements Clonable<Body> {
     this.collider.clear();
     this.collider.on('precollision', (evt: PreCollisionEvent<Collider>) => {
       if (this.actor) {
-        this.actor.emit('precollision', new PreCollisionEvent(evt.target.body.actor, evt.other.body.actor, evt.side, evt.intersection));
+        this.actor.emit(
+          'precollision',
+          new PreCollisionEvent(
+            evt.target.body.actor,
+            evt.other.body.actor,
+            evt.side,
+            evt.intersection
+          )
+        );
       }
     });
     this.collider.on('postcollision', (evt: PostCollisionEvent<Collider>) => {
       if (this.actor) {
-        this.actor.emit('postcollision', new PostCollisionEvent(evt.target.body.actor, evt.other.body.actor, evt.side, evt.intersection));
+        this.actor.emit(
+          'postcollision',
+          new PostCollisionEvent(
+            evt.target.body.actor,
+            evt.other.body.actor,
+            evt.side,
+            evt.intersection
+          )
+        );
       }
     });
     this.collider.on('collisionstart', (evt: CollisionStartEvent<Collider>) => {
       if (this.actor) {
-        this.actor.emit('collisionstart', new CollisionStartEvent(evt.target.body.actor, evt.other.body.actor, evt.pair));
+        this.actor.emit(
+          'collisionstart',
+          new CollisionStartEvent(
+            evt.target.body.actor,
+            evt.other.body.actor,
+            evt.pair
+          )
+        );
       }
     });
     this.collider.on('collisionend', (evt: CollisionEndEvent<Collider>) => {
       if (this.actor) {
-        this.actor.emit('collisionend', new CollisionEndEvent(evt.target.body.actor, evt.other.body.actor));
+        this.actor.emit(
+          'collisionend',
+          new CollisionEndEvent(evt.target.body.actor, evt.other.body.actor)
+        );
       }
     });
   }

@@ -61,7 +61,9 @@ export class SystemManager<ContextType> {
     }
 
     for (const s of systems) {
-      const entities = this._world.queryManager.getQuery(s.types).getEntities(s.sort);
+      const entities = this._world.queryManager
+        .getQuery(s.types)
+        .getEntities(s.sort);
       s.update(entities, delta);
     }
 

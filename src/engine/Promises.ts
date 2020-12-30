@@ -9,14 +9,17 @@ import { obsolete } from './Util/Decorators';
 export enum PromiseState {
   Resolved,
   Rejected,
-  Pending
+  Pending,
 }
 
 /**
  * @deprecated Will be removed in v0.26.0
  */
 export interface PromiseLike<T> {
-  then(successCallback?: (value?: T) => any, rejectCallback?: (value?: T) => any): PromiseLike<T>;
+  then(
+    successCallback?: (value?: T) => any,
+    rejectCallback?: (value?: T) => any
+  ): PromiseLike<T>;
   error(rejectCallback?: (value?: any) => any): PromiseLike<T>;
 
   //Cannot define static methods on interfaces
@@ -35,8 +38,9 @@ export interface PromiseLike<T> {
  * @deprecated Will be removed in v0.26.0
  */
 @obsolete({
-  message: 'ex.Promises are being replaced by native browser promises in v0.26.0',
-  alternateMethod: 'Use browser native promises'
+  message:
+    'ex.Promises are being replaced by native browser promises in v0.26.0',
+  alternateMethod: 'Use browser native promises',
 })
 export class Promise<T> implements PromiseLike<T> {
   private _state: PromiseState = PromiseState.Pending;
@@ -132,7 +136,10 @@ export class Promise<T> implements PromiseLike<T> {
    * @param successCallback  Call on resolution of promise
    * @param rejectCallback   Call on rejection of promise
    */
-  public then(successCallback?: (value?: T) => any, rejectCallback?: (value?: any) => any) {
+  public then(
+    successCallback?: (value?: T) => any,
+    rejectCallback?: (value?: any) => any
+  ) {
     if (successCallback) {
       this._successCallbacks.push(successCallback);
 
@@ -188,7 +195,9 @@ export class Promise<T> implements PromiseLike<T> {
         this._handleError(e);
       }
     } else {
-      throw new Error('Cannot resolve a promise that is not in a pending state!');
+      throw new Error(
+        'Cannot resolve a promise that is not in a pending state!'
+      );
     }
     return this;
   }
@@ -207,7 +216,9 @@ export class Promise<T> implements PromiseLike<T> {
         this._handleError(e);
       }
     } else {
-      throw new Error('Cannot reject a promise that is not in a pending state!');
+      throw new Error(
+        'Cannot reject a promise that is not in a pending state!'
+      );
     }
     return this;
   }

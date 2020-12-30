@@ -38,9 +38,9 @@
     "core:bundle-prod": "webpack --config webpack.config.prod.js",
     "core:watch": "npm run core:bundle -- --watch",
     "lint": "npm run eslint && npm run eslint:spec",
-    "eslint": "eslint \"src/engine/**/*.ts\"",
-    "eslint:sandbox": "eslint \"sandbox/**/*.ts\"",
-    "eslint:spec": "eslint \"src/spec/**/*.ts\"",
+    "eslint": "eslint \"src/engine/**/*.ts\" --fix",
+    "eslint:sandbox": "eslint \"sandbox/**/*.ts\" --fix",
+    "eslint:spec": "eslint \"src/spec/**/*.ts\" --fix",
     "visual": "start-storybook",
     "build-storybook": "build-storybook -o build-storybook",
     "sandbox:copy": "copyfiles -u 2 \"./build/dist/**/*.*\" \"./build/dist/*.*\" ./sandbox/lib/",
@@ -53,15 +53,6 @@
     "apidocs": "git submodule update && node apidocs.js",
     "pretty": "prettier --write \"{src,sandbox/src,sandbox/tests}/**/*.{ts,js,json,css,md}\" --config prettier.config.js",
     "release": "node release.js"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{ts,js,json,md,css}": "prettier --write",
-    "*.ts": "eslint --fix"
   },
   "devDependencies": {
     "@babel/core": "7.12.10",
@@ -119,7 +110,9 @@
     "webpack-merge": "5.7.3"
   },
   "dependencies": {
-    "core-js": "3.8.1"
+    "core-js": "3.8.1",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.0"
   },
   "resolutions": {
     "travis-ci/underscore.string": "2.2.1"

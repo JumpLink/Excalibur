@@ -32,7 +32,9 @@ export class Flags {
    */
   public static enable(flagName: string): void {
     if (this._FROZEN) {
-      throw Error('Feature flags can only be enabled before Engine constructor time');
+      throw Error(
+        'Feature flags can only be enabled before Engine constructor time'
+      );
     }
     Flags._FLAGS[flagName] = true;
   }
@@ -43,7 +45,9 @@ export class Flags {
    */
   public static disable(flagName: string): void {
     if (this._FROZEN) {
-      throw Error('Feature flags can only be disabled before Engine constructor time');
+      throw Error(
+        'Feature flags can only be disabled before Engine constructor time'
+      );
     }
     Flags._FLAGS[flagName] = false;
   }

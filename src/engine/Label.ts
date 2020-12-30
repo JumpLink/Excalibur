@@ -29,7 +29,7 @@ export enum FontUnit {
   /**
    * Percent is a scalable unit similar to Em, the only difference is the Em units scale faster when Text-Size stuff
    */
-  Percent
+  Percent,
 }
 
 /**
@@ -57,7 +57,7 @@ export enum TextAlign {
    * The text is aligned at the normal end of the line (right-aligned for left-to-right locales,
    * left-aligned for right-to-left locales).
    */
-  End
+  End,
 }
 
 /**
@@ -93,7 +93,7 @@ export enum BaseAlign {
    * from the ideographic baseline in that the ideographic baseline
    * doesn't consider descenders.
    */
-  Bottom
+  Bottom,
 }
 
 /**
@@ -102,7 +102,7 @@ export enum BaseAlign {
 export enum FontStyle {
   Normal,
   Italic,
-  Oblique
+  Oblique,
 }
 
 export interface LabelArgs extends Partial<LabelImpl> {
@@ -197,8 +197,18 @@ export class LabelImpl extends Actor {
    * @param spriteFont  Use an Excalibur sprite font for the label's font, if a SpriteFont is provided it will take precedence
    * over a css font.
    */
-  constructor(textOrConfig?: string | Partial<LabelImpl>, x?: number, y?: number, fontFamily?: string, spriteFont?: SpriteFont) {
-    super(textOrConfig && typeof textOrConfig === 'object' ? textOrConfig : { pos: new Vector(x, y) });
+  constructor(
+    textOrConfig?: string | Partial<LabelImpl>,
+    x?: number,
+    y?: number,
+    fontFamily?: string,
+    spriteFont?: SpriteFont
+  ) {
+    super(
+      textOrConfig && typeof textOrConfig === 'object'
+        ? textOrConfig
+        : { pos: new Vector(x, y) }
+    );
 
     let text = '';
     if (textOrConfig && typeof textOrConfig === 'object') {
@@ -358,7 +368,7 @@ export class LabelImpl extends Actor {
         textAlign: this.textAlign,
         fontSize: this.fontSize,
         letterSpacing: this.letterSpacing,
-        opacity: this.opacity
+        opacity: this.opacity,
       });
     } else {
       const oldAlign = ctx.textAlign;
@@ -383,7 +393,9 @@ export class LabelImpl extends Actor {
   }
 
   protected get _fontString() {
-    return `${this._lookupFontStyle(this.fontStyle)} ${this.fontSize}${this._lookupFontUnit(this.fontUnit)} ${this.fontFamily}`;
+    return `${this._lookupFontStyle(this.fontStyle)} ${
+      this.fontSize
+    }${this._lookupFontUnit(this.fontUnit)} ${this.fontFamily}`;
   }
 
   public debugDraw(ctx: CanvasRenderingContext2D) {
@@ -398,8 +410,20 @@ export class LabelImpl extends Actor {
 export class Label extends Configurable(LabelImpl) {
   constructor();
   constructor(config?: LabelArgs);
-  constructor(text?: string, x?: number, y?: number, fontFamily?: string, spriteFont?: SpriteFont);
-  constructor(textOrConfig?: string | LabelArgs, x?: number, y?: number, fontFamily?: string, spriteFont?: SpriteFont) {
+  constructor(
+    text?: string,
+    x?: number,
+    y?: number,
+    fontFamily?: string,
+    spriteFont?: SpriteFont
+  );
+  constructor(
+    textOrConfig?: string | LabelArgs,
+    x?: number,
+    y?: number,
+    fontFamily?: string,
+    spriteFont?: SpriteFont
+  ) {
     super(textOrConfig, x, y, fontFamily, spriteFont);
   }
 }

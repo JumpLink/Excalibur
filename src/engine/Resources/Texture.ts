@@ -29,7 +29,7 @@ export class Texture implements Loadable<HTMLImageElement> {
   }
 
   private _loadedResolve: (image: HTMLImageElement) => any;
-  public loaded = new Promise<HTMLImageElement>(resolve => {
+  public loaded = new Promise<HTMLImageElement>((resolve) => {
     this._loadedResolve = resolve;
   });
 

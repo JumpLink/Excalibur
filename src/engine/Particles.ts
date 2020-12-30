@@ -21,7 +21,7 @@ export enum EmitterType {
   /**
    * Constant for the rectangular emitter type
    */
-  Rectangle
+  Rectangle,
 }
 
 /**
@@ -133,9 +133,21 @@ export class ParticleImpl {
       );
     }
 
-    this._currentColor.r = Util.clamp(this._currentColor.r + this._rRate * delta, 0, 255);
-    this._currentColor.g = Util.clamp(this._currentColor.g + this._gRate * delta, 0, 255);
-    this._currentColor.b = Util.clamp(this._currentColor.b + this._bRate * delta, 0, 255);
+    this._currentColor.r = Util.clamp(
+      this._currentColor.r + this._rRate * delta,
+      0,
+      255
+    );
+    this._currentColor.g = Util.clamp(
+      this._currentColor.g + this._gRate * delta,
+      0,
+      255
+    );
+    this._currentColor.b = Util.clamp(
+      this._currentColor.b + this._bRate * delta,
+      0,
+      255
+    );
     this._currentColor.a = Util.clamp(this.opacity, 0.0001, 1);
 
     if (this.focus) {
@@ -151,7 +163,10 @@ export class ParticleImpl {
     this.position = this.position.add(this.velocity.scale(delta / 1000));
 
     if (this.particleRotationalVelocity) {
-      this.currentRotation = (this.currentRotation + (this.particleRotationalVelocity * delta) / 1000) % (2 * Math.PI);
+      this.currentRotation =
+        (this.currentRotation +
+          (this.particleRotationalVelocity * delta) / 1000) %
+        (2 * Math.PI);
     }
   }
 
@@ -166,7 +181,13 @@ export class ParticleImpl {
     this._currentColor.a = Util.clamp(this.opacity, 0.0001, 1);
     ctx.fillStyle = this._currentColor.toString();
     ctx.beginPath();
-    ctx.arc(this.position.x, this.position.y, this.particleSize, 0, Math.PI * 2);
+    ctx.arc(
+      this.position.x,
+      this.position.y,
+      this.particleSize,
+      0,
+      Math.PI * 2
+    );
     ctx.fill();
     ctx.closePath();
   }
@@ -212,7 +233,18 @@ export class Particle extends Configurable(ParticleImpl) {
     startSize?: number,
     endSize?: number
   ) {
-    super(emitterOrConfig, life, opacity, beginColor, endColor, position, velocity, acceleration, startSize, endSize);
+    super(
+      emitterOrConfig,
+      life,
+      opacity,
+      beginColor,
+      endColor,
+      position,
+      velocity,
+      acceleration,
+      startSize,
+      endSize
+    );
   }
 }
 
@@ -350,8 +382,17 @@ export class ParticleEmitterImpl extends Actor {
    * @param width     The width of the emitter
    * @param height    The height of the emitter
    */
-  constructor(xOrConfig?: number | ParticleEmitterArgs, y?: number, width?: number, height?: number) {
-    super(typeof xOrConfig === 'number' ? { pos: new Vector(xOrConfig, y), width: width, height: height } : xOrConfig);
+  constructor(
+    xOrConfig?: number | ParticleEmitterArgs,
+    y?: number,
+    width?: number,
+    height?: number
+  ) {
+    super(
+      typeof xOrConfig === 'number'
+        ? { pos: new Vector(xOrConfig, y), width: width, height: height }
+        : xOrConfig
+    );
     this._particlesToEmit = 0;
     this.body.collider.type = CollisionType.PreventCollision;
     this.particles = new Util.Collection<Particle>();
@@ -392,7 +433,9 @@ export class ParticleEmitterImpl extends Actor {
 
     const angle = Util.randomInRange(this.minAngle, this.maxAngle, this.random);
     const vel = Util.randomInRange(this.minVel, this.maxVel, this.random);
-    const size = this.startSize || Util.randomInRange(this.minSize, this.maxSize, this.random);
+    const size =
+      this.startSize ||
+      Util.randomInRange(this.minSize, this.maxSize, this.random);
     const dx = vel * Math.cos(angle);
     const dy = vel * Math.sin(angle);
 
@@ -441,7 +484,8 @@ export class ParticleEmitterImpl extends Actor {
       //var numParticles = Math.ceil(this.emitRate * delta / 1000);
       if (this._particlesToEmit > 1.0) {
         this.emitParticles(Math.floor(this._particlesToEmit));
-        this._particlesToEmit = this._particlesToEmit - Math.floor(this._particlesToEmit);
+        this._particlesToEmit =
+          this._particlesToEmit - Math.floor(this._particlesToEmit);
       }
     }
 
@@ -459,12 +503,27 @@ export class ParticleEmitterImpl extends Actor {
   public debugDraw(ctx: CanvasRenderingContext2D) {
     super.debugDraw(ctx);
     ctx.fillStyle = Color.Black.toString();
-    ctx.fillText('Particles: ' + this.particles.count(), this.pos.x, this.pos.y + 20);
+    ctx.fillText(
+      'Particles: ' + this.particles.count(),
+      this.pos.x,
+      this.pos.y + 20
+    );
 
     if (this.focus) {
       ctx.fillRect(this.focus.x + this.pos.x, this.focus.y + this.pos.y, 3, 3);
-      DrawUtil.line(ctx, Color.Yellow, this.focus.x + this.pos.x, this.focus.y + this.pos.y, this.center.x, this.center.y);
-      ctx.fillText('Focus', this.focus.x + this.pos.x, this.focus.y + this.pos.y);
+      DrawUtil.line(
+        ctx,
+        Color.Yellow,
+        this.focus.x + this.pos.x,
+        this.focus.y + this.pos.y,
+        this.center.x,
+        this.center.y
+      );
+      ctx.fillText(
+        'Focus',
+        this.focus.x + this.pos.x,
+        this.focus.y + this.pos.y
+      );
     }
   }
 }
@@ -505,8 +564,18 @@ export interface ParticleEmitterArgs extends Partial<ParticleEmitterImpl> {
  */
 export class ParticleEmitter extends Configurable(ParticleEmitterImpl) {
   constructor(config?: ParticleEmitterArgs);
-  constructor(x?: number | ParticleEmitterArgs, y?: number, width?: number, height?: number);
-  constructor(xOrConfig?: number | ParticleEmitterArgs, y?: number, width?: number, height?: number) {
+  constructor(
+    x?: number | ParticleEmitterArgs,
+    y?: number,
+    width?: number,
+    height?: number
+  );
+  constructor(
+    xOrConfig?: number | ParticleEmitterArgs,
+    y?: number,
+    width?: number,
+    height?: number
+  ) {
     super(xOrConfig, y, width, height);
   }
 }

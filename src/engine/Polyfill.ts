@@ -11,7 +11,7 @@ export function polyfill() {
     window = <any>{
       audioContext: function () {
         return;
-      }
+      },
     };
   }
   /* istanbul ignore next */

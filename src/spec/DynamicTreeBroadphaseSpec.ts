@@ -10,7 +10,7 @@ describe('A DynamicTree Broadphase', () => {
     const colliderA = actorA.body.collider;
     colliderA.type = ex.CollisionType.Active;
     colliderA.shape = new ex.Circle({
-      radius: 10
+      radius: 10,
     });
 
     actorB = new ex.Actor(20, 0, 20, 20);
@@ -18,7 +18,7 @@ describe('A DynamicTree Broadphase', () => {
     colliderB.type = ex.CollisionType.Active;
 
     colliderB.shape = new ex.Circle({
-      radius: 10
+      radius: 10,
     });
 
     actorC = new ex.Actor(1000, 0, 20, 20);
@@ -26,7 +26,7 @@ describe('A DynamicTree Broadphase', () => {
     colliderC.type = ex.CollisionType.Active;
 
     colliderC.shape = new ex.Circle({
-      radius: 10
+      radius: 10,
     });
   });
 

@@ -59,7 +59,11 @@ export class Random {
     for (let i = 1; i < this._n; i++) {
       const s = this._mt[i - 1] ^ (this._mt[i - 1] >>> (this._w - 2));
       // numbers are bigger than the JS max safe int, add in 16-bit chunks to prevent IEEE rounding errors on high bits
-      this._mt[i] = (((this._f * ((s & 0xffff0000) >>> 16)) << 16) + this._f * (s & 0xffff) + i) >>> 0;
+      this._mt[i] =
+        (((this._f * ((s & 0xffff0000) >>> 16)) << 16) +
+          this._f * (s & 0xffff) +
+          i) >>>
+        0;
     }
     this._index = this._n;
   }
@@ -73,14 +77,21 @@ export class Random {
       i = 0;
     for (; i < this._n - this._m; i++) {
       y = (this._mt[i] & this._upperMask) | (this._mt[i + 1] & this._lowerMask);
-      this._mt[i] = this._mt[i + this._m] ^ (y >>> 1) ^ (mag01[y & 0x1] & BITMASK32);
+      this._mt[i] =
+        this._mt[i + this._m] ^ (y >>> 1) ^ (mag01[y & 0x1] & BITMASK32);
     }
     for (; i < this._n - 1; i++) {
       y = (this._mt[i] & this._upperMask) | (this._mt[i + 1] & this._lowerMask);
-      this._mt[i] = this._mt[i + (this._m - this._n)] ^ (y >>> 1) ^ (mag01[y & 0x1] & BITMASK32);
+      this._mt[i] =
+        this._mt[i + (this._m - this._n)] ^
+        (y >>> 1) ^
+        (mag01[y & 0x1] & BITMASK32);
     }
-    y = (this._mt[this._n - 1] & this._upperMask) | (this._mt[0] & this._lowerMask);
-    this._mt[this._n - 1] = this._mt[this._m - 1] ^ (y >>> 1) ^ (mag01[y & 0x1] & BITMASK32);
+    y =
+      (this._mt[this._n - 1] & this._upperMask) |
+      (this._mt[0] & this._lowerMask);
+    this._mt[this._n - 1] =
+      this._mt[this._m - 1] ^ (y >>> 1) ^ (mag01[y & 0x1] & BITMASK32);
 
     this._index = 0;
   }
@@ -148,7 +159,11 @@ export class Random {
    * @param allowDuplicates indicates whether the returned set is allowed duplicates (it does not mean there will always be duplicates
    * just that it is possible)
    */
-  public pickSet<T>(array: Array<T>, numPicks: number, allowDuplicates: boolean = false): Array<T> {
+  public pickSet<T>(
+    array: Array<T>,
+    numPicks: number,
+    allowDuplicates: boolean = false
+  ): Array<T> {
     if (allowDuplicates) {
       return this._pickSetWithDuplicates(array, numPicks);
     } else {
@@ -161,9 +176,14 @@ export class Random {
    * @param array Array to pick elements out of
    * @param numPicks must be less than or equal to the number of elements in the array.
    */
-  private _pickSetWithoutDuplicates<T>(array: Array<T>, numPicks: number): Array<T> {
+  private _pickSetWithoutDuplicates<T>(
+    array: Array<T>,
+    numPicks: number
+  ): Array<T> {
     if (numPicks > array.length || numPicks < 0) {
-      throw new Error('Invalid number of elements to pick, must pick a value 0 < n <= length');
+      throw new Error(
+        'Invalid number of elements to pick, must pick a value 0 < n <= length'
+      );
     }
     if (numPicks === array.length) {
       return array;
@@ -186,10 +206,15 @@ export class Random {
    * @param array Array to pick elements out of
    * @param numPicks can be any positive number
    */
-  private _pickSetWithDuplicates<T>(array: Array<T>, numPicks: number): Array<T> {
+  private _pickSetWithDuplicates<T>(
+    array: Array<T>,
+    numPicks: number
+  ): Array<T> {
     // Typescript numbers are all floating point, so do we add check for int? (or floor the input?)
     if (numPicks < 0) {
-      throw new Error('Invalid number of elements to pick, must pick a value 0 <= n < MAX_INT');
+      throw new Error(
+        'Invalid number of elements to pick, must pick a value 0 <= n < MAX_INT'
+      );
     }
     const result = new Array<T>(numPicks);
     for (let i = 0; i < numPicks; i++) {

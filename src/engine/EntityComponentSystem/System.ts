@@ -8,10 +8,14 @@ import { Scene } from '../Scene';
  */
 export enum SystemType {
   Update = 'update',
-  Draw = 'draw'
+  Draw = 'draw',
 }
 
-export type SystemTypes<ComponentTypes> = ComponentTypes extends Component<infer TypeName> ? TypeName : never;
+export type SystemTypes<ComponentTypes> = ComponentTypes extends Component<
+  infer TypeName
+>
+  ? TypeName
+  : never;
 
 /**
  * An Excalibur [[System]] that updates entities of certain types.
@@ -32,8 +36,10 @@ export type SystemTypes<ComponentTypes> = ComponentTypes extends Component<infer
  * }
  * ```
  */
-export abstract class System<ComponentTypeUnion extends Component = Component, ContextType = Scene>
-implements Observer<AddedEntity | RemovedEntity> {
+export abstract class System<
+  ComponentTypeUnion extends Component = Component,
+  ContextType = Scene
+> implements Observer<AddedEntity | RemovedEntity> {
   /**
    * The types of entities that this system operates on
    * For example ['transform', 'motion']

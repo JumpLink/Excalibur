@@ -34,13 +34,18 @@ describe('A World', () => {
 
   it('can remove entities', () => {
     const world = new ex.World(null);
-    world.entityManager = jasmine.createSpyObj('EntityManager', ['addEntity', 'removeEntity']);
+    world.entityManager = jasmine.createSpyObj('EntityManager', [
+      'addEntity',
+      'removeEntity',
+    ]);
 
     const entity = new ex.Entity();
 
     world.add(entity);
     world.remove(entity);
-    expect(world.entityManager.removeEntity).toHaveBeenCalledWith(entity as any);
+    expect(world.entityManager.removeEntity).toHaveBeenCalledWith(
+      entity as any
+    );
   });
 
   it('can add systems', () => {
@@ -55,7 +60,10 @@ describe('A World', () => {
 
   it('can remove systems', () => {
     const world = new ex.World(null);
-    world.systemManager = jasmine.createSpyObj('SystemManager', ['addSystem', 'removeSystem']);
+    world.systemManager = jasmine.createSpyObj('SystemManager', [
+      'addSystem',
+      'removeSystem',
+    ]);
 
     const system = new FakeSystem();
 
@@ -78,12 +86,20 @@ describe('A World', () => {
 
   it('can update', () => {
     const world = new ex.World('context');
-    world.entityManager = jasmine.createSpyObj('EntityManager', ['processComponentRemovals']);
-    world.systemManager = jasmine.createSpyObj('SystemManager', ['updateSystems']);
+    world.entityManager = jasmine.createSpyObj('EntityManager', [
+      'processComponentRemovals',
+    ]);
+    world.systemManager = jasmine.createSpyObj('SystemManager', [
+      'updateSystems',
+    ]);
 
     world.update(SystemType.Update, 100);
 
-    expect(world.systemManager.updateSystems).toHaveBeenCalledWith(SystemType.Update, 'context', 100);
+    expect(world.systemManager.updateSystems).toHaveBeenCalledWith(
+      SystemType.Update,
+      'context',
+      100
+    );
     expect(world.entityManager.processComponentRemovals).toHaveBeenCalled();
   });
 });

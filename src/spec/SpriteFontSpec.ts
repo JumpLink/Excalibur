@@ -9,10 +9,13 @@ describe('A spritefont', () => {
     jasmine.addMatchers(ExcaliburMatchers);
     engine = TestUtils.engine({
       width: 800,
-      height: 200
+      height: 200,
     });
 
-    texture = new ex.Texture('base/src/spec/images/SpriteFontSpec/SpriteFont.png', true);
+    texture = new ex.Texture(
+      'base/src/spec/images/SpriteFontSpec/SpriteFont.png',
+      true
+    );
   });
   afterEach(() => {
     engine.stop();
@@ -28,7 +31,7 @@ describe('A spritefont', () => {
         columns: 16,
         rows: 3,
         spWidth: 16,
-        spHeight: 16
+        spHeight: 16,
       });
 
       expect(sf.image.isLoaded());
@@ -48,7 +51,7 @@ describe('A spritefont', () => {
         columns: 16,
         rows: 3,
         spWidth: 16,
-        spHeight: 16
+        spHeight: 16,
       });
 
       sf.draw(engine.ctx, `This is a test string!?-&.'`, 20, 20, {
@@ -58,10 +61,13 @@ describe('A spritefont', () => {
         letterSpacing: 0,
         textAlign: ex.TextAlign.Left,
         baseAlign: ex.BaseAlign.Bottom,
-        maxWidth: 500
+        maxWidth: 500,
       });
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteFontSpec/ExpectedFont.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteFontSpec/ExpectedFont.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -77,7 +83,7 @@ describe('A spritefont', () => {
         columns: 16,
         rows: 3,
         spWidth: 16,
-        spHeight: 16
+        spHeight: 16,
       });
 
       const sprites = sf.getTextSprites();
@@ -97,7 +103,10 @@ describe('A spritefont', () => {
       sprites['?'].draw(engine.ctx, 4 * 16, 16);
       sprites['-'].draw(engine.ctx, 5 * 16, 16);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteFontSpec/IndividualSprites.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteFontSpec/IndividualSprites.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -113,7 +122,7 @@ describe('A spritefont', () => {
         columns: 16,
         rows: 3,
         spWidth: 16,
-        spHeight: 16
+        spHeight: 16,
       });
 
       sf.setTextShadow(5, 5, ex.Color.Yellow);
@@ -125,10 +134,13 @@ describe('A spritefont', () => {
         letterSpacing: 0,
         textAlign: ex.TextAlign.Left,
         baseAlign: ex.BaseAlign.Bottom,
-        maxWidth: 500
+        maxWidth: 500,
       });
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteFontSpec/TextShadow.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteFontSpec/TextShadow.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });

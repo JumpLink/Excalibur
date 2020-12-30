@@ -313,7 +313,7 @@ export class PerlinGenerator {
     215,
     61,
     156,
-    180
+    180,
   ];
   private _p: Uint8Array = new Uint8Array(512);
   private _random: Random;
@@ -322,7 +322,7 @@ export class PerlinGenerator {
     octaves: 1,
     frequency: 1,
     amplitude: 1,
-    persistance: 0.5
+    persistance: 0.5,
   };
 
   /**
@@ -394,10 +394,16 @@ export class PerlinGenerator {
           total += this._noise1d(arguments[0] * freq) * amp;
           break;
         case 2:
-          total += this._noise2d(arguments[0] * freq, arguments[1] * freq) * amp;
+          total +=
+            this._noise2d(arguments[0] * freq, arguments[1] * freq) * amp;
           break;
         case 3:
-          total += this._noise3d(arguments[0] * freq, arguments[1] * freq, arguments[2] * freq) * amp;
+          total +=
+            this._noise3d(
+              arguments[0] * freq,
+              arguments[1] * freq,
+              arguments[2] * freq
+            ) * amp;
           break;
         /* istanbul ignore next */
         default:
@@ -465,7 +471,15 @@ export class PerlinGenerator {
     const intX = Math.floor(x) & 0xff; // force 0-255 integers to lookup in permutation
     x -= Math.floor(x);
     const fadeX = _fade(x);
-    return (_lerp(fadeX, this._gradient1d(this._p[intX], x), this._gradient1d(this._p[intX + 1], x - 1)) + 1) / 2;
+    return (
+      (_lerp(
+        fadeX,
+        this._gradient1d(this._p[intX], x),
+        this._gradient1d(this._p[intX + 1], x - 1)
+      ) +
+        1) /
+      2
+    );
   }
 
   private _noise2d(x: number, y: number) {
@@ -482,8 +496,16 @@ export class PerlinGenerator {
     return (
       (_lerp(
         fadeY,
-        _lerp(fadeX, this._gradient2d(this._p[a], x, y), this._gradient2d(this._p[b], x - 1, y)),
-        _lerp(fadeX, this._gradient2d(this._p[a + 1], x, y - 1), this._gradient2d(this._p[b + 1], x - 1, y - 1))
+        _lerp(
+          fadeX,
+          this._gradient2d(this._p[a], x, y),
+          this._gradient2d(this._p[b], x - 1, y)
+        ),
+        _lerp(
+          fadeX,
+          this._gradient2d(this._p[a + 1], x, y - 1),
+          this._gradient2d(this._p[b + 1], x - 1, y - 1)
+        )
       ) +
         1) /
       2
@@ -517,13 +539,29 @@ export class PerlinGenerator {
         fadeZ,
         _lerp(
           fadeY,
-          _lerp(fadeX, this._gradient3d(this._p[aa], x, y, z), this._gradient3d(this._p[ba], x - 1, y, z)),
-          _lerp(fadeX, this._gradient3d(this._p[ab], x, y - 1, z), this._gradient3d(this._p[bb], x - 1, y - 1, z))
+          _lerp(
+            fadeX,
+            this._gradient3d(this._p[aa], x, y, z),
+            this._gradient3d(this._p[ba], x - 1, y, z)
+          ),
+          _lerp(
+            fadeX,
+            this._gradient3d(this._p[ab], x, y - 1, z),
+            this._gradient3d(this._p[bb], x - 1, y - 1, z)
+          )
         ),
         _lerp(
           fadeY,
-          _lerp(fadeX, this._gradient3d(this._p[aa + 1], x, y, z - 1), this._gradient3d(this._p[ba + 1], x - 1, y, z - 1)),
-          _lerp(fadeX, this._gradient3d(this._p[ab + 1], x, y - 1, z - 1), this._gradient3d(this._p[bb + 1], x - 1, y - 1, z - 1))
+          _lerp(
+            fadeX,
+            this._gradient3d(this._p[aa + 1], x, y, z - 1),
+            this._gradient3d(this._p[ba + 1], x - 1, y, z - 1)
+          ),
+          _lerp(
+            fadeX,
+            this._gradient3d(this._p[ab + 1], x, y - 1, z - 1),
+            this._gradient3d(this._p[bb + 1], x - 1, y - 1, z - 1)
+          )
         )
       ) +
         1) /
@@ -540,7 +578,10 @@ export class PerlinDrawer2D {
    * @param generator - An existing perlin generator
    * @param colorFcn - A color function that takes a value between [0, 255] derived from the perlin generator, and returns a color
    */
-  constructor(public generator: PerlinGenerator, public colorFcn?: (val: number) => Color) {
+  constructor(
+    public generator: PerlinGenerator,
+    public colorFcn?: (val: number) => Color
+  ) {
     if (!colorFcn) {
       this.colorFcn = (val: number) => {
         return val < 125 ? Color.Black : Color.White;
@@ -565,7 +606,13 @@ export class PerlinDrawer2D {
   /**
    * This draws a 2D perlin grid on a canvas context, not recommended to be called every frame due to performance
    */
-  public draw(ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number) {
+  public draw(
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    width: number,
+    height: number
+  ) {
     const grid = this.generator.grid(width, height);
     const imageData = ctx.getImageData(x, y, width, height);
     for (let j = 0; j < height; j++) {

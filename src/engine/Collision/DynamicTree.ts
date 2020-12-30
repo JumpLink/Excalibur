@@ -38,7 +38,14 @@ export class TreeNode {
 export class DynamicTree {
   public root: TreeNode;
   public nodes: { [key: number]: TreeNode };
-  constructor(public worldBounds: BoundingBox = new BoundingBox(-Number.MAX_VALUE, -Number.MAX_VALUE, Number.MAX_VALUE, Number.MAX_VALUE)) {
+  constructor(
+    public worldBounds: BoundingBox = new BoundingBox(
+      -Number.MAX_VALUE,
+      -Number.MAX_VALUE,
+      Number.MAX_VALUE,
+      Number.MAX_VALUE
+    )
+  ) {
     this.root = null;
     this.nodes = {};
   }
@@ -142,14 +149,21 @@ export class DynamicTree {
       currentNode = this._balance(currentNode);
 
       if (!currentNode.left) {
-        throw new Error('Parent of current leaf cannot have a null left child' + currentNode);
+        throw new Error(
+          'Parent of current leaf cannot have a null left child' + currentNode
+        );
       }
       if (!currentNode.right) {
-        throw new Error('Parent of current leaf cannot have a null right child' + currentNode);
+        throw new Error(
+          'Parent of current leaf cannot have a null right child' + currentNode
+        );
       }
 
-      currentNode.height = 1 + Math.max(currentNode.left.height, currentNode.right.height);
-      currentNode.bounds = currentNode.left.bounds.combine(currentNode.right.bounds);
+      currentNode.height =
+        1 + Math.max(currentNode.left.height, currentNode.right.height);
+      currentNode.bounds = currentNode.left.bounds.combine(
+        currentNode.right.bounds
+      );
 
       currentNode = currentNode.parent;
     }
@@ -184,8 +198,11 @@ export class DynamicTree {
       let currentNode = grandParent;
       while (currentNode) {
         currentNode = this._balance(currentNode);
-        currentNode.bounds = currentNode.left.bounds.combine(currentNode.right.bounds);
-        currentNode.height = 1 + Math.max(currentNode.left.height, currentNode.right.height);
+        currentNode.bounds = currentNode.left.bounds.combine(
+          currentNode.right.bounds
+        );
+        currentNode.height =
+          1 + Math.max(currentNode.left.height, currentNode.right.height);
 
         currentNode = currentNode.parent;
       }
@@ -222,7 +239,11 @@ export class DynamicTree {
 
     // if the body is outside the world no longer update it
     if (!this.worldBounds.contains(b)) {
-      Logger.getInstance().warn('Collider with id ' + body.id + ' is outside the world bounds and will no longer be tracked for physics');
+      Logger.getInstance().warn(
+        'Collider with id ' +
+          body.id +
+          ' is outside the world bounds and will no longer be tracked for physics'
+      );
       this.untrackBody(body);
       return false;
     }
@@ -429,7 +450,11 @@ export class DynamicTree {
    * callback indicates that your are complete with your query and do not want to continue. Return false will continue searching
    * the tree until all possible bodies that would intersect with the ray have been returned.
    */
-  public rayCastQuery(ray: Ray, max: number = Infinity, callback: (other: Body) => boolean): void {
+  public rayCastQuery(
+    ray: Ray,
+    max: number = Infinity,
+    callback: (other: Body) => boolean
+  ): void {
     const helper = (currentNode: TreeNode): boolean => {
       if (currentNode && currentNode.bounds.rayCast(ray, max)) {
         if (currentNode.isLeaf()) {
@@ -450,7 +475,10 @@ export class DynamicTree {
   public getNodes(): TreeNode[] {
     const helper = (currentNode: TreeNode): TreeNode[] => {
       if (currentNode) {
-        return [currentNode].concat(helper(currentNode.left), helper(currentNode.right));
+        return [currentNode].concat(
+          helper(currentNode.left),
+          helper(currentNode.right)
+        );
       } else {
         return [];
       }

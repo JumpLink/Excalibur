@@ -40,7 +40,10 @@ export class SpriteSheetImpl {
     if (imageOrConfigOrSprites instanceof Array) {
       this.sprites = imageOrConfigOrSprites;
     } else {
-      if (imageOrConfigOrSprites && !(imageOrConfigOrSprites instanceof Texture)) {
+      if (
+        imageOrConfigOrSprites &&
+        !(imageOrConfigOrSprites instanceof Texture)
+      ) {
         this.columns = imageOrConfigOrSprites.columns;
         this.rows = imageOrConfigOrSprites.rows;
         this.spWidth = imageOrConfigOrSprites.spWidth;
@@ -64,8 +67,10 @@ export class SpriteSheetImpl {
       let isWidthError: boolean = false;
       let isHeightError: boolean = false;
       if (this.image.isLoaded()) {
-        isWidthError = this.spWidth * this.columns > this.image.image.naturalWidth;
-        isHeightError = this.spHeight * this.rows > this.image.image.naturalHeight;
+        isWidthError =
+          this.spWidth * this.columns > this.image.image.naturalWidth;
+        isHeightError =
+          this.spHeight * this.rows > this.image.image.naturalHeight;
         if (isWidthError) {
           throw new RangeError(
             `SpriteSheet specified is wider, ` +
@@ -105,12 +110,16 @@ export class SpriteSheetImpl {
    * @param indices  An array of sprite indices to use in the animation
    * @param speed    The number in milliseconds to display each frame in the animation
    */
-  public getAnimationByIndices(engine: Engine, indices: number[], speed: number) {
+  public getAnimationByIndices(
+    engine: Engine,
+    indices: number[],
+    speed: number
+  ) {
     let images: Sprite[] = indices.map((index) => {
       return this.sprites[index];
     });
 
-    images = images.map(function(i) {
+    images = images.map(function (i) {
       return i.clone();
     });
     return new Animation(engine, images, speed);
@@ -125,9 +134,14 @@ export class SpriteSheetImpl {
    * @param endIndex    The index to stop taking frames (exclusive)
    * @param speed       The number in milliseconds to display each frame in the animation
    */
-  public getAnimationBetween(engine: Engine, beginIndex: number, endIndex: number, speed: number) {
+  public getAnimationBetween(
+    engine: Engine,
+    beginIndex: number,
+    endIndex: number,
+    speed: number
+  ) {
     let images = this.sprites.slice(beginIndex, endIndex);
-    images = images.map(function(i) {
+    images = images.map(function (i) {
       return i.clone();
     });
     return new Animation(engine, images, speed);
@@ -140,7 +154,7 @@ export class SpriteSheetImpl {
    * @param speed   The number in milliseconds to display each frame the animation
    */
   public getAnimationForAll(engine: Engine, speed: number) {
-    const sprites = this.sprites.map(function(i) {
+    const sprites = this.sprites.map(function (i) {
       return i.clone();
     });
     return new Animation(engine, sprites, speed);
@@ -167,7 +181,11 @@ export class SpriteSheetImpl {
    * @param spriteCoordinates
    * @param speed
    */
-  public getAnimationByCoords(engine: Engine, spriteCoordinates: SpriteArgs[], speed: number): Animation {
+  public getAnimationByCoords(
+    engine: Engine,
+    spriteCoordinates: SpriteArgs[],
+    speed: number
+  ): Animation {
     let maxWidth: number = 0;
     let maxHeight: number = 0;
     const sprites: Sprite[] = new Array(spriteCoordinates.length);
@@ -206,7 +224,13 @@ export interface SpriteSheetArgs extends Partial<SpriteSheetImpl> {
 export class SpriteSheet extends Configurable(SpriteSheetImpl) {
   constructor(config: SpriteSheetArgs);
   constructor(sprites: Sprite[]);
-  constructor(image: Texture, columns: number, rows: number, spWidth: number, spHeight: number);
+  constructor(
+    image: Texture,
+    columns: number,
+    rows: number,
+    spWidth: number,
+    spHeight: number
+  );
   constructor(
     imageOrConfigOrSprites: Texture | SpriteSheetArgs | Sprite[],
     columns?: number,
@@ -254,15 +278,15 @@ export class SpriteFontImpl extends SpriteSheet {
     spacing?: number
   ) {
     super(
-      imageOrConfig instanceof Texture ?
-        {
-          image: imageOrConfig,
-          spWidth: spWidth,
-          spHeight: spHeight,
-          rows: rows,
-          columns: columns,
-          spacing: spacing || 0
-        }
+      imageOrConfig instanceof Texture
+        ? {
+            image: imageOrConfig,
+            spWidth: spWidth,
+            spHeight: spHeight,
+            rows: rows,
+            columns: columns,
+            spacing: spacing || 0,
+          }
         : imageOrConfig
     );
 
@@ -321,10 +345,19 @@ export class SpriteFontImpl extends SpriteSheet {
   /**
    * Draws the current sprite font
    */
-  public draw(ctx: CanvasRenderingContext2D, text: string, x: number, y: number, options: SpriteFontOptions) {
+  public draw(
+    ctx: CanvasRenderingContext2D,
+    text: string,
+    x: number,
+    y: number,
+    options: SpriteFontOptions
+  ) {
     options = this._parseOptions(options);
 
-    if (this._currentColor.toString() !== options.color.toString() || this._currentOpacity !== options.opacity) {
+    if (
+      this._currentColor.toString() !== options.color.toString() ||
+      this._currentOpacity !== options.opacity
+    ) {
       this._currentOpacity = options.opacity;
       this._currentColor = options.color;
       for (const char in this._sprites) {
@@ -337,7 +370,9 @@ export class SpriteFontImpl extends SpriteSheet {
     if (this._textShadowOn && this._textShadowDirty && this._textShadowColor) {
       for (const characterShadow in this._textShadowSprites) {
         this._textShadowSprites[characterShadow].clearEffects();
-        this._textShadowSprites[characterShadow].addEffect(new Effects.Fill(this._textShadowColor.clone()));
+        this._textShadowSprites[characterShadow].addEffect(
+          new Effects.Fill(this._textShadowColor.clone())
+        );
       }
       this._textShadowDirty = false;
     }
@@ -351,19 +386,30 @@ export class SpriteFontImpl extends SpriteSheet {
     // calculate appropriate scale for font size
     const scale = options.fontSize / height;
 
-    const length = text.length * sprite.drawWidth * scale + text.length * options.letterSpacing;
+    const length =
+      text.length * sprite.drawWidth * scale +
+      text.length * options.letterSpacing;
 
     let currX = x;
-    if (options.textAlign === TextAlign.Left || options.textAlign === TextAlign.Start) {
+    if (
+      options.textAlign === TextAlign.Left ||
+      options.textAlign === TextAlign.Start
+    ) {
       currX = x;
-    } else if (options.textAlign === TextAlign.Right || options.textAlign === TextAlign.End) {
+    } else if (
+      options.textAlign === TextAlign.Right ||
+      options.textAlign === TextAlign.End
+    ) {
       currX = x - length;
     } else if (options.textAlign === TextAlign.Center) {
       currX = x - length / 2;
     }
 
     let currY = y - height * scale;
-    if (options.baseAlign === BaseAlign.Top || options.baseAlign === BaseAlign.Hanging) {
+    if (
+      options.baseAlign === BaseAlign.Top ||
+      options.baseAlign === BaseAlign.Hanging
+    ) {
       currY = y;
     } else if (
       options.baseAlign === BaseAlign.Ideographic ||
@@ -385,7 +431,11 @@ export class SpriteFontImpl extends SpriteSheet {
         if (this._textShadowOn) {
           this._textShadowSprites[character].scale.x = scale;
           this._textShadowSprites[character].scale.y = scale;
-          this._textShadowSprites[character].draw(ctx, currX + this._shadowOffsetX, currY + this._shadowOffsetY);
+          this._textShadowSprites[character].draw(
+            ctx,
+            currX + this._shadowOffsetX,
+            currY + this._shadowOffsetY
+          );
         }
 
         const charSprite = this._sprites[character];
@@ -394,7 +444,9 @@ export class SpriteFontImpl extends SpriteSheet {
         charSprite.draw(ctx, currX, currY);
         currX += charSprite.drawWidth + options.letterSpacing;
       } catch (e) {
-        Logger.getInstance().error(`SpriteFont Error drawing char ${character}`);
+        Logger.getInstance().error(
+          `SpriteFont Error drawing char ${character}`
+        );
       }
     }
   }
@@ -404,10 +456,16 @@ export class SpriteFontImpl extends SpriteSheet {
       fontSize: options.fontSize || 10,
       letterSpacing: options.letterSpacing || 0,
       color: options.color || Color.Black,
-      textAlign: typeof options.textAlign === undefined ? TextAlign.Left : options.textAlign,
-      baseAlign: typeof options.baseAlign === undefined ? BaseAlign.Bottom : options.baseAlign,
+      textAlign:
+        typeof options.textAlign === undefined
+          ? TextAlign.Left
+          : options.textAlign,
+      baseAlign:
+        typeof options.baseAlign === undefined
+          ? BaseAlign.Bottom
+          : options.baseAlign,
       maxWidth: options.maxWidth || -1,
-      opacity: options.opacity || 0
+      opacity: options.opacity || 0,
     };
   }
 }
@@ -442,7 +500,15 @@ export interface SpriteFontArgs extends SpriteSheetArgs {
  */
 export class SpriteFont extends Configurable(SpriteFontImpl) {
   constructor(config: SpriteFontArgs);
-  constructor(image: Texture, alphabet: string, caseInsensitive: boolean, columns: number, rows: number, spWidth: number, spHeight: number);
+  constructor(
+    image: Texture,
+    alphabet: string,
+    caseInsensitive: boolean,
+    columns: number,
+    rows: number,
+    spWidth: number,
+    spHeight: number
+  );
   constructor(
     imageOrConfig: Texture | SpriteFontArgs,
     alphabet?: string,
@@ -453,6 +519,15 @@ export class SpriteFont extends Configurable(SpriteFontImpl) {
     spHeight?: number,
     spacing?: number
   ) {
-    super(imageOrConfig, alphabet, caseInsensitive, columns, rows, spWidth, spHeight, spacing);
+    super(
+      imageOrConfig,
+      alphabet,
+      caseInsensitive,
+      columns,
+      rows,
+      spWidth,
+      spHeight,
+      spacing
+    );
   }
 }

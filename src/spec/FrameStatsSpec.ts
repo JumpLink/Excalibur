@@ -13,7 +13,7 @@ describe('The engine', () => {
   beforeEach(() => {
     engine = TestUtils.engine({
       width: 400,
-      height: 400
+      height: 400,
     });
     scene = new ex.Scene(engine);
     engine.currentScene = scene;
@@ -56,9 +56,21 @@ describe('The engine', () => {
     });
 
     it('should collect frame duration stats', () => {
-      expect(stats.duration.total).toBeCloseTo(0, 1, 'Frame duration total is wrong');
-      expect(stats.duration.draw).toBeCloseTo(0, 1, 'Frame duration draw is wrong');
-      expect(stats.duration.update).toBeCloseTo(0, 1, 'Frame duration update is wrong');
+      expect(stats.duration.total).toBeCloseTo(
+        0,
+        1,
+        'Frame duration total is wrong'
+      );
+      expect(stats.duration.draw).toBeCloseTo(
+        0,
+        1,
+        'Frame duration draw is wrong'
+      );
+      expect(stats.duration.update).toBeCloseTo(
+        0,
+        1,
+        'Frame duration update is wrong'
+      );
     });
   });
 });

@@ -124,7 +124,7 @@ describe('A collection', () => {
       collection.push(i);
     }
     let sum = 0;
-    collection.forEach(function(element: number, index: number) {
+    collection.forEach(function (element: number, index: number) {
       sum += element;
     });
 
@@ -135,11 +135,11 @@ describe('A collection', () => {
     for (let i = 0; i < 4; i++) {
       collection.push(i);
     }
-    collection.map(function(element: number, index: number) {
+    collection.map(function (element: number, index: number) {
       return element * 2;
     });
 
-    collection.forEach(function(element: number, index: number) {
+    collection.forEach(function (element: number, index: number) {
       expect(element).toBe(index * 2);
     });
   });

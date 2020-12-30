@@ -59,11 +59,18 @@ export class ActionContext {
    * @param duration  The time it should take the actor to move to the new location in milliseconds
    * @param easingFcn Use [[EasingFunctions]] or a custom function to use to calculate position
    */
-  public easeTo(x: number, y: number, duration: number, easingFcn: EasingFunction = EasingFunctions.Linear) {
+  public easeTo(
+    x: number,
+    y: number,
+    duration: number,
+    easingFcn: EasingFunction = EasingFunctions.Linear
+  ) {
     const len = this._queues.length;
 
     for (let i = 0; i < len; i++) {
-      this._queues[i].add(new Actions.EaseTo(this._actors[i], x, y, duration, easingFcn));
+      this._queues[i].add(
+        new Actions.EaseTo(this._actors[i], x, y, duration, easingFcn)
+      );
     }
 
     return this;
@@ -93,10 +100,16 @@ export class ActionContext {
    * @param yOffset     The y location to move the actor to
    * @param speed  The speed in pixels per second the actor should move
    */
-  public moveBy(xOffset: number, yOffset: number, speed: number): ActionContext {
+  public moveBy(
+    xOffset: number,
+    yOffset: number,
+    speed: number
+  ): ActionContext {
     const len = this._queues.length;
     for (let i = 0; i < len; i++) {
-      this._queues[i].add(new Actions.MoveBy(this._actors[i], xOffset, yOffset, speed));
+      this._queues[i].add(
+        new Actions.MoveBy(this._actors[i], xOffset, yOffset, speed)
+      );
     }
     return this;
   }
@@ -109,10 +122,16 @@ export class ActionContext {
    * @param speed         The angular velocity of the rotation specified in radians per second
    * @param rotationType  The [[RotationType]] to use for this rotation
    */
-  public rotateTo(angleRadians: number, speed: number, rotationType?: RotationType): ActionContext {
+  public rotateTo(
+    angleRadians: number,
+    speed: number,
+    rotationType?: RotationType
+  ): ActionContext {
     const len = this._queues.length;
     for (let i = 0; i < len; i++) {
-      this._queues[i].add(new Actions.RotateTo(this._actors[i], angleRadians, speed, rotationType));
+      this._queues[i].add(
+        new Actions.RotateTo(this._actors[i], angleRadians, speed, rotationType)
+      );
     }
     return this;
   }
@@ -125,10 +144,21 @@ export class ActionContext {
    * @param speed          The speed in radians/sec the actor should rotate at
    * @param rotationType  The [[RotationType]] to use for this rotation, default is shortest path
    */
-  public rotateBy(angleRadiansOffset: number, speed: number, rotationType?: RotationType): ActionContext {
+  public rotateBy(
+    angleRadiansOffset: number,
+    speed: number,
+    rotationType?: RotationType
+  ): ActionContext {
     const len = this._queues.length;
     for (let i = 0; i < len; i++) {
-      this._queues[i].add(new Actions.RotateBy(this._actors[i], angleRadiansOffset, speed, rotationType));
+      this._queues[i].add(
+        new Actions.RotateBy(
+          this._actors[i],
+          angleRadiansOffset,
+          speed,
+          rotationType
+        )
+      );
     }
     return this;
   }
@@ -143,10 +173,17 @@ export class ActionContext {
    * @param speedX  The speed of scaling specified in magnitude increase per second on X axis
    * @param speedY  The speed of scaling specified in magnitude increase per second on Y axis
    */
-  public scaleTo(sizeX: number, sizeY: number, speedX: number, speedY: number): ActionContext {
+  public scaleTo(
+    sizeX: number,
+    sizeY: number,
+    speedX: number,
+    speedY: number
+  ): ActionContext {
     const len = this._queues.length;
     for (let i = 0; i < len; i++) {
-      this._queues[i].add(new Actions.ScaleTo(this._actors[i], sizeX, sizeY, speedX, speedY));
+      this._queues[i].add(
+        new Actions.ScaleTo(this._actors[i], sizeX, sizeY, speedX, speedY)
+      );
     }
     return this;
   }
@@ -159,10 +196,16 @@ export class ActionContext {
    * @param sizeOffsetY   The scaling factor to apply on Y axis
    * @param speed    The speed to scale at in scale units/sec
    */
-  public scaleBy(sizeOffsetX: number, sizeOffsetY: number, speed: number): ActionContext {
+  public scaleBy(
+    sizeOffsetX: number,
+    sizeOffsetY: number,
+    speed: number
+  ): ActionContext {
     const len = this._queues.length;
     for (let i = 0; i < len; i++) {
-      this._queues[i].add(new Actions.ScaleBy(this._actors[i], sizeOffsetX, sizeOffsetY, speed));
+      this._queues[i].add(
+        new Actions.ScaleBy(this._actors[i], sizeOffsetX, sizeOffsetY, speed)
+      );
     }
     return this;
   }
@@ -176,10 +219,21 @@ export class ActionContext {
    * @param timeNotVisible  The amount of time to stay not visible per blink in milliseconds
    * @param numBlinks       The number of times to blink
    */
-  public blink(timeVisible: number, timeNotVisible: number, numBlinks: number = 1): ActionContext {
+  public blink(
+    timeVisible: number,
+    timeNotVisible: number,
+    numBlinks: number = 1
+  ): ActionContext {
     const len = this._queues.length;
     for (let i = 0; i < len; i++) {
-      this._queues[i].add(new Actions.Blink(this._actors[i], timeVisible, timeNotVisible, numBlinks));
+      this._queues[i].add(
+        new Actions.Blink(
+          this._actors[i],
+          timeVisible,
+          timeNotVisible,
+          numBlinks
+        )
+      );
     }
     return this;
   }
@@ -254,7 +308,13 @@ export class ActionContext {
     }
     const len = this._queues.length;
     for (let i = 0; i < len; i++) {
-      this._queues[i].add(new Actions.Repeat(this._actors[i], times, this._actors[i].actionQueue.getActions()));
+      this._queues[i].add(
+        new Actions.Repeat(
+          this._actors[i],
+          times,
+          this._actors[i].actionQueue.getActions()
+        )
+      );
     }
 
     return this;
@@ -268,7 +328,12 @@ export class ActionContext {
   public repeatForever(): ActionContext {
     const len = this._queues.length;
     for (let i = 0; i < len; i++) {
-      this._queues[i].add(new Actions.RepeatForever(this._actors[i], this._actors[i].actionQueue.getActions()));
+      this._queues[i].add(
+        new Actions.RepeatForever(
+          this._actors[i],
+          this._actors[i].actionQueue.getActions()
+        )
+      );
     }
     return this;
   }
@@ -284,7 +349,9 @@ export class ActionContext {
       if (followDistance === undefined) {
         this._queues[i].add(new Actions.Follow(this._actors[i], actor));
       } else {
-        this._queues[i].add(new Actions.Follow(this._actors[i], actor, followDistance));
+        this._queues[i].add(
+          new Actions.Follow(this._actors[i], actor, followDistance)
+        );
       }
     }
     return this;

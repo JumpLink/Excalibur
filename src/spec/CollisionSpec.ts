@@ -182,7 +182,7 @@ describe('A Collision', () => {
 
   it('should recognize when actor bodies are touching', () => {
     let touching = false;
-    actor1.on('postupdate', function() {
+    actor1.on('postupdate', function () {
       if (actor1.body.collider.touching(actor2.body.collider)) {
         touching = true;
       }
@@ -196,14 +196,21 @@ describe('A Collision', () => {
   });
 
   it('should not collide when active and passive', (done) => {
-    ex.Physics.collisionResolutionStrategy = ex.CollisionResolutionStrategy.RigidBody;
+    ex.Physics.collisionResolutionStrategy =
+      ex.CollisionResolutionStrategy.RigidBody;
 
     const activeBlock = new ex.Actor(200, 200, 50, 50, ex.Color.Red.clone());
     activeBlock.body.collider.type = ex.CollisionType.Active;
     activeBlock.vel.x = 100;
     engine.add(activeBlock);
 
-    const passiveBlock = new ex.Actor(400, 200, 50, 50, ex.Color.DarkGray.clone());
+    const passiveBlock = new ex.Actor(
+      400,
+      200,
+      50,
+      50,
+      ex.Color.DarkGray.clone()
+    );
     passiveBlock.body.collider.type = ex.CollisionType.Passive;
     passiveBlock.vel.x = -100;
     engine.add(passiveBlock);
@@ -217,7 +224,7 @@ describe('A Collision', () => {
             expect(passiveBlock.vel.x).toBeLessThan(0);
             done();
           },
-          repeats: false
+          repeats: false,
         })
       );
     };
@@ -230,14 +237,21 @@ describe('A Collision', () => {
   });
 
   it('should emit a start collision once when objects start colliding', () => {
-    ex.Physics.collisionResolutionStrategy = ex.CollisionResolutionStrategy.RigidBody;
+    ex.Physics.collisionResolutionStrategy =
+      ex.CollisionResolutionStrategy.RigidBody;
 
     const activeBlock = new ex.Actor(200, 200, 50, 50, ex.Color.Red.clone());
     activeBlock.body.collider.type = ex.CollisionType.Active;
     activeBlock.vel.x = 100;
     engine.add(activeBlock);
 
-    const passiveBlock = new ex.Actor(400, 200, 50, 50, ex.Color.DarkGray.clone());
+    const passiveBlock = new ex.Actor(
+      400,
+      200,
+      50,
+      50,
+      ex.Color.DarkGray.clone()
+    );
     passiveBlock.body.collider.type = ex.CollisionType.Passive;
     passiveBlock.vel.x = -100;
     engine.add(passiveBlock);
@@ -258,14 +272,21 @@ describe('A Collision', () => {
   });
 
   it('should emit a end collision once when objects stop colliding', () => {
-    ex.Physics.collisionResolutionStrategy = ex.CollisionResolutionStrategy.RigidBody;
+    ex.Physics.collisionResolutionStrategy =
+      ex.CollisionResolutionStrategy.RigidBody;
 
     const activeBlock = new ex.Actor(200, 200, 50, 50, ex.Color.Red.clone());
     activeBlock.body.collider.type = ex.CollisionType.Active;
     activeBlock.vel.x = 100;
     engine.add(activeBlock);
 
-    const passiveBlock = new ex.Actor(400, 200, 50, 50, ex.Color.DarkGray.clone());
+    const passiveBlock = new ex.Actor(
+      400,
+      200,
+      50,
+      50,
+      ex.Color.DarkGray.clone()
+    );
     passiveBlock.body.collider.type = ex.CollisionType.Passive;
     passiveBlock.vel.x = -100;
     engine.add(passiveBlock);
@@ -293,7 +314,13 @@ describe('A Collision', () => {
     activeBlock.vel.x = 100;
     engine.add(activeBlock);
 
-    const fixedBlock = new ex.Actor(400, 200, 50, 50, ex.Color.DarkGray.clone());
+    const fixedBlock = new ex.Actor(
+      400,
+      200,
+      50,
+      50,
+      ex.Color.DarkGray.clone()
+    );
     fixedBlock.body.collider.type = ex.CollisionType.Fixed;
     engine.add(fixedBlock);
 
@@ -311,7 +338,13 @@ describe('A Collision', () => {
     activeBlock.body.collider.type = ex.CollisionType.Active;
     engine.add(activeBlock);
 
-    const fixedBlock = new ex.Actor(400, 200, 50, 50, ex.Color.DarkGray.clone());
+    const fixedBlock = new ex.Actor(
+      400,
+      200,
+      50,
+      50,
+      ex.Color.DarkGray.clone()
+    );
     fixedBlock.body.collider.type = ex.CollisionType.Fixed;
     engine.add(fixedBlock);
 
@@ -325,19 +358,26 @@ describe('A Collision', () => {
   });
 
   it('should have the actor as the handler context for collisionstart', (done) => {
-    ex.Physics.collisionResolutionStrategy = ex.CollisionResolutionStrategy.RigidBody;
+    ex.Physics.collisionResolutionStrategy =
+      ex.CollisionResolutionStrategy.RigidBody;
 
     const activeBlock = new ex.Actor(200, 200, 50, 50, ex.Color.Red.clone());
     activeBlock.body.collider.type = ex.CollisionType.Active;
     activeBlock.vel.x = 100;
     engine.add(activeBlock);
 
-    const passiveBlock = new ex.Actor(400, 200, 50, 50, ex.Color.DarkGray.clone());
+    const passiveBlock = new ex.Actor(
+      400,
+      200,
+      50,
+      50,
+      ex.Color.DarkGray.clone()
+    );
     passiveBlock.body.collider.type = ex.CollisionType.Passive;
     passiveBlock.vel.x = -100;
     engine.add(passiveBlock);
 
-    const collisionEnd = function() {
+    const collisionEnd = function () {
       expect(this).toBe(activeBlock);
       done();
     };
@@ -350,19 +390,26 @@ describe('A Collision', () => {
   });
 
   it('should have the actor as the handler context for collisionend', (done) => {
-    ex.Physics.collisionResolutionStrategy = ex.CollisionResolutionStrategy.RigidBody;
+    ex.Physics.collisionResolutionStrategy =
+      ex.CollisionResolutionStrategy.RigidBody;
 
     const activeBlock = new ex.Actor(200, 200, 50, 50, ex.Color.Red.clone());
     activeBlock.body.collider.type = ex.CollisionType.Active;
     activeBlock.vel.x = 100;
     engine.add(activeBlock);
 
-    const passiveBlock = new ex.Actor(400, 200, 50, 50, ex.Color.DarkGray.clone());
+    const passiveBlock = new ex.Actor(
+      400,
+      200,
+      50,
+      50,
+      ex.Color.DarkGray.clone()
+    );
     passiveBlock.body.collider.type = ex.CollisionType.Passive;
     passiveBlock.vel.x = -100;
     engine.add(passiveBlock);
 
-    const collisionEnd = function() {
+    const collisionEnd = function () {
       expect(this).toBe(activeBlock);
       done();
     };

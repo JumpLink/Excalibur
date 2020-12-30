@@ -30,7 +30,12 @@ export class BoundingBox {
    * @param right   x coordinate of the right edge
    * @param bottom  y coordinate of the bottom edge
    */
-  constructor(leftOrOptions: number | BoundingBoxOptions = 0, top: number = 0, right: number = 0, bottom: number = 0) {
+  constructor(
+    leftOrOptions: number | BoundingBoxOptions = 0,
+    top: number = 0,
+    right: number = 0,
+    bottom: number = 0
+  ) {
     if (typeof leftOrOptions === 'object') {
       this.left = leftOrOptions.left;
       this.top = leftOrOptions.top;
@@ -90,7 +95,12 @@ export class BoundingBox {
     return new BoundingBox(minX, minY, maxX, maxY);
   }
 
-  public static fromDimension(width: number, height: number, anchor: Vector = Vector.Half, pos: Vector = Vector.Zero) {
+  public static fromDimension(
+    width: number,
+    height: number,
+    anchor: Vector = Vector.Half,
+    pos: Vector = Vector.Zero
+  ) {
     return new BoundingBox(
       -width * anchor.x + pos.x,
       -height * anchor.y + pos.y,
@@ -117,11 +127,19 @@ export class BoundingBox {
    * Returns the center of the bounding box
    */
   public get center(): Vector {
-    return new Vector((this.left + this.right) / 2, (this.top + this.bottom) / 2);
+    return new Vector(
+      (this.left + this.right) / 2,
+      (this.top + this.bottom) / 2
+    );
   }
 
   public translate(pos: Vector): BoundingBox {
-    return new BoundingBox(this.left + pos.x, this.top + pos.y, this.right + pos.x, this.bottom + pos.y);
+    return new BoundingBox(
+      this.left + pos.x,
+      this.top + pos.y,
+      this.right + pos.x,
+      this.bottom + pos.y
+    );
   }
 
   /**
@@ -135,7 +153,12 @@ export class BoundingBox {
 
   public scale(scale: Vector, point: Vector = Vector.Zero): BoundingBox {
     const shifted = this.translate(point);
-    return new BoundingBox(shifted.left * scale.x, shifted.top * scale.y, shifted.right * scale.x, shifted.bottom * scale.y);
+    return new BoundingBox(
+      shifted.left * scale.x,
+      shifted.top * scale.y,
+      shifted.right * scale.x,
+      shifted.bottom * scale.y
+    );
   }
 
   /**
@@ -167,7 +190,7 @@ export class BoundingBox {
     return new ConvexPolygon({
       collider: maybeCollider,
       points: this.getPoints(),
-      offset: Vector.Zero
+      offset: Vector.Zero,
     });
   }
 
@@ -232,9 +255,19 @@ export class BoundingBox {
   public contains(bb: BoundingBox): boolean;
   public contains(val: any): boolean {
     if (val instanceof Vector) {
-      return this.left <= val.x && this.top <= val.y && this.bottom >= val.y && this.right >= val.x;
+      return (
+        this.left <= val.x &&
+        this.top <= val.y &&
+        this.bottom >= val.y &&
+        this.right >= val.x
+      );
     } else if (val instanceof BoundingBox) {
-      if (this.left < val.left && this.top < val.top && val.bottom < this.bottom && val.right < this.right) {
+      if (
+        this.left < val.left &&
+        this.top < val.top &&
+        val.bottom < this.bottom &&
+        val.right < this.right
+      ) {
         return true;
       }
       return false;
@@ -339,7 +372,10 @@ export class BoundingBox {
         return new Vector(0, overlapY);
       }
       // Case of total containment of one bounding box by another
-    } else if (totalBoundingBox.dimensions.equals(other.dimensions) || totalBoundingBox.dimensions.equals(this.dimensions)) {
+    } else if (
+      totalBoundingBox.dimensions.equals(other.dimensions) ||
+      totalBoundingBox.dimensions.equals(this.dimensions)
+    ) {
       let overlapX = 0;
       // this is wider than the other
       if (this.width - other.width >= 0) {

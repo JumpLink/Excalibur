@@ -29,7 +29,9 @@ export class Grayscale implements SpriteEffect {
   updatePixel(x: number, y: number, imageData: ImageData): void {
     const firstPixel = (x + y * imageData.width) * 4;
     const pixel = imageData.data;
-    const avg = (pixel[firstPixel + 0] + pixel[firstPixel + 1] + pixel[firstPixel + 2]) / 3;
+    const avg =
+      (pixel[firstPixel + 0] + pixel[firstPixel + 1] + pixel[firstPixel + 2]) /
+      3;
     pixel[firstPixel + 0] = avg;
     pixel[firstPixel + 1] = avg;
     pixel[firstPixel + 2] = avg;
@@ -97,9 +99,12 @@ export class Lighten implements SpriteEffect {
   updatePixel(x: number, y: number, imageData: ImageData): void {
     const firstPixel = (x + y * imageData.width) * 4;
     const pixel = imageData.data;
-    const color = Color.fromRGB(pixel[firstPixel + 0], pixel[firstPixel + 1], pixel[firstPixel + 2], pixel[firstPixel + 3]).lighten(
-      this.factor
-    );
+    const color = Color.fromRGB(
+      pixel[firstPixel + 0],
+      pixel[firstPixel + 1],
+      pixel[firstPixel + 2],
+      pixel[firstPixel + 3]
+    ).lighten(this.factor);
     pixel[firstPixel + 0] = color.r;
     pixel[firstPixel + 1] = color.g;
     pixel[firstPixel + 2] = color.b;
@@ -118,9 +123,12 @@ export class Darken implements SpriteEffect {
   updatePixel(x: number, y: number, imageData: ImageData): void {
     const firstPixel = (x + y * imageData.width) * 4;
     const pixel = imageData.data;
-    const color = Color.fromRGB(pixel[firstPixel + 0], pixel[firstPixel + 1], pixel[firstPixel + 2], pixel[firstPixel + 3]).darken(
-      this.factor
-    );
+    const color = Color.fromRGB(
+      pixel[firstPixel + 0],
+      pixel[firstPixel + 1],
+      pixel[firstPixel + 2],
+      pixel[firstPixel + 3]
+    ).darken(this.factor);
     pixel[firstPixel + 0] = color.r;
     pixel[firstPixel + 1] = color.g;
     pixel[firstPixel + 2] = color.b;
@@ -139,9 +147,12 @@ export class Saturate implements SpriteEffect {
   updatePixel(x: number, y: number, imageData: ImageData): void {
     const firstPixel = (x + y * imageData.width) * 4;
     const pixel = imageData.data;
-    const color = Color.fromRGB(pixel[firstPixel + 0], pixel[firstPixel + 1], pixel[firstPixel + 2], pixel[firstPixel + 3]).saturate(
-      this.factor
-    );
+    const color = Color.fromRGB(
+      pixel[firstPixel + 0],
+      pixel[firstPixel + 1],
+      pixel[firstPixel + 2],
+      pixel[firstPixel + 3]
+    ).saturate(this.factor);
     pixel[firstPixel + 0] = color.r;
     pixel[firstPixel + 1] = color.g;
     pixel[firstPixel + 2] = color.b;
@@ -160,9 +171,12 @@ export class Desaturate implements SpriteEffect {
   updatePixel(x: number, y: number, imageData: ImageData): void {
     const firstPixel = (x + y * imageData.width) * 4;
     const pixel = imageData.data;
-    const color = Color.fromRGB(pixel[firstPixel + 0], pixel[firstPixel + 1], pixel[firstPixel + 2], pixel[firstPixel + 3]).desaturate(
-      this.factor
-    );
+    const color = Color.fromRGB(
+      pixel[firstPixel + 0],
+      pixel[firstPixel + 1],
+      pixel[firstPixel + 2],
+      pixel[firstPixel + 3]
+    ).desaturate(this.factor);
     pixel[firstPixel + 0] = color.r;
     pixel[firstPixel + 1] = color.g;
     pixel[firstPixel + 2] = color.b;

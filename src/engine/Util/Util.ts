@@ -34,7 +34,11 @@ export function extend<T1, T2>(target: T1, object2: T2): T1 & T2;
  * @param object3 The third object whose properties to merge
  * @returns Merged object with properties from other objects
  */
-export function extend<T1, T2, T3>(target: T1, object2: T2, object3: T3): T1 & T2 & T3;
+export function extend<T1, T2, T3>(
+  target: T1,
+  object2: T2,
+  object3: T3
+): T1 & T2 & T3;
 
 /**
  * Merges one or more objects into a single target object
@@ -71,7 +75,10 @@ export function extend() {
       for (const prop in obj) {
         if (Object.prototype.hasOwnProperty.call(obj, prop)) {
           // If deep merge and property is an object, merge properties
-          if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+          if (
+            deep &&
+            Object.prototype.toString.call(obj[prop]) === '[object Object]'
+          ) {
             extended[prop] = extend(true, extended[prop], obj[prop]);
           } else {
             extended[prop] = obj[prop];
@@ -101,7 +108,8 @@ export function extend() {
  * @deprecated This method is marked for removal
  */
 export function base64Encode(inputStr: string) {
-  const b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+  const b64 =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
   let outputStr = '';
   let i = 0;
 
@@ -127,7 +135,8 @@ export function base64Encode(inputStr: string) {
       }
     }
 
-    outputStr += b64.charAt(enc1) + b64.charAt(enc2) + b64.charAt(enc3) + b64.charAt(enc4);
+    outputStr +=
+      b64.charAt(enc1) + b64.charAt(enc2) + b64.charAt(enc3) + b64.charAt(enc4);
   }
 
   return outputStr;
@@ -139,7 +148,9 @@ export function base64Encode(inputStr: string) {
  * @param defaultVal
  */
 export function nullish<T>(nullishVal: T | undefined | null, defaultVal: T): T {
-  return nullishVal !== null && nullishVal !== undefined ? nullishVal : defaultVal;
+  return nullishVal !== null && nullishVal !== undefined
+    ? nullishVal
+    : defaultVal;
 }
 
 /**
@@ -152,15 +163,25 @@ export function clamp(val: number, min: number, max: number) {
 /**
  * Find a random floating point number in range
  */
-export function randomInRange(min: number, max: number, random: Random = new Random()): number {
+export function randomInRange(
+  min: number,
+  max: number,
+  random: Random = new Random()
+): number {
   return random ? random.floating(min, max) : min + Math.random() * (max - min);
 }
 
 /**
  * Find a random integer in a range
  */
-export function randomIntInRange(min: number, max: number, random: Random = new Random()): number {
-  return random ? random.integer(min, max) : Math.round(randomInRange(min, max));
+export function randomIntInRange(
+  min: number,
+  max: number,
+  random: Random = new Random()
+): number {
+  return random
+    ? random.integer(min, max)
+    : Math.round(randomInRange(min, max));
 }
 
 /**
@@ -468,7 +489,7 @@ export function fail(message: never): never {
  * @param milliseconds
  */
 export function delay(milliseconds: number): Promise<void> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve();
     }, milliseconds);

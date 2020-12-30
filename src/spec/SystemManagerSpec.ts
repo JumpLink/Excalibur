@@ -8,7 +8,12 @@ class FakeComponent<T extends string> extends ex.Component<T> {
 }
 
 class FakeSystem extends ex.System<null> {
-  constructor(public priority: number, public name: string, public types: string[], public systemType: ex.SystemType) {
+  constructor(
+    public priority: number,
+    public name: string,
+    public types: string[],
+    public systemType: ex.SystemType
+  ) {
     super();
   }
   update(entities: ex.Entity[], delta: number): void {

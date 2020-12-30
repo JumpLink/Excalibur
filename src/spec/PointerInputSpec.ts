@@ -12,11 +12,17 @@ describe('A pointer', () => {
    * @param x
    * @param y
    */
-  function executeMouseEvent(type: string, target: HTMLElement, button: ex.Input.NativePointerButton = null, x: number = 0, y: number = 0) {
+  function executeMouseEvent(
+    type: string,
+    target: HTMLElement,
+    button: ex.Input.NativePointerButton = null,
+    x: number = 0,
+    y: number = 0
+  ) {
     const evt = new PointerEvent(type, {
       clientX: x,
       clientY: y,
-      button: button
+      button: button,
     });
 
     target.dispatchEvent(evt);
@@ -62,9 +68,21 @@ describe('A pointer', () => {
       }
     });
 
-    executeMouseEvent('pointerdown', <any>document, ex.Input.NativePointerButton.Left);
-    executeMouseEvent('pointerdown', <any>document, ex.Input.NativePointerButton.Right);
-    executeMouseEvent('pointerdown', <any>document, ex.Input.NativePointerButton.Middle);
+    executeMouseEvent(
+      'pointerdown',
+      <any>document,
+      ex.Input.NativePointerButton.Left
+    );
+    executeMouseEvent(
+      'pointerdown',
+      <any>document,
+      ex.Input.NativePointerButton.Right
+    );
+    executeMouseEvent(
+      'pointerdown',
+      <any>document,
+      ex.Input.NativePointerButton.Middle
+    );
 
     expect(eventLeftFired).toBe(true, 'left should fire');
     expect(eventRightFired).toBe(true, 'right should fire');
@@ -76,21 +94,36 @@ describe('A pointer', () => {
     let eventRightFired = false;
     let eventMiddleFired = false;
 
-    engine.input.pointers.primary.on('up', function (ev: ex.Input.PointerEvent) {
-      if (ev.button === ex.Input.PointerButton.Left) {
-        eventLeftFired = true;
+    engine.input.pointers.primary.on(
+      'up',
+      function (ev: ex.Input.PointerEvent) {
+        if (ev.button === ex.Input.PointerButton.Left) {
+          eventLeftFired = true;
+        }
+        if (ev.button === ex.Input.PointerButton.Right) {
+          eventRightFired = true;
+        }
+        if (ev.button === ex.Input.PointerButton.Middle) {
+          eventMiddleFired = true;
+        }
       }
-      if (ev.button === ex.Input.PointerButton.Right) {
-        eventRightFired = true;
-      }
-      if (ev.button === ex.Input.PointerButton.Middle) {
-        eventMiddleFired = true;
-      }
-    });
+    );
 
-    executeMouseEvent('pointerup', <any>document, ex.Input.NativePointerButton.Left);
-    executeMouseEvent('pointerup', <any>document, ex.Input.NativePointerButton.Right);
-    executeMouseEvent('pointerup', <any>document, ex.Input.NativePointerButton.Middle);
+    executeMouseEvent(
+      'pointerup',
+      <any>document,
+      ex.Input.NativePointerButton.Left
+    );
+    executeMouseEvent(
+      'pointerup',
+      <any>document,
+      ex.Input.NativePointerButton.Right
+    );
+    executeMouseEvent(
+      'pointerup',
+      <any>document,
+      ex.Input.NativePointerButton.Middle
+    );
 
     expect(eventLeftFired).toBeTruthy('left should fire');
     expect(eventRightFired).toBeTruthy('right should fire');
@@ -100,9 +133,12 @@ describe('A pointer', () => {
   it('should fire pointermove events', () => {
     let eventMoveFired = false;
 
-    engine.input.pointers.primary.on('move', function (ev: ex.Input.PointerEvent) {
-      eventMoveFired = true;
-    });
+    engine.input.pointers.primary.on(
+      'move',
+      function (ev: ex.Input.PointerEvent) {
+        eventMoveFired = true;
+      }
+    );
 
     executeMouseEvent('pointermove', <any>document);
 
@@ -126,20 +162,40 @@ describe('A pointer', () => {
   });
 
   it('should not throw when checking if actors are under pointer if no pointer events have happened yet', () => {
-    const actor = new ex.Actor({ pos: new ex.Vector(50, 50), width: 100, height: 100 });
-    expect(() => engine.input.pointers.primary.checkActorUnderPointer(actor)).not.toThrowError();
-    expect(engine.input.pointers.primary.checkActorUnderPointer(actor)).toBe(false);
+    const actor = new ex.Actor({
+      pos: new ex.Vector(50, 50),
+      width: 100,
+      height: 100,
+    });
+    expect(() =>
+      engine.input.pointers.primary.checkActorUnderPointer(actor)
+    ).not.toThrowError();
+    expect(engine.input.pointers.primary.checkActorUnderPointer(actor)).toBe(
+      false
+    );
   });
 
   it('should return true when an actor is under the pointer', () => {
-    const actor = new ex.Actor({ pos: new ex.Vector(50, 50), width: 100, height: 100 });
+    const actor = new ex.Actor({
+      pos: new ex.Vector(50, 50),
+      width: 100,
+      height: 100,
+    });
     executeMouseEvent('pointerdown', <any>document, null, 50, 50);
 
-    expect(engine.input.pointers.primary.checkActorUnderPointer(actor)).toBe(true);
+    expect(engine.input.pointers.primary.checkActorUnderPointer(actor)).toBe(
+      true
+    );
   });
   it('should only add actors under pointer that are in scene', () => {
-    const actor = new ex.Actor({ pos: new ex.Vector(50, 50), width: 100, height: 100 });
+    const actor = new ex.Actor({
+      pos: new ex.Vector(50, 50),
+      width: 100,
+      height: 100,
+    });
     executeMouseEvent('pointerdown', <any>document, null, 50, 50);
-    expect(engine.input.pointers.primary.isActorAliveUnderPointer(actor)).toBe(false);
+    expect(engine.input.pointers.primary.isActorAliveUnderPointer(actor)).toBe(
+      false
+    );
   });
 });

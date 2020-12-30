@@ -13,12 +13,16 @@ describe('Excalibur Math', () => {
 
   it('can canonicalize angles larger than 2PI', () => {
     const angleLargerThan2Pi = Math.PI * 3 + Math.PI / 2;
-    expect(ex.Util.canonicalizeAngle(angleLargerThan2Pi)).toBe((3 / 2) * Math.PI);
+    expect(ex.Util.canonicalizeAngle(angleLargerThan2Pi)).toBe(
+      (3 / 2) * Math.PI
+    );
   });
 
   it('can canonicalize angles less than 2PI', () => {
     const angleLessThanZero = -Math.PI / 4;
-    expect(ex.Util.canonicalizeAngle(angleLessThanZero)).toBe((7 / 4) * Math.PI);
+    expect(ex.Util.canonicalizeAngle(angleLessThanZero)).toBe(
+      (7 / 4) * Math.PI
+    );
   });
 
   it('can clamp a value larger than a range', () => {

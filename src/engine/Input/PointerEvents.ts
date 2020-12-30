@@ -11,7 +11,7 @@ export enum NativePointerButton {
   Left = 0,
   Middle = 1,
   Right = 2,
-  Unknown = 3
+  Unknown = 3,
 }
 
 /**
@@ -22,13 +22,13 @@ export enum PointerButton {
   Middle = 'Middle',
   Right = 'Right',
   Unknown = 'Unknown',
-  NoButton = 'NoButton'
+  NoButton = 'NoButton',
 }
 
 export enum WheelDeltaMode {
   Pixel = 'Pixel',
   Line = 'Line',
-  Page = 'Page'
+  Page = 'Page',
 }
 
 /**
@@ -150,7 +150,14 @@ export class PointerEventFactory<T extends PointerEvent> {
     button: PointerButton,
     ev: any
   ): T {
-    return new this._pointerEventType(coordinates, pointer, index, pointerType, button, ev);
+    return new this._pointerEventType(
+      coordinates,
+      pointer,
+      index,
+      pointerType,
+      button,
+      ev
+    );
   }
 }
 

@@ -31,9 +31,15 @@ describe('A query', () => {
     const entity2 = new ex.Entity();
     entity2.addComponent(compA);
 
-    expect(queryAB.matches(entity1)).toBe(true, 'entity1 should match has both compontents A, B');
+    expect(queryAB.matches(entity1)).toBe(
+      true,
+      'entity1 should match has both compontents A, B'
+    );
     expect(queryAB.matches(['A', 'B'])).toBe(true);
-    expect(queryAB.matches(entity2)).toBe(false, 'entity2 should not match, only has 1 component A');
+    expect(queryAB.matches(entity2)).toBe(
+      false,
+      'entity2 should not match, only has 1 component A'
+    );
     expect(queryAB.matches(['A'])).toBe(false);
   });
 
@@ -89,7 +95,7 @@ describe('A query', () => {
         expect(message.type).toBe('Entity Added');
         expect(message.data).toBe(entity1);
         done();
-      }
+      },
     });
 
     queryAB.addEntity(entity1);
@@ -109,7 +115,7 @@ describe('A query', () => {
         expect(message.type).toBe('Entity Removed');
         expect(message.data).toBe(entity1);
         done();
-      }
+      },
     });
 
     queryAB.removeEntity(entity1);
@@ -125,7 +131,7 @@ describe('A query', () => {
 
     queryAB.addEntity(entity1);
     queryAB.register({
-      notify: () => {} // eslint-disable-line @typescript-eslint/no-empty-function
+      notify: () => {}, // eslint-disable-line @typescript-eslint/no-empty-function
     });
     expect(queryAB.getEntities()).toEqual([entity1]);
     expect(queryAB.observers.length).toBe(1);

@@ -84,10 +84,14 @@ export abstract class Component<TypeName extends string = string> {
  * entity.tags.includes
  * ```
  */
-export class TagComponent<TypeName extends string, MaybeValueType extends string | symbol | number | boolean = never> extends Component<
-TypeName
-> {
-  constructor(public readonly type: TypeName, public readonly value?: MaybeValueType) {
+export class TagComponent<
+  TypeName extends string,
+  MaybeValueType extends string | symbol | number | boolean = never
+> extends Component<TypeName> {
+  constructor(
+    public readonly type: TypeName,
+    public readonly value?: MaybeValueType
+  ) {
     super();
   }
 }

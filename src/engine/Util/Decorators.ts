@@ -46,23 +46,37 @@ export function obsolete(options?: ObsoleteOptions): any {
     {
       message: 'This feature will be removed in future versions of Excalibur.',
       alternateMethod: null,
-      showStackTrack: false
+      showStackTrack: false,
     },
     options
   );
 
-  return function (target: any, property: string, descriptor: PropertyDescriptor): any {
+  return function (
+    target: any,
+    property: string,
+    descriptor: PropertyDescriptor
+  ): any {
     if (
       descriptor &&
-      !(typeof descriptor.value === 'function' || typeof descriptor.get === 'function' || typeof descriptor.set === 'function')
+      !(
+        typeof descriptor.value === 'function' ||
+        typeof descriptor.get === 'function' ||
+        typeof descriptor.set === 'function'
+      )
     ) {
-      throw new SyntaxError('Only classes/functions/getters/setters can be marked as obsolete');
+      throw new SyntaxError(
+        'Only classes/functions/getters/setters can be marked as obsolete'
+      );
     }
-    const methodSignature = `${target.name || ''}${target.name && property ? '.' : ''}${property ? property : ''}`;
+    const methodSignature = `${target.name || ''}${
+      target.name && property ? '.' : ''
+    }${property ? property : ''}`;
 
     const message =
       `${methodSignature} is marked obsolete: ${options.message}` +
-      (options.alternateMethod ? ` Use ${options.alternateMethod} instead` : '');
+      (options.alternateMethod
+        ? ` Use ${options.alternateMethod} instead`
+        : '');
 
     if (!obsoleteMessage[message]) {
       obsoleteMessage[message] = 0;

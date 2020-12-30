@@ -20,7 +20,7 @@ describe('A Bounding Box constructed with no parameters', () => {
   });
 });
 
-describe('A Bounding Box', function() {
+describe('A Bounding Box', function () {
   /**
    *
    */
@@ -42,11 +42,14 @@ describe('A Bounding Box', function() {
 /**
  *
  */
-function runBoundingBoxTests(creationType: string, createBoundingBox: Function) {
-  describe(creationType, function() {
+function runBoundingBoxTests(
+  creationType: string,
+  createBoundingBox: Function
+) {
+  describe(creationType, function () {
     let bb: ex.BoundingBox;
 
-    beforeEach(function() {
+    beforeEach(function () {
       //create an instance by invoking the constructor function
       bb = createBoundingBox();
     });
@@ -118,7 +121,10 @@ function runBoundingBoxTests(creationType: string, createBoundingBox: Function) 
       const bb = new ex.BoundingBox(18, 15, 18, 15); // point bounding box
       const bb2 = new ex.BoundingBox(0, 0, 20, 20); // square bounding box;
 
-      expect(bb2.intersect(bb)).not.toBe(null, 'Point bounding boxes should still collide');
+      expect(bb2.intersect(bb)).not.toBe(
+        null,
+        'Point bounding boxes should still collide'
+      );
       expect(bb2.intersect(bb).x).toBe(-2);
       expect(bb2.intersect(bb).y).toBe(0);
     });

@@ -31,10 +31,19 @@ describe('A scaled and rotated actor', () => {
   });
 
   it('is drawn correctly scaled at 90 degrees', (done) => {
-    const bg = new ex.Texture('./base/src/spec/images/ScaleSpec/logo.png', true);
+    const bg = new ex.Texture(
+      './base/src/spec/images/ScaleSpec/logo.png',
+      true
+    );
 
     engine.start(new ex.Loader([bg])).then(() => {
-      const actor = new ex.Actor(engine.halfDrawWidth, engine.halfDrawHeight, 100, 100, ex.Color.Black);
+      const actor = new ex.Actor(
+        engine.halfDrawWidth,
+        engine.halfDrawHeight,
+        100,
+        100,
+        ex.Color.Black
+      );
       actor.addDrawing(bg);
       actor.height = 10;
       actor.scale.setTo(1, 0.2);
@@ -44,7 +53,10 @@ describe('A scaled and rotated actor', () => {
 
       actor.on('postdraw', (ev: ex.PostDrawEvent) => {
         engine.stop();
-        ensureImagesLoaded(engine.canvas, 'src/spec/images/ScaleSpec/scale.png').then(([canvas, image]) => {
+        ensureImagesLoaded(
+          engine.canvas,
+          'src/spec/images/ScaleSpec/scale.png'
+        ).then(([canvas, image]) => {
           expect(canvas).toEqualImage(image);
           done();
         });

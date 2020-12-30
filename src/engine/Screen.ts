@@ -26,7 +26,7 @@ export enum DisplayMode {
   /**
    * Allow the game to be positioned with the [[EngineOptions.position]] option
    */
-  Position = 'Position'
+  Position = 'Position',
 }
 
 /**
@@ -181,8 +181,13 @@ export class Screen {
     this._pixelRatio = options.pixelRatio;
     this._applyDisplayMode();
 
-    this._mediaQueryList = this._browser.window.nativeComponent.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`);
-    this._mediaQueryList.addEventListener('change', this._pixelRatioChangeHandler);
+    this._mediaQueryList = this._browser.window.nativeComponent.matchMedia(
+      `(resolution: ${window.devicePixelRatio}dppx)`
+    );
+    this._mediaQueryList.addEventListener(
+      'change',
+      this._pixelRatioChangeHandler
+    );
   }
 
   public dispose(): void {
@@ -190,7 +195,10 @@ export class Screen {
       // Clean up handlers
       this._isDisposed = true;
       this._browser.window.off('resize', this._windowResizeHandler);
-      this._mediaQueryList.removeEventListener('change', this._pixelRatioChangeHandler);
+      this._mediaQueryList.removeEventListener(
+        'change',
+        this._pixelRatioChangeHandler
+      );
     }
   }
 
@@ -200,7 +208,11 @@ export class Screen {
   };
 
   private _windowResizeHandler = () => {
-    const parent = <any>(this.displayMode === DisplayMode.Container ? <any>(this.canvas.parentElement || document.body) : <any>window);
+    const parent = <any>(
+      (this.displayMode === DisplayMode.Container
+        ? <any>(this.canvas.parentElement || document.body)
+        : <any>window)
+    );
     this._logger.debug('View port resized');
     this._setHeightByDisplayMode(parent);
     this._logger.info('parent.clientHeight ' + parent.clientHeight);
@@ -458,8 +470,15 @@ export class Screen {
   }
 
   private _applyDisplayMode() {
-    if (this.displayMode === DisplayMode.FullScreen || this.displayMode === DisplayMode.Container) {
-      const parent = <any>(this.displayMode === DisplayMode.Container ? <any>(this.canvas.parentElement || document.body) : <any>window);
+    if (
+      this.displayMode === DisplayMode.FullScreen ||
+      this.displayMode === DisplayMode.Container
+    ) {
+      const parent = <any>(
+        (this.displayMode === DisplayMode.Container
+          ? <any>(this.canvas.parentElement || document.body)
+          : <any>window)
+      );
 
       this._setHeightByDisplayMode(parent);
 
@@ -476,7 +495,7 @@ export class Screen {
     if (this.displayMode === DisplayMode.Container) {
       this.resolution = {
         width: (<HTMLElement>parent).clientWidth,
-        height: (<HTMLElement>parent).clientHeight
+        height: (<HTMLElement>parent).clientHeight,
       };
 
       this.viewport = this.resolution;
@@ -487,7 +506,7 @@ export class Screen {
       document.body.style.overflow = 'hidden';
       this.resolution = {
         width: (<Window>parent).innerWidth,
-        height: (<Window>parent).innerHeight
+        height: (<Window>parent).innerHeight,
       };
 
       this.viewport = this.resolution;
@@ -496,7 +515,9 @@ export class Screen {
 
   private _initializeDisplayModePosition(position: CanvasPosition) {
     if (!position) {
-      throw new Error('DisplayMode of Position was selected but no position option was given');
+      throw new Error(
+        'DisplayMode of Position was selected but no position option was given'
+      );
     } else {
       this.canvas.style.display = 'block';
       this.canvas.style.position = 'absolute';

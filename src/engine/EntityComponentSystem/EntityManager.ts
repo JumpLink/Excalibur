@@ -1,11 +1,18 @@
-import { Entity, RemovedComponent, AddedComponent, isAddedComponent, isRemovedComponent } from './Entity';
+import {
+  Entity,
+  RemovedComponent,
+  AddedComponent,
+  isAddedComponent,
+  isRemovedComponent,
+} from './Entity';
 import { Observer } from '../Util/Observable';
 import { World } from './World';
 import { Util } from '..';
 
 // Add/Remove entitys and components
 
-export class EntityManager implements Observer<RemovedComponent | AddedComponent> {
+export class EntityManager
+  implements Observer<RemovedComponent | AddedComponent> {
   public entities: Entity[] = [];
   public _entityIndex: { [entityId: string]: Entity } = {};
 
@@ -22,7 +29,10 @@ export class EntityManager implements Observer<RemovedComponent | AddedComponent
     }
 
     if (isRemovedComponent(message)) {
-      this._world.queryManager.removeComponent(message.data.entity, message.data.component);
+      this._world.queryManager.removeComponent(
+        message.data.entity,
+        message.data.component
+      );
     }
   }
 

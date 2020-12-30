@@ -17,7 +17,7 @@ export namespace TestUtils {
         suppressHiDPIScaling: true,
         suppressPlayButton: true,
         displayMode: ex.DisplayMode.Position,
-        position: 'top'
+        position: 'top',
       },
       options
     );

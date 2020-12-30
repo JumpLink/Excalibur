@@ -1,6 +1,12 @@
 import { Audio } from './Audio';
 
-export type ExResponseType = '' | 'arraybuffer' | 'blob' | 'document' | 'json' | 'text';
+export type ExResponseType =
+  | ''
+  | 'arraybuffer'
+  | 'blob'
+  | 'document'
+  | 'json'
+  | 'text';
 
 export interface ExResponseTypesLookup {
   [name: string]: ExResponseType;
@@ -13,7 +19,7 @@ export class ExResponse {
     json: 'json',
     text: 'text',
     document: 'document',
-    arraybuffer: 'arraybuffer'
+    arraybuffer: 'arraybuffer',
   };
 }
 

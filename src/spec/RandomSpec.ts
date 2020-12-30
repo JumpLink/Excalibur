@@ -60,7 +60,10 @@ describe('A random number', () => {
     for (let i = 0; i < 9000; i++) {
       const r = random1.next();
       const inrange = 0 <= r && r < 1.0;
-      expect(inrange).toBe(true, `Random ${r} not in range [0, 1). Seed [${random1.seed}] Iteration [${i}]`);
+      expect(inrange).toBe(
+        true,
+        `Random ${r} not in range [0, 1). Seed [${random1.seed}] Iteration [${i}]`
+      );
     }
   });
 
@@ -69,7 +72,10 @@ describe('A random number', () => {
     for (let i = 0; i < 9000; i++) {
       const r = random1.floating(-88, 1900);
       const inrange = -88 <= r && r < 1900;
-      expect(inrange).toBe(true, `Random ${r} not in range [-88, 1900). Seed [${random1.seed}] Iteration [${i}]`);
+      expect(inrange).toBe(
+        true,
+        `Random ${r} not in range [-88, 1900). Seed [${random1.seed}] Iteration [${i}]`
+      );
     }
   });
 
@@ -78,7 +84,10 @@ describe('A random number', () => {
     for (let i = 0; i < 9000; i++) {
       const r = random1.integer(-10, 10);
       const inrange = -10 <= r && r <= 10;
-      expect(inrange).toBe(true, `Random ${r} not in range [-10, 10]. Seed [${random1.seed}] Iteration [${i}]`);
+      expect(inrange).toBe(
+        true,
+        `Random ${r} not in range [-10, 10]. Seed [${random1.seed}] Iteration [${i}]`
+      );
     }
   });
 
@@ -96,7 +105,11 @@ describe('A random number', () => {
       }
     }
     const ratio = truthCount / falseCount;
-    expect(ratio).toBeCloseTo(1.0, 0.1, `Bool did not appear to be 50/50 Ratio true/false [${ratio}]`);
+    expect(ratio).toBeCloseTo(
+      1.0,
+      0.1,
+      `Bool did not appear to be 50/50 Ratio true/false [${ratio}]`
+    );
   });
 
   it('can pick an element out of an array', () => {
@@ -142,8 +155,12 @@ describe('A random number', () => {
     const random1 = new ex.Random(10);
     const array = ['one', 'two', 'three', 'four'];
 
-    expect(() => random1.pickSet(array, 5)).toThrowError('Invalid number of elements to pick, must pick a value 0 < n <= length');
-    expect(() => random1.pickSet(array, -1)).toThrowError('Invalid number of elements to pick, must pick a value 0 < n <= length');
+    expect(() => random1.pickSet(array, 5)).toThrowError(
+      'Invalid number of elements to pick, must pick a value 0 < n <= length'
+    );
+    expect(() => random1.pickSet(array, -1)).toThrowError(
+      'Invalid number of elements to pick, must pick a value 0 < n <= length'
+    );
     expect(random1.pickSet(array, 0).length).toBe(0);
     expect(random1.pickSet(array, 2).length).toBe(2);
   });
@@ -157,20 +174,20 @@ describe('A random number', () => {
     const counts = {
       one: {
         count: 0,
-        lastIndex: -1
+        lastIndex: -1,
       },
       two: {
         count: 0,
-        lastIndex: -1
+        lastIndex: -1,
       },
       three: {
         count: 0,
-        lastIndex: -1
+        lastIndex: -1,
       },
       four: {
         count: 0,
-        lastIndex: -1
-      }
+        lastIndex: -1,
+      },
     };
 
     const newSet = random1.pickSet(array, numCounts, true);
@@ -193,10 +210,17 @@ describe('A random number', () => {
     expect(counts.three.count).toBeGreaterThan(0);
     expect(counts.four.count).toBeGreaterThan(0);
 
-    const countsSum = counts.one.count + counts.two.count + counts.three.count + counts.four.count;
+    const countsSum =
+      counts.one.count +
+      counts.two.count +
+      counts.three.count +
+      counts.four.count;
     expect(countsSum).toEqual(numCounts);
 
-    const ratio = counts.one.count / counts.two.count / (counts.three.count / counts.four.count);
+    const ratio =
+      counts.one.count /
+      counts.two.count /
+      (counts.three.count / counts.four.count);
     expect(ratio).toBeCloseTo(1.0, 0.1, 'Should pick elements equally');
   });
 
@@ -227,7 +251,11 @@ describe('A random number', () => {
         return acc + curr;
       }, 0) / 1000;
 
-    expect(average).toBeCloseTo(expectedValue, 0.01, 'Should pick elements equally');
+    expect(average).toBeCloseTo(
+      expectedValue,
+      0.01,
+      'Should pick elements equally'
+    );
   });
 
   it('can do d4 dice rolls', () => {

@@ -24,7 +24,6 @@ export class Gif implements Loadable<Texture[]> {
    */
   public height: number;
 
-
   private _stream: Stream = null;
   private _gif: ParseGif = null;
   private _textures: Texture[] = [];
@@ -38,7 +37,11 @@ export class Gif implements Loadable<Texture[]> {
    * @param color      Optionally set the color to treat as transparent the gif, by default [[Color.Magenta]]
    * @param bustCache  Optionally load texture with cache busting
    */
-  constructor(public path: string, public color: Color = Color.Magenta, public bustCache = true) {
+  constructor(
+    public path: string,
+    public color: Color = Color.Magenta,
+    public bustCache = true
+  ) {
     this._resource = new Resource(path, 'arraybuffer', bustCache);
     this._transparentColor = color;
   }
@@ -50,11 +53,11 @@ export class Gif implements Loadable<Texture[]> {
     const arraybuffer = await this._resource.load();
     this._stream = new Stream(arraybuffer);
     this._gif = new ParseGif(this._stream, this._transparentColor);
-    const textures = this._gif.images.map(i => new Texture(i.src, false));
+    const textures = this._gif.images.map((i) => new Texture(i.src, false));
 
     // Load all textures
-    await Promise.all(textures.map(t => t.load()));
-    return this.data = this._textures = textures;
+    await Promise.all(textures.map((t) => t.load()));
+    return (this.data = this._textures = textures);
   }
 
   public isLoaded() {
@@ -287,7 +290,7 @@ export class ParseGif {
       sorted: null,
       globalColorTable: [],
       bgColor: null,
-      pixelAspectRatio: null // if not 0, aspectRatio = (pixelAspectRatio + 15) / 64
+      pixelAspectRatio: null, // if not 0, aspectRatio = (pixelAspectRatio + 15) / 64
     };
 
     hdr.sig = this._st.read(3);
@@ -309,7 +312,9 @@ export class ParseGif {
     hdr.pixelAspectRatio = this._st.readByte(); // if not 0, aspectRatio = (pixelAspectRatio + 15) / 64
 
     if (hdr.gctFlag) {
-      hdr.globalColorTable = this.parseColorTable(1 << (hdr.globalColorTableSize + 1));
+      hdr.globalColorTable = this.parseColorTable(
+        1 << (hdr.globalColorTableSize + 1)
+      );
       this.globalColorTable = hdr.globalColorTable;
     }
     if (this._handler.hdr && this._handler.hdr(hdr)) {
@@ -360,7 +365,11 @@ export class ParseGif {
         block.unknown = this._st.readByte(); // ??? Always 1? What is this?
         block.iterations = this._st.readUnsigned();
         block.terminator = this._st.readByte();
-        if (this._handler.app && this._handler.app.NETSCAPE && this._handler.app.NETSCAPE(block)) {
+        if (
+          this._handler.app &&
+          this._handler.app.NETSCAPE &&
+          this._handler.app.NETSCAPE(block)
+        ) {
           this.checkBytes.push(this._handler.app);
         }
       };
@@ -368,7 +377,11 @@ export class ParseGif {
       const parseUnknownAppExt = (block: any) => {
         block.appData = this.readSubBlocks();
         // FIXME: This won't work if a handler wants to match on any identifier.
-        if (this._handler.app && this._handler.app[block.identifier] && this._handler.app[block.identifier](block)) {
+        if (
+          this._handler.app &&
+          this._handler.app[block.identifier] &&
+          this._handler.app[block.identifier](block)
+        ) {
           this.checkBytes.push(this._handler.app[block.identifier]);
         }
       };
@@ -427,7 +440,10 @@ export class ParseGif {
       const rows = pixels.length / width;
       const cpRow = (toRow: any, fromRow: any) => {
         const fromPixels = pixels.slice(fromRow * width, (fromRow + 1) * width);
-        newPixels.splice.apply(newPixels, [toRow * width, width].concat(fromPixels));
+        newPixels.splice.apply(
+          newPixels,
+          [toRow * width, width].concat(fromPixels)
+        );
       };
 
       const offsets = [0, 4, 2, 1];
@@ -481,7 +497,7 @@ export class ParseGif {
   public parseBlock = () => {
     const block = {
       sentinel: this._st.readByte(),
-      type: ''
+      type: '',
     };
     const blockChar = String.fromCharCode(block.sentinel);
     switch (blockChar) {
@@ -524,7 +540,10 @@ export class ParseGif {
         y++;
         x = 0;
       }
-      if (this.globalColorTable[frame.pixels[i]] === this._transparentColor.toHex()) {
+      if (
+        this.globalColorTable[frame.pixels[i]] ===
+        this._transparentColor.toHex()
+      ) {
         context.fillStyle = `rgba(0, 0, 0, 0)`;
       } else {
         context.fillStyle = this.globalColorTable[frame.pixels[i]];

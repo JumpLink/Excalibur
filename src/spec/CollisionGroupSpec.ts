@@ -11,9 +11,18 @@ describe('A Collision Group', () => {
   });
 
   it('should not collide with itself', () => {
-    expect(groupA.canCollide(groupA)).toBe(false, 'Group groupA should not collide with itself');
-    expect(groupB.canCollide(groupB)).toBe(false, 'Group groupB should not collide with itself');
-    expect(groupC.canCollide(groupC)).toBe(false, 'Group groupC should not collide with itself');
+    expect(groupA.canCollide(groupA)).toBe(
+      false,
+      'Group groupA should not collide with itself'
+    );
+    expect(groupB.canCollide(groupB)).toBe(
+      false,
+      'Group groupB should not collide with itself'
+    );
+    expect(groupC.canCollide(groupC)).toBe(
+      false,
+      'Group groupC should not collide with itself'
+    );
   });
 
   it('should collide with other groups', () => {
@@ -28,10 +37,22 @@ describe('A Collision Group', () => {
   });
 
   it('should collide with the All collision group', () => {
-    expect(ex.CollisionGroup.All.canCollide(groupA)).toBe(true, 'All should collide with groupA');
-    expect(ex.CollisionGroup.All.canCollide(groupB)).toBe(true, 'All should collide with groupB');
-    expect(ex.CollisionGroup.All.canCollide(groupC)).toBe(true, 'All should collide with groupC');
-    expect(ex.CollisionGroup.All.canCollide(ex.CollisionGroup.All)).toBe(true, 'All collision group should collide with itself');
+    expect(ex.CollisionGroup.All.canCollide(groupA)).toBe(
+      true,
+      'All should collide with groupA'
+    );
+    expect(ex.CollisionGroup.All.canCollide(groupB)).toBe(
+      true,
+      'All should collide with groupB'
+    );
+    expect(ex.CollisionGroup.All.canCollide(groupC)).toBe(
+      true,
+      'All should collide with groupC'
+    );
+    expect(ex.CollisionGroup.All.canCollide(ex.CollisionGroup.All)).toBe(
+      true,
+      'All collision group should collide with itself'
+    );
   });
 
   it('should be accessible by name', () => {

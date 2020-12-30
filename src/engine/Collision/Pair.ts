@@ -24,12 +24,18 @@ export class Pair {
     }
 
     // if both are fixed short circuit
-    if (colliderA.type === CollisionType.Fixed && colliderB.type === CollisionType.Fixed) {
+    if (
+      colliderA.type === CollisionType.Fixed &&
+      colliderB.type === CollisionType.Fixed
+    ) {
       return false;
     }
 
     // if the either is prevent collision short circuit
-    if (colliderB.type === CollisionType.PreventCollision || colliderA.type === CollisionType.PreventCollision) {
+    if (
+      colliderB.type === CollisionType.PreventCollision ||
+      colliderA.type === CollisionType.PreventCollision
+    ) {
       return false;
     }
 
@@ -69,7 +75,10 @@ export class Pair {
   /**
    * Calculates the unique pair hash id for this collision pair
    */
-  public static calculatePairHash(colliderA: Collider, colliderB: Collider): string {
+  public static calculatePairHash(
+    colliderA: Collider,
+    colliderB: Collider
+  ): string {
     if (colliderA.id < colliderB.id) {
       return `#${colliderA.id}+${colliderB.id}`;
     } else {
@@ -84,7 +93,13 @@ export class Pair {
         DrawUtil.point(ctx, Color.Red, this.collision.point);
       }
       if (Physics.showCollisionNormals) {
-        DrawUtil.vector(ctx, Color.Cyan, this.collision.point, this.collision.normal, 30);
+        DrawUtil.vector(
+          ctx,
+          Color.Cyan,
+          this.collision.point,
+          this.collision.normal,
+          30
+        );
       }
     }
   }

@@ -4,7 +4,10 @@ import { Engine } from '../../Engine';
 import { Resource } from '../Resource';
 import { WebAudioInstance } from './WebAudioInstance';
 import { AudioContextFactory } from './AudioContext';
-import { NativeSoundEvent, NativeSoundProcessedEvent } from '../../Events/MediaEvents';
+import {
+  NativeSoundEvent,
+  NativeSoundProcessedEvent,
+} from '../../Events/MediaEvents';
 import { canPlayFile } from '../../Util/Sound';
 import { Loadable } from '../../Interfaces/Index';
 import { Logger } from '../../Util/Log';
@@ -30,7 +33,12 @@ export class Sound extends Class implements Audio, Loadable<AudioBuffer> {
       track.loop = this._loop;
     }
 
-    this.logger.debug('Set loop for all instances of sound', this.path, 'to', this._loop);
+    this.logger.debug(
+      'Set loop for all instances of sound',
+      this.path,
+      'to',
+      this._loop
+    );
   }
   public get loop(): boolean {
     return this._loop;
@@ -45,7 +53,12 @@ export class Sound extends Class implements Audio, Loadable<AudioBuffer> {
 
     this.emit('volumechange', new NativeSoundEvent(this));
 
-    this.logger.debug('Set loop for all instances of sound', this.path, 'to', this._volume);
+    this.logger.debug(
+      'Set loop for all instances of sound',
+      this.path,
+      'to',
+      this._volume
+    );
   }
   public get volume(): number {
     return this._volume;
@@ -99,7 +112,10 @@ export class Sound extends Class implements Audio, Loadable<AudioBuffer> {
     }
 
     if (!this.path) {
-      this.logger.warn('This browser does not support any of the audio files specified:', paths.join(', '));
+      this.logger.warn(
+        'This browser does not support any of the audio files specified:',
+        paths.join(', ')
+      );
       this.logger.warn('Attempting to use', paths[0]);
       this.path = paths[0]; // select the first specified
     }
@@ -115,9 +131,10 @@ export class Sound extends Class implements Audio, Loadable<AudioBuffer> {
     }
     const arraybuffer = await this._resource.load();
     const audiobuffer = await this.decodeAudio(arraybuffer.slice(0));
-    this._duration = typeof audiobuffer === 'object' ? audiobuffer.duration : undefined;
+    this._duration =
+      typeof audiobuffer === 'object' ? audiobuffer.duration : undefined;
     this.emit('processed', new NativeSoundProcessedEvent(this, audiobuffer));
-    return this.data = audiobuffer;
+    return (this.data = audiobuffer);
   }
 
   public async decodeAudio(data: ArrayBuffer): Promise<AudioBuffer> {
@@ -182,7 +199,11 @@ export class Sound extends Class implements Audio, Loadable<AudioBuffer> {
    */
   public play(volume?: number): Promise<boolean> {
     if (!this.isLoaded()) {
-      this.logger.warn('Cannot start playing. Resource', this.path, 'is not loaded yet');
+      this.logger.warn(
+        'Cannot start playing. Resource',
+        this.path,
+        'is not loaded yet'
+      );
 
       return Promise.resolve(true);
     }
@@ -235,8 +256,6 @@ export class Sound extends Class implements Audio, Loadable<AudioBuffer> {
     this.logger.debug('Stopped all instances of sound', this.path);
   }
 
-
-
   /**
    * Get Id of provided AudioInstance in current trackList
    * @param track [[AudioInstance]] which Id is to be given
@@ -257,7 +276,11 @@ export class Sound extends Class implements Audio, Loadable<AudioBuffer> {
 
       this.emit('resume', new NativeSoundEvent(this));
 
-      this.logger.debug('Resuming paused instances for sound', this.path, this._tracks);
+      this.logger.debug(
+        'Resuming paused instances for sound',
+        this.path,
+        this._tracks
+      );
       // resolve when resumed tracks are done
       await Promise.all(resumed);
     }

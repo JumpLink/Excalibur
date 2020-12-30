@@ -81,7 +81,12 @@ export class AnimationImpl implements Drawable, HasTick {
    * @param speed   The number in milliseconds to display each frame in the animation
    * @param loop    Indicates whether the animation should loop after it is completed
    */
-  constructor(engineOrConfig: Engine | AnimationArgs, sprites: Sprite[], speed: number, loop?: boolean) {
+  constructor(
+    engineOrConfig: Engine | AnimationArgs,
+    sprites: Sprite[],
+    speed: number,
+    loop?: boolean
+  ) {
     let engine = engineOrConfig;
     if (engineOrConfig && !(engineOrConfig instanceof Engine)) {
       const config = engineOrConfig;
@@ -260,7 +265,9 @@ export class AnimationImpl implements Drawable, HasTick {
     this._idempotencyToken = idempotencyToken;
     this._timeLeftInFrame -= elapsed;
     if (this._timeLeftInFrame <= 0) {
-      this.currentFrame = this.loop ? (this.currentFrame + 1) % this.sprites.length : this.currentFrame + 1;
+      this.currentFrame = this.loop
+        ? (this.currentFrame + 1) % this.sprites.length
+        : this.currentFrame + 1;
       this._timeLeftInFrame = this.speed;
     }
 
@@ -300,7 +307,11 @@ export class AnimationImpl implements Drawable, HasTick {
    * @param options
    */
   public draw(options: DrawOptions): void;
-  public draw(ctxOrOptions: CanvasRenderingContext2D | DrawOptions, x?: number, y?: number) {
+  public draw(
+    ctxOrOptions: CanvasRenderingContext2D | DrawOptions,
+    x?: number,
+    y?: number
+  ) {
     if (ctxOrOptions instanceof CanvasRenderingContext2D) {
       this._drawWithOptions({ ctx: ctxOrOptions, x, y });
     } else {
@@ -317,7 +328,7 @@ export class AnimationImpl implements Drawable, HasTick {
       flipHorizontal: options.flipHorizontal ?? this.flipHorizontal,
       flipVertical: options.flipVertical ?? this.flipVertical,
       anchor: options.anchor ?? this.anchor,
-      opacity: options.opacity ?? this._opacity
+      opacity: options.opacity ?? this._opacity,
     };
 
     this._updateValues();
@@ -328,7 +339,9 @@ export class AnimationImpl implements Drawable, HasTick {
     }
 
     if (this.freezeFrame !== -1 && this.currentFrame >= this.sprites.length) {
-      currSprite = this.sprites[Util.clamp(this.freezeFrame, 0, this.sprites.length - 1)];
+      currSprite = this.sprites[
+        Util.clamp(this.freezeFrame, 0, this.sprites.length - 1)
+      ];
       currSprite.draw(animOptions);
     }
 
@@ -371,7 +384,12 @@ export interface AnimationArgs extends Partial<AnimationImpl> {
 export class Animation extends Configurable(AnimationImpl) {
   constructor(config: AnimationArgs);
   constructor(engine: Engine, images: Sprite[], speed: number, loop?: boolean);
-  constructor(engineOrConfig: Engine | AnimationArgs, images?: Sprite[], speed?: number, loop?: boolean) {
+  constructor(
+    engineOrConfig: Engine | AnimationArgs,
+    images?: Sprite[],
+    speed?: number,
+    loop?: boolean
+  ) {
     super(engineOrConfig, images, speed, loop);
   }
 }

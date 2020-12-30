@@ -14,7 +14,9 @@ import { TransformComponent } from './EntityComponentSystem/Components/Transform
 /**
  * @hidden
  */
-export class TileMapImpl extends Entity<TransformComponent | CanvasDrawComponent> {
+export class TileMapImpl extends Entity<
+  TransformComponent | CanvasDrawComponent
+> {
   private _collidingX: number = -1;
   private _collidingY: number = -1;
   private _onScreenXStart: number = 0;
@@ -45,11 +47,26 @@ export class TileMapImpl extends Entity<TransformComponent | CanvasDrawComponent
     this.y = val.y;
   }
 
-  public on(eventName: Events.preupdate, handler: (event: Events.PreUpdateEvent<TileMap>) => void): void;
-  public on(eventName: Events.postupdate, handler: (event: Events.PostUpdateEvent<TileMap>) => void): void;
-  public on(eventName: Events.predraw, handler: (event: Events.PreDrawEvent) => void): void;
-  public on(eventName: Events.postdraw, handler: (event: Events.PostDrawEvent) => void): void;
-  public on(eventName: string, handler: (event: Events.GameEvent<any>) => void): void;
+  public on(
+    eventName: Events.preupdate,
+    handler: (event: Events.PreUpdateEvent<TileMap>) => void
+  ): void;
+  public on(
+    eventName: Events.postupdate,
+    handler: (event: Events.PostUpdateEvent<TileMap>) => void
+  ): void;
+  public on(
+    eventName: Events.predraw,
+    handler: (event: Events.PreDrawEvent) => void
+  ): void;
+  public on(
+    eventName: Events.postdraw,
+    handler: (event: Events.PostDrawEvent) => void
+  ): void;
+  public on(
+    eventName: string,
+    handler: (event: Events.GameEvent<any>) => void
+  ): void;
   public on(eventName: string, handler: (event: any) => void): void {
     super.on(eventName, handler);
   }
@@ -62,7 +79,14 @@ export class TileMapImpl extends Entity<TransformComponent | CanvasDrawComponent
    * @param rows          The number of rows in the TileMap (should not be changed once set)
    * @param cols          The number of cols in the TileMap (should not be changed once set)
    */
-  constructor(xOrConfig: number | TileMapArgs, y: number, cellWidth: number, cellHeight: number, rows: number, cols: number) {
+  constructor(
+    xOrConfig: number | TileMapArgs,
+    y: number,
+    cellWidth: number,
+    cellHeight: number,
+    rows: number,
+    cols: number
+  ) {
     super();
     if (xOrConfig && typeof xOrConfig === 'object') {
       const config = xOrConfig;
@@ -83,14 +107,22 @@ export class TileMapImpl extends Entity<TransformComponent | CanvasDrawComponent
     for (let i = 0; i < cols; i++) {
       for (let j = 0; j < rows; j++) {
         (() => {
-          const cd = new Cell(i * cellWidth + <number>xOrConfig, j * cellHeight + y, cellWidth, cellHeight, i + j * cols);
+          const cd = new Cell(
+            i * cellWidth + <number>xOrConfig,
+            j * cellHeight + y,
+            cellWidth,
+            cellHeight,
+            i + j * cols
+          );
           this.data[i + j * cols] = cd;
         })();
       }
     }
 
     this.addComponent(new TransformComponent());
-    this.addComponent(new CanvasDrawComponent((ctx, delta) => this.draw(ctx, delta)));
+    this.addComponent(
+      new CanvasDrawComponent((ctx, delta) => this.draw(ctx, delta))
+    );
   }
 
   public registerSpriteSheet(key: string, spriteSheet: SpriteSheet) {
@@ -109,8 +141,16 @@ export class TileMapImpl extends Entity<TransformComponent | CanvasDrawComponent
       return null;
     }
     // trace points for overlap
-    for (let x = actorBounds.left; x <= width; x += Math.min(actor.width / 2, this.cellWidth / 2)) {
-      for (let y = actorBounds.top; y <= height; y += Math.min(actor.height / 2, this.cellHeight / 2)) {
+    for (
+      let x = actorBounds.left;
+      x <= width;
+      x += Math.min(actor.width / 2, this.cellWidth / 2)
+    ) {
+      for (
+        let y = actorBounds.top;
+        y <= height;
+        y += Math.min(actor.height / 2, this.cellHeight / 2)
+      ) {
         const cell = this.getCellByPoint(x, y);
         if (cell && cell.solid) {
           const overlap = actorBounds.intersect(cell.bounds);
@@ -180,13 +220,29 @@ export class TileMapImpl extends Entity<TransformComponent | CanvasDrawComponent
     this.onPreUpdate(engine, delta);
     this.emit('preupdate', new Events.PreUpdateEvent(engine, delta, this));
 
-    const worldCoordsUpperLeft = engine.screenToWorldCoordinates(new Vector(0, 0));
-    const worldCoordsLowerRight = engine.screenToWorldCoordinates(new Vector(engine.canvas.clientWidth, engine.canvas.clientHeight));
+    const worldCoordsUpperLeft = engine.screenToWorldCoordinates(
+      new Vector(0, 0)
+    );
+    const worldCoordsLowerRight = engine.screenToWorldCoordinates(
+      new Vector(engine.canvas.clientWidth, engine.canvas.clientHeight)
+    );
 
-    this._onScreenXStart = Math.max(Math.floor((worldCoordsUpperLeft.x - this.x) / this.cellWidth) - 2, 0);
-    this._onScreenYStart = Math.max(Math.floor((worldCoordsUpperLeft.y - this.y) / this.cellHeight) - 2, 0);
-    this._onScreenXEnd = Math.max(Math.floor((worldCoordsLowerRight.x - this.x) / this.cellWidth) + 2, 0);
-    this._onScreenYEnd = Math.max(Math.floor((worldCoordsLowerRight.y - this.y) / this.cellHeight) + 2, 0);
+    this._onScreenXStart = Math.max(
+      Math.floor((worldCoordsUpperLeft.x - this.x) / this.cellWidth) - 2,
+      0
+    );
+    this._onScreenYStart = Math.max(
+      Math.floor((worldCoordsUpperLeft.y - this.y) / this.cellHeight) - 2,
+      0
+    );
+    this._onScreenXEnd = Math.max(
+      Math.floor((worldCoordsLowerRight.x - this.x) / this.cellWidth) + 2,
+      0
+    );
+    this._onScreenYEnd = Math.max(
+      Math.floor((worldCoordsLowerRight.y - this.y) / this.cellHeight) + 2,
+      0
+    );
 
     this.onPostUpdate(engine, delta);
     this.emit('postupdate', new Events.PostUpdateEvent(engine, delta, this));
@@ -223,10 +279,22 @@ export class TileMapImpl extends Entity<TransformComponent | CanvasDrawComponent
             if (sprite) {
               sprite.draw(ctx, x * this.cellWidth, y * this.cellHeight);
             } else {
-              this.logger.warn('Sprite does not exist for id', cs[csi].spriteId, 'in sprite sheet', cs[csi].spriteSheetKey, sprite, ss);
+              this.logger.warn(
+                'Sprite does not exist for id',
+                cs[csi].spriteId,
+                'in sprite sheet',
+                cs[csi].spriteSheetKey,
+                sprite,
+                ss
+              );
             }
           } else {
-            this.logger.warn('Sprite sheet', cs[csi].spriteSheetKey, 'does not exist', ss);
+            this.logger.warn(
+              'Sprite sheet',
+              cs[csi].spriteSheetKey,
+              'does not exist',
+              ss
+            );
           }
         }
       }
@@ -295,8 +363,22 @@ export interface TileMapArgs extends Partial<TileMapImpl> {
  */
 export class TileMap extends Configurable(TileMapImpl) {
   constructor(config: TileMapArgs);
-  constructor(x: number, y: number, cellWidth: number, cellHeight: number, rows: number, cols: number);
-  constructor(xOrConfig: number | TileMapArgs, y?: number, cellWidth?: number, cellHeight?: number, rows?: number, cols?: number) {
+  constructor(
+    x: number,
+    y: number,
+    cellWidth: number,
+    cellHeight: number,
+    rows: number,
+    cols: number
+  );
+  constructor(
+    xOrConfig: number | TileMapArgs,
+    y?: number,
+    cellWidth?: number,
+    cellHeight?: number,
+    rows?: number,
+    cols?: number
+  ) {
     super(xOrConfig, y, cellWidth, cellHeight, rows, cols);
   }
 }
@@ -360,7 +442,12 @@ export class CellImpl {
     this.index = index;
     this.solid = solid;
     this.sprites = sprites;
-    this._bounds = new BoundingBox(this.x, this.y, this.x + this.width, this.y + this.height);
+    this._bounds = new BoundingBox(
+      this.x,
+      this.y,
+      this.x + this.width,
+      this.y + this.height
+    );
   }
 
   public get bounds() {
@@ -416,7 +503,15 @@ export interface CellArgs extends Partial<CellImpl> {
  */
 export class Cell extends Configurable(CellImpl) {
   constructor(config: CellArgs);
-  constructor(x: number, y: number, width: number, height: number, index: number, solid?: boolean, sprites?: TileSprite[]);
+  constructor(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    index: number,
+    solid?: boolean,
+    sprites?: TileSprite[]
+  );
   constructor(
     xOrConfig: number | CellArgs,
     y?: number,

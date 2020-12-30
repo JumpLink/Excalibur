@@ -18,7 +18,13 @@ export class Resource<T> implements Loadable<T> {
    */
   constructor(
     public path: string,
-    public responseType: '' | 'arraybuffer' | 'blob' | 'document' | 'json' | 'text',
+    public responseType:
+      | ''
+      | 'arraybuffer'
+      | 'blob'
+      | 'document'
+      | 'json'
+      | 'text',
     public bustCache: boolean = true
   ) {}
 
@@ -29,7 +35,6 @@ export class Resource<T> implements Loadable<T> {
   public isLoaded(): boolean {
     return this.data !== null;
   }
-
 
   private _cacheBust(uri: string): string {
     const query: RegExp = /\?\w*=\w*/;
@@ -54,16 +59,33 @@ export class Resource<T> implements Loadable<T> {
       }
 
       const request = new XMLHttpRequest();
-      request.open('GET', this.bustCache ? this._cacheBust(this.path) : this.path, true);
+      request.open(
+        'GET',
+        this.bustCache ? this._cacheBust(this.path) : this.path,
+        true
+      );
       request.responseType = this.responseType;
-      request.addEventListener('loadstart', (e) => this.events.emit('loadstart', e as any));
-      request.addEventListener('progress', (e) => this.events.emit('progress', e as any));
-      request.addEventListener('error', (e) => this.events.emit('error', e as any));
-      request.addEventListener('load', (e) => this.events.emit('load', e as any));
+      request.addEventListener('loadstart', (e) =>
+        this.events.emit('loadstart', e as any)
+      );
+      request.addEventListener('progress', (e) =>
+        this.events.emit('progress', e as any)
+      );
+      request.addEventListener('error', (e) =>
+        this.events.emit('error', e as any)
+      );
+      request.addEventListener('load', (e) =>
+        this.events.emit('load', e as any)
+      );
       request.addEventListener('load', () => {
         // XHR on file:// success status is 0, such as with PhantomJS
         if (request.status !== 0 && request.status !== 200) {
-          this.logger.error('Failed to load resource ', this.path, ' server responded with error code', request.status);
+          this.logger.error(
+            'Failed to load resource ',
+            this.path,
+            ' server responded with error code',
+            request.status
+          );
           this.events.emit('error', request.response);
           reject(request.response);
           return;

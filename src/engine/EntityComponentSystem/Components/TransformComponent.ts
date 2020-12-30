@@ -14,7 +14,7 @@ export enum CoordPlane {
    * The screen coordinate plane represents screen space, entities drawn in screen space are pinned
    * to screen coordinates ignoring the camera.
    */
-  Screen = 'screen'
+  Screen = 'screen',
 }
 
 export class TransformComponent extends Component<'transform'> {

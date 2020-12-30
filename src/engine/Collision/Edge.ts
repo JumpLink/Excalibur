@@ -51,7 +51,7 @@ export class Edge implements CollisionShape {
     return new Edge({
       begin: this.begin.clone(),
       end: this.end.clone(),
-      collider: null
+      collider: null,
     });
   }
 
@@ -124,7 +124,10 @@ export class Edge implements CollisionShape {
     const numerator = this._getTransformedBegin().sub(ray.pos);
 
     // Test is line and ray are parallel and non intersecting
-    if (ray.dir.cross(this.getSlope()) === 0 && numerator.cross(ray.dir) !== 0) {
+    if (
+      ray.dir.cross(this.getSlope()) === 0 &&
+      numerator.cross(ray.dir) !== 0
+    ) {
       return null;
     }
 
@@ -158,7 +161,9 @@ export class Edge implements CollisionShape {
     } else if (shape instanceof Edge) {
       return ClosestLineJumpTable.EdgeEdgeClosestLine(this, shape);
     } else {
-      throw new Error(`Polygon could not collide with unknown CollisionShape ${typeof shape}`);
+      throw new Error(
+        `Polygon could not collide with unknown CollisionShape ${typeof shape}`
+      );
     }
   }
 
@@ -173,7 +178,9 @@ export class Edge implements CollisionShape {
     } else if (shape instanceof Edge) {
       return CollisionJumpTable.CollideEdgeEdge();
     } else {
-      throw new Error(`Edge could not collide with unknown CollisionShape ${typeof shape}`);
+      throw new Error(
+        `Edge could not collide with unknown CollisionShape ${typeof shape}`
+      );
     }
   }
 
@@ -191,7 +198,12 @@ export class Edge implements CollisionShape {
   }
 
   private _boundsFromBeginEnd(begin: Vector, end: Vector) {
-    return new BoundingBox(Math.min(begin.x, end.x), Math.min(begin.y, end.y), Math.max(begin.x, end.x), Math.max(begin.y, end.y));
+    return new BoundingBox(
+      Math.min(begin.x, end.x),
+      Math.min(begin.y, end.y),
+      Math.max(begin.x, end.x),
+      Math.max(begin.y, end.y)
+    );
   }
 
   /**
@@ -265,10 +277,17 @@ export class Edge implements CollisionShape {
       scalars.push(points[i].dot(axis));
     }
 
-    return new Projection(Math.min.apply(Math, scalars), Math.max.apply(Math, scalars));
+    return new Projection(
+      Math.min.apply(Math, scalars),
+      Math.max.apply(Math, scalars)
+    );
   }
 
-  public draw(ctx: CanvasRenderingContext2D, color: Color = Color.Green, pos: Vector = Vector.Zero) {
+  public draw(
+    ctx: CanvasRenderingContext2D,
+    color: Color = Color.Green,
+    pos: Vector = Vector.Zero
+  ) {
     const begin = this.begin.add(pos);
     const end = this.end.add(pos);
     ctx.strokeStyle = color.toString();

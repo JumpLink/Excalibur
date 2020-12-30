@@ -14,7 +14,7 @@ xdescribe('A label', () => {
       width: 500,
       height: 500,
       suppressConsoleBootMessage: true,
-      suppressMinimumBrowserFeatureDetection: true
+      suppressMinimumBrowserFeatureDetection: true,
     });
 
     label = new ex.Label('Test string', 100, 100);
@@ -38,7 +38,7 @@ xdescribe('A label', () => {
       fontStyle: ex.FontStyle.Normal,
       fontUnit: ex.FontUnit.Px,
       textAlign: ex.TextAlign.Left,
-      maxWidth: 200
+      maxWidth: 200,
     });
 
     expect(label.text).toBe('test text');
@@ -81,7 +81,10 @@ xdescribe('A label', () => {
     label.draw(engine.ctx, 100);
     expect(label.color.toString()).toBe(ex.Color.Blue.toString());
 
-    ensureImagesLoaded(engine.canvas, 'src/spec/images/LabelSpec/bluetext.png').then(([canvas, image]) => {
+    ensureImagesLoaded(
+      engine.canvas,
+      'src/spec/images/LabelSpec/bluetext.png'
+    ).then(([canvas, image]) => {
       expect(canvas).toEqualImage(image, 1);
       done();
     });
@@ -94,7 +97,10 @@ xdescribe('A label', () => {
     label.fontStyle = ex.FontStyle.Italic;
     label.draw(engine.ctx, 100);
 
-    ensureImagesLoaded(engine.canvas, 'src/spec/images/LabelSpec/italictext-linux.png').then(([canvas, image]) => {
+    ensureImagesLoaded(
+      engine.canvas,
+      'src/spec/images/LabelSpec/italictext-linux.png'
+    ).then(([canvas, image]) => {
       expect(canvas).toEqualImage(image, 0.98);
       done();
     });
@@ -106,7 +112,10 @@ xdescribe('A label', () => {
     label.color = ex.Color.Black;
     label.fontStyle = ex.FontStyle.Oblique;
     label.draw(engine.ctx, 100);
-    ensureImagesLoaded(engine.canvas, 'src/spec/images/LabelSpec/obliquetext-linux.png').then(([canvas, image]) => {
+    ensureImagesLoaded(
+      engine.canvas,
+      'src/spec/images/LabelSpec/obliquetext-linux.png'
+    ).then(([canvas, image]) => {
       expect(canvas).toEqualImage(image, 0.98);
       done();
     });
@@ -121,7 +130,10 @@ xdescribe('A label', () => {
     label.fontStyle = ex.FontStyle.Normal;
 
     label.draw(engine.ctx, 100);
-    ensureImagesLoaded(engine.canvas, 'src/spec/images/LabelSpec/normaltext-linux.png').then(([canvas, image]) => {
+    ensureImagesLoaded(
+      engine.canvas,
+      'src/spec/images/LabelSpec/normaltext-linux.png'
+    ).then(([canvas, image]) => {
       expect(canvas).toEqualImage(image, 0.98);
       done();
     });
@@ -135,7 +147,10 @@ xdescribe('A label', () => {
     label.bold = true;
 
     label.draw(engine.ctx, 100);
-    ensureImagesLoaded(engine.canvas, 'src/spec/images/LabelSpec/boldtext-linux.png').then(([canvas, image]) => {
+    ensureImagesLoaded(
+      engine.canvas,
+      'src/spec/images/LabelSpec/boldtext-linux.png'
+    ).then(([canvas, image]) => {
       expect(canvas).toEqualImage(image, 0.98);
       done();
     });
@@ -149,7 +164,10 @@ xdescribe('A label', () => {
     label.textAlign = ex.TextAlign.Right;
     label.draw(engine.ctx, 100);
 
-    ensureImagesLoaded(engine.canvas, 'src/spec/images/LabelSpec/righttext-linux.png').then(([canvas, image]) => {
+    ensureImagesLoaded(
+      engine.canvas,
+      'src/spec/images/LabelSpec/righttext-linux.png'
+    ).then(([canvas, image]) => {
       expect(canvas).toEqualImage(image, 0.98);
       done();
     });
@@ -163,7 +181,10 @@ xdescribe('A label', () => {
     label.textAlign = ex.TextAlign.Left;
     label.draw(engine.ctx, 100);
 
-    ensureImagesLoaded(engine.canvas, 'src/spec/images/LabelSpec/lefttext-linux.png').then(([canvas, image]) => {
+    ensureImagesLoaded(
+      engine.canvas,
+      'src/spec/images/LabelSpec/lefttext-linux.png'
+    ).then(([canvas, image]) => {
       expect(canvas).toEqualImage(image, 0.98);
       done();
     });
@@ -177,7 +198,10 @@ xdescribe('A label', () => {
     label.textAlign = ex.TextAlign.Center;
     label.draw(engine.ctx, 100);
 
-    ensureImagesLoaded(engine.canvas, 'src/spec/images/LabelSpec/centertext-linux.png').then(([canvas, image]) => {
+    ensureImagesLoaded(
+      engine.canvas,
+      'src/spec/images/LabelSpec/centertext-linux.png'
+    ).then(([canvas, image]) => {
       expect(canvas).toEqualImage(image, 0.98);
       done();
     });

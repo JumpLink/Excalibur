@@ -5,7 +5,7 @@ import { Engine } from '../Engine';
 export enum ColorBlindness {
   Protanope,
   Deuteranope,
-  Tritanope
+  Tritanope,
 }
 
 /**
@@ -90,7 +90,11 @@ export class ColorBlindCorrector implements PostProcessor {
   private _gl: WebGLRenderingContext;
   private _program: WebGLProgram;
 
-  constructor(public engine: Engine, public simulate: boolean = false, public colorMode: ColorBlindness = ColorBlindness.Protanope) {
+  constructor(
+    public engine: Engine,
+    public simulate: boolean = false,
+    public colorMode: ColorBlindness = ColorBlindness.Protanope
+  ) {
     this._internalCanvas = document.createElement('canvas');
     this._internalCanvas.width = engine.drawWidth;
     this._internalCanvas.height = engine.drawHeight;
@@ -99,7 +103,10 @@ export class ColorBlindCorrector implements PostProcessor {
     this._gl = <WebGLRenderingContext>this._internalCanvas.getContext('webgl', { preserveDrawingBuffer: true });
 
     this._program = this._gl.createProgram();
-    const fragmentShader = this._getShader('Fragment', this._getFragmentShaderByMode(colorMode));
+    const fragmentShader = this._getShader(
+      'Fragment',
+      this._getFragmentShaderByMode(colorMode)
+    );
     const vertextShader = this._getShader('Vertex', this._vertexShader);
 
     this._gl.attachShader(this._program, vertextShader);
@@ -133,9 +140,15 @@ export class ColorBlindCorrector implements PostProcessor {
     }
 
     if (this.simulate) {
-      this._fragmentShader = this._fragmentShader.replace('//SIMULATE//', 'gl_FragColor = error.rgba;');
+      this._fragmentShader = this._fragmentShader.replace(
+        '//SIMULATE//',
+        'gl_FragColor = error.rgba;'
+      );
     } else {
-      this._fragmentShader = this._fragmentShader.replace('//SIMULATE//', 'gl_FragColor = correction.rgba;');
+      this._fragmentShader = this._fragmentShader.replace(
+        '//SIMULATE//',
+        'gl_FragColor = correction.rgba;'
+      );
     }
 
     return this._fragmentShader.replace('//MODE CODE//', code);
@@ -146,7 +159,11 @@ export class ColorBlindCorrector implements PostProcessor {
     const x2 = x + width;
     const y1 = y;
     const y2 = y + height;
-    this._gl.bufferData(this._gl.ARRAY_BUFFER, new Float32Array([x1, y1, x2, y1, x1, y2, x1, y2, x2, y1, x2, y2]), this._gl.STATIC_DRAW);
+    this._gl.bufferData(
+      this._gl.ARRAY_BUFFER,
+      new Float32Array([x1, y1, x2, y1, x1, y2, x1, y2, x2, y1, x2, y2]),
+      this._gl.STATIC_DRAW
+    );
   }
 
   private _getShader(type: string, program: string): WebGLShader {
@@ -163,7 +180,10 @@ export class ColorBlindCorrector implements PostProcessor {
     this._gl.compileShader(shader);
 
     if (!this._gl.getShaderParameter(shader, this._gl.COMPILE_STATUS)) {
-      Logger.getInstance().error('Unable to compile shader!', this._gl.getShaderInfoLog(shader));
+      Logger.getInstance().error(
+        'Unable to compile shader!',
+        this._gl.getShaderInfoLog(shader)
+      );
       return null;
     }
 
@@ -172,44 +192,107 @@ export class ColorBlindCorrector implements PostProcessor {
 
   public process(image: ImageData, out: CanvasRenderingContext2D) {
     // look up where the vertex data needs to go.
-    const positionLocation = this._gl.getAttribLocation(this._program, 'a_position');
-    const texCoordLocation = this._gl.getAttribLocation(this._program, 'a_texCoord');
+    const positionLocation = this._gl.getAttribLocation(
+      this._program,
+      'a_position'
+    );
+    const texCoordLocation = this._gl.getAttribLocation(
+      this._program,
+      'a_texCoord'
+    );
 
     const texCoordBuffer = this._gl.createBuffer();
     this._gl.bindBuffer(this._gl.ARRAY_BUFFER, texCoordBuffer);
     this._gl.bufferData(
       this._gl.ARRAY_BUFFER,
-      new Float32Array([0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0]),
+      new Float32Array([
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+      ]),
       this._gl.STATIC_DRAW
     );
     this._gl.enableVertexAttribArray(texCoordLocation);
-    this._gl.vertexAttribPointer(texCoordLocation, 2, this._gl.FLOAT, false, 0, 0);
+    this._gl.vertexAttribPointer(
+      texCoordLocation,
+      2,
+      this._gl.FLOAT,
+      false,
+      0,
+      0
+    );
 
     // Create a texture.
     const texture = this._gl.createTexture();
     this._gl.bindTexture(this._gl.TEXTURE_2D, texture);
 
     // Set the parameters so we can render any size image.
-    this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_S, this._gl.CLAMP_TO_EDGE);
-    this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_WRAP_T, this._gl.CLAMP_TO_EDGE);
-    this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_MIN_FILTER, this._gl.NEAREST);
-    this._gl.texParameteri(this._gl.TEXTURE_2D, this._gl.TEXTURE_MAG_FILTER, this._gl.NEAREST);
+    this._gl.texParameteri(
+      this._gl.TEXTURE_2D,
+      this._gl.TEXTURE_WRAP_S,
+      this._gl.CLAMP_TO_EDGE
+    );
+    this._gl.texParameteri(
+      this._gl.TEXTURE_2D,
+      this._gl.TEXTURE_WRAP_T,
+      this._gl.CLAMP_TO_EDGE
+    );
+    this._gl.texParameteri(
+      this._gl.TEXTURE_2D,
+      this._gl.TEXTURE_MIN_FILTER,
+      this._gl.NEAREST
+    );
+    this._gl.texParameteri(
+      this._gl.TEXTURE_2D,
+      this._gl.TEXTURE_MAG_FILTER,
+      this._gl.NEAREST
+    );
     // Flip the texture when unpacking into the gl context, gl reads textures in the opposite order as everything else :/
     this._gl.pixelStorei(this._gl.UNPACK_FLIP_Y_WEBGL, 1);
     // Upload the image into the texture.
-    this._gl.texImage2D(this._gl.TEXTURE_2D, 0, this._gl.RGBA, this._gl.RGBA, this._gl.UNSIGNED_BYTE, image);
+    this._gl.texImage2D(
+      this._gl.TEXTURE_2D,
+      0,
+      this._gl.RGBA,
+      this._gl.RGBA,
+      this._gl.UNSIGNED_BYTE,
+      image
+    );
 
     // lookup uniforms
-    const resolutionLocation = this._gl.getUniformLocation(this._program, 'u_resolution');
+    const resolutionLocation = this._gl.getUniformLocation(
+      this._program,
+      'u_resolution'
+    );
 
     // set the resolution
-    this._gl.uniform2f(resolutionLocation, this._internalCanvas.width, this._internalCanvas.height);
+    this._gl.uniform2f(
+      resolutionLocation,
+      this._internalCanvas.width,
+      this._internalCanvas.height
+    );
 
     // Create a buffer for the position of the rectangle corners.
     const positionBuffer = this._gl.createBuffer();
     this._gl.bindBuffer(this._gl.ARRAY_BUFFER, positionBuffer);
     this._gl.enableVertexAttribArray(positionLocation);
-    this._gl.vertexAttribPointer(positionLocation, 2, this._gl.FLOAT, false, 0, 0);
+    this._gl.vertexAttribPointer(
+      positionLocation,
+      2,
+      this._gl.FLOAT,
+      false,
+      0,
+      0
+    );
 
     // Set a rectangle the same size as the image.
     this._setRectangle(0, 0, image.width, image.height);
@@ -219,7 +302,15 @@ export class ColorBlindCorrector implements PostProcessor {
 
     // Grab transformed image from internal canvas
     const pixelData = new Uint8Array(image.width * image.height * 4);
-    this._gl.readPixels(0, 0, image.width, image.height, this._gl.RGBA, this._gl.UNSIGNED_BYTE, pixelData);
+    this._gl.readPixels(
+      0,
+      0,
+      image.width,
+      image.height,
+      this._gl.RGBA,
+      this._gl.UNSIGNED_BYTE,
+      pixelData
+    );
 
     (<any>image.data).set(pixelData);
 

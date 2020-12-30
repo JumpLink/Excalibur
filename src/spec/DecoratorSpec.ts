@@ -71,14 +71,17 @@ describe('An @obsolete decorator', () => {
 
   it('can have a custom message', () => {
     const value = testObsolete.customMessage();
-    expect(logger.warn).toHaveBeenCalledWith('customMessage is marked obsolete: mymessage');
+    expect(logger.warn).toHaveBeenCalledWith(
+      'customMessage is marked obsolete: mymessage'
+    );
     expect(value).toBe('stuff');
   });
 
   it('can specify an alternate method', () => {
     const value = testObsolete.altmethod();
     expect(logger.warn).toHaveBeenCalledWith(
-      'altmethod is marked obsolete: This feature will be ' + 'removed in future versions of Excalibur. Use altMethod instead'
+      'altmethod is marked obsolete: This feature will be ' +
+        'removed in future versions of Excalibur. Use altMethod instead'
     );
     expect(value).toBe('stuff');
   });
@@ -86,7 +89,8 @@ describe('An @obsolete decorator', () => {
   it('can be used on a class', () => {
     const instance = new ObsoleteClass();
     expect(logger.warn).toHaveBeenCalledWith(
-      'ObsoleteClass is marked obsolete: This feature will be ' + 'removed in future versions of Excalibur.'
+      'ObsoleteClass is marked obsolete: This feature will be ' +
+        'removed in future versions of Excalibur.'
     );
   });
 

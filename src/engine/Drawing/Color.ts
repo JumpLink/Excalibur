@@ -115,7 +115,12 @@ export class Color {
    * @param l  Luminance is represented [0-1]
    * @param a  Alpha is represented [0-1]
    */
-  public static fromHSL(h: number, s: number, l: number, a: number = 1.0): Color {
+  public static fromHSL(
+    h: number,
+    s: number,
+    l: number,
+    a: number = 1.0
+  ): Color {
     const temp = new HSLColor(h, s, l, a);
     return temp.toRGBA();
   }
@@ -182,7 +187,10 @@ export class Color {
    * @param color
    * @obsolete Alias for incorrect spelling used in older versions, use multiply instead, will be removed in v0.25.0
    */
-  @obsolete({ message: 'Alias for incorrect spelling used in older versions, use multiply instead, will be removed in v0.25.0' })
+  @obsolete({
+    message:
+      'Alias for incorrect spelling used in older versions, use multiply instead, will be removed in v0.25.0',
+  })
   public mulitiply(color: Color): Color {
     return this.multiply(color);
   }
@@ -250,14 +258,24 @@ export class Color {
    * Return Hex representation of a color.
    */
   public toHex() {
-    return '#' + this._componentToHex(this.r) + this._componentToHex(this.g) + this._componentToHex(this.b);
+    return (
+      '#' +
+      this._componentToHex(this.r) +
+      this._componentToHex(this.g) +
+      this._componentToHex(this.b)
+    );
   }
 
   /**
    * Return RGBA representation of a color.
    */
   public toRGBA() {
-    const result = String(this.r.toFixed(0)) + ', ' + String(this.g.toFixed(0)) + ', ' + String(this.b.toFixed(0));
+    const result =
+      String(this.r.toFixed(0)) +
+      ', ' +
+      String(this.g.toFixed(0)) +
+      ', ' +
+      String(this.b.toFixed(0));
     if (this.a !== undefined || this.a !== null) {
       return 'rgba(' + result + ', ' + String(this.a) + ')';
     }
@@ -354,7 +372,7 @@ export class Color {
    */
   @obsolete({
     message: 'Alias for incorrect spelling used in older versions',
-    alternateMethod: 'Vermilion'
+    alternateMethod: 'Vermilion',
   })
   public static get Vermillion(): Color {
     return Color.Vermilion;
@@ -438,7 +456,12 @@ export class Color {
  * http://axonflux.com/handy-rgb-to-hsl-and-rgb-to-hsv-color-model-c
  */
 class HSLColor {
-  constructor(public h: number, public s: number, public l: number, public a: number) {}
+  constructor(
+    public h: number,
+    public s: number,
+    public l: number,
+    public a: number
+  ) {}
 
   public static hue2rgb(p: number, q: number, t: number): number {
     if (t < 0) {
@@ -496,7 +519,10 @@ class HSLColor {
     if (this.s === 0) {
       r = g = b = this.l; // achromatic
     } else {
-      const q = this.l < 0.5 ? this.l * (1 + this.s) : this.l + this.s - this.l * this.s;
+      const q =
+        this.l < 0.5
+          ? this.l * (1 + this.s)
+          : this.l + this.s - this.l * this.s;
       const p = 2 * this.l - q;
       r = HSLColor.hue2rgb(p, q, this.h + 1 / 3);
       g = HSLColor.hue2rgb(p, q, this.h);

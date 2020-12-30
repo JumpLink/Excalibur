@@ -63,7 +63,7 @@ export class ConvexPolygon implements CollisionShape {
     return new ConvexPolygon({
       offset: this.offset.clone(),
       points: this.points.map((p) => p.clone()),
-      collider: null
+      collider: null,
     });
   }
 
@@ -97,7 +97,10 @@ export class ConvexPolygon implements CollisionShape {
     const len = this.points.length;
     this._transformedPoints.length = 0; // clear out old transform
     for (let i = 0; i < len; i++) {
-      this._transformedPoints[i] = this.points[i].scale(scale).rotate(angle).add(pos);
+      this._transformedPoints[i] = this.points[i]
+        .scale(scale)
+        .rotate(angle)
+        .add(pos);
     }
   }
 
@@ -173,7 +176,9 @@ export class ConvexPolygon implements CollisionShape {
     } else if (shape instanceof Edge) {
       return ClosestLineJumpTable.PolygonEdgeClosestLine(this, shape);
     } else {
-      throw new Error(`Polygon could not collide with unknown CollisionShape ${typeof shape}`);
+      throw new Error(
+        `Polygon could not collide with unknown CollisionShape ${typeof shape}`
+      );
     }
   }
 
@@ -190,7 +195,9 @@ export class ConvexPolygon implements CollisionShape {
     } else if (shape instanceof Edge) {
       return CollisionJumpTable.CollidePolygonEdge(this, shape);
     } else {
-      throw new Error(`Polygon could not collide with unknown CollisionShape ${typeof shape}`);
+      throw new Error(
+        `Polygon could not collide with unknown CollisionShape ${typeof shape}`
+      );
     }
   }
 
@@ -232,7 +239,7 @@ export class ConvexPolygon implements CollisionShape {
     if (faceIndex !== -1) {
       return {
         distance: sides[faceIndex].normal().scale(distance),
-        face: sides[faceIndex]
+        face: sides[faceIndex],
       };
     }
 
@@ -268,7 +275,9 @@ export class ConvexPolygon implements CollisionShape {
       const crossTerm = this.points[iplusone].cross(this.points[i]);
       numerator +=
         crossTerm *
-        (this.points[i].dot(this.points[i]) + this.points[i].dot(this.points[iplusone]) + this.points[iplusone].dot(this.points[iplusone]));
+        (this.points[i].dot(this.points[i]) +
+          this.points[i].dot(this.points[iplusone]) +
+          this.points[iplusone].dot(this.points[iplusone]));
       denominator += crossTerm;
     }
     return (mass / 6) * (numerator / denominator);
@@ -286,7 +295,11 @@ export class ConvexPolygon implements CollisionShape {
     let contactIndex = -1;
     for (let i = 0; i < len; i++) {
       const contactTime = ray.intersect(sides[i]);
-      if (contactTime >= 0 && contactTime < minContactTime && contactTime <= max) {
+      if (
+        contactTime >= 0 &&
+        contactTime < minContactTime &&
+        contactTime <= max
+      ) {
         minContactTime = contactTime;
         contactIndex = i;
       }
@@ -371,7 +384,11 @@ export class ConvexPolygon implements CollisionShape {
     return new Projection(min, max);
   }
 
-  public draw(ctx: CanvasRenderingContext2D, color: Color = Color.Green, pos: Vector = Vector.Zero) {
+  public draw(
+    ctx: CanvasRenderingContext2D,
+    color: Color = Color.Green,
+    pos: Vector = Vector.Zero
+  ) {
     const basePos = pos.add(this.offset);
     ctx.beginPath();
     ctx.fillStyle = color.toString();

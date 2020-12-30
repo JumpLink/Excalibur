@@ -15,10 +15,20 @@ export class Shape {
    * @param anchor Anchor of the box (default (.5, .5)) which positions the box relative to the center of the collider's position
    * @param offset Optional offset relative to the collider in local coordinates
    */
-  static Box(width: number, height: number, anchor: Vector = Vector.Half, offset: Vector = Vector.Zero): ConvexPolygon {
+  static Box(
+    width: number,
+    height: number,
+    anchor: Vector = Vector.Half,
+    offset: Vector = Vector.Zero
+  ): ConvexPolygon {
     return new ConvexPolygon({
-      points: new BoundingBox(-width * anchor.x, -height * anchor.y, width - width * anchor.x, height - height * anchor.y).getPoints(),
-      offset: offset
+      points: new BoundingBox(
+        -width * anchor.x,
+        -height * anchor.y,
+        width - width * anchor.x,
+        height - height * anchor.y
+      ).getPoints(),
+      offset: offset,
     });
   }
 
@@ -28,11 +38,15 @@ export class Shape {
    * @param clockwiseWinding Optionally changed the winding of points, by default false meaning counter-clockwise winding.
    * @param offset Optional offset relative to the collider in local coordinates
    */
-  static Polygon(points: Vector[], clockwiseWinding: boolean = false, offset: Vector = Vector.Zero): ConvexPolygon {
+  static Polygon(
+    points: Vector[],
+    clockwiseWinding: boolean = false,
+    offset: Vector = Vector.Zero
+  ): ConvexPolygon {
     return new ConvexPolygon({
       points: points,
       offset: offset,
-      clockwiseWinding: clockwiseWinding
+      clockwiseWinding: clockwiseWinding,
     });
   }
 
@@ -44,7 +58,7 @@ export class Shape {
   static Circle(radius: number, offset: Vector = Vector.Zero): Circle {
     return new Circle({
       radius: radius,
-      offset: offset
+      offset: offset,
     });
   }
 
@@ -56,7 +70,7 @@ export class Shape {
   static Edge(begin: Vector, end: Vector): Edge {
     return new Edge({
       begin: begin,
-      end: end
+      end: end,
     });
   }
 }

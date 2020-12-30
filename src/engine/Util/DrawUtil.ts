@@ -44,7 +44,11 @@ export function line(
 /**
  * Draw the vector as a point onto the canvas.
  */
-export function point(ctx: CanvasRenderingContext2D, color: Color = Color.Red, point: Vector): void {
+export function point(
+  ctx: CanvasRenderingContext2D,
+  color: Color = Color.Red,
+  point: Vector
+): void {
   ctx.beginPath();
   ctx.strokeStyle = color.toString();
   ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
@@ -59,7 +63,13 @@ export function point(ctx: CanvasRenderingContext2D, color: Color = Color.Red, p
 /**
  *
  */
-export function vector(ctx: CanvasRenderingContext2D, color: Color, origin: Vector, vector: Vector, scale: number = 1.0): void {
+export function vector(
+  ctx: CanvasRenderingContext2D,
+  color: Color,
+  origin: Vector,
+  vector: Vector,
+  scale: number = 1.0
+): void {
   const c = color ? color.toString() : 'blue';
   const v = vector.scale(scale);
   ctx.beginPath();

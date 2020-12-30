@@ -33,13 +33,17 @@ describe('Utility functions', () => {
 
     it('should return true when successfully removing an item', () => {
       const arrayToRemove = ['Stark', 'Lannister', 'Targaryen'];
-      expect(ex.Util.removeItemFromArray('Lannister', arrayToRemove)).toBe(true);
+      expect(ex.Util.removeItemFromArray('Lannister', arrayToRemove)).toBe(
+        true
+      );
       expect(arrayToRemove.length).toBe(2);
     });
 
     it('should return false when item to delete is not present', () => {
       const arrayToRemove = ['Godfrey', 'Crizzo', 'Fullstack'];
-      expect(ex.Util.removeItemFromArray('Lannister', arrayToRemove)).toBe(false);
+      expect(ex.Util.removeItemFromArray('Lannister', arrayToRemove)).toBe(
+        false
+      );
     });
   });
 
@@ -63,7 +67,7 @@ describe('Utility functions', () => {
       const obj2 = { bar: true };
       expect(ex.Util.extend({}, obj1, obj2)).toEqual({
         ...obj1,
-        ...obj2
+        ...obj2,
       });
     });
 
@@ -72,7 +76,7 @@ describe('Utility functions', () => {
       const obj2 = { bar: true, deep: { switch: true } };
       expect(ex.Util.extend<any, any, any>({}, obj1, obj2)).toEqual({
         ...obj1,
-        ...obj2
+        ...obj2,
       });
     });
 
@@ -82,8 +86,8 @@ describe('Utility functions', () => {
       expect(ex.Util.extend(true, {}, obj1, obj2)).toEqual({
         deep: {
           overwrite: true,
-          preserve: true
-        }
+          preserve: true,
+        },
       });
     });
   });

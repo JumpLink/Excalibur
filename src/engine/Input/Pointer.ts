@@ -3,7 +3,12 @@ import { Vector } from '../Algebra';
 import { Class } from '../Class';
 import * as Actors from '../Util/Actors';
 import { removeItemFromArray } from '../Util/Util';
-import { PointerMoveEvent, PointerDownEvent, PointerUpEvent, WheelEvent } from './PointerEvents';
+import {
+  PointerMoveEvent,
+  PointerDownEvent,
+  PointerUpEvent,
+  WheelEvent,
+} from './PointerEvents';
 
 export interface ActorsUnderPointer {
   [ActorId: number]: Actor;
@@ -17,7 +22,7 @@ export enum PointerType {
   Touch = 'Touch',
   Mouse = 'Mouse',
   Pen = 'Pen',
-  Unknown = 'Unknown'
+  Unknown = 'Unknown',
 }
 
 /**
@@ -33,7 +38,7 @@ export enum PointerScope {
   /**
    * Handles events on the entire document. All events will be handled by Excalibur.
    */
-  Document = 'Document'
+  Document = 'Document',
 }
 
 /**
@@ -195,9 +200,11 @@ export class Pointer extends Class {
    * Returns all actors relevant for events to pointer this frame
    */
   public getActorsForEvents(): Actor[] {
-    return this._actors.concat(this._actorsLastFrame).filter((actor, i, self) => {
-      return self.indexOf(actor) === i;
-    });
+    return this._actors
+      .concat(this._actorsLastFrame)
+      .filter((actor, i, self) => {
+        return self.indexOf(actor) === i;
+      });
   }
 
   /**
@@ -206,7 +213,11 @@ export class Pointer extends Class {
    */
   public checkActorUnderPointer(actor: Actor): boolean {
     if (this.lastWorldPos) {
-      return actor.contains(this.lastWorldPos.x, this.lastWorldPos.y, !Actors.isScreenElement(actor));
+      return actor.contains(
+        this.lastWorldPos.x,
+        this.lastWorldPos.y,
+        !Actors.isScreenElement(actor)
+      );
     }
     return false;
   }
@@ -224,7 +235,11 @@ export class Pointer extends Class {
    * @param actor An Actor for check;
    */
   public isActorAliveUnderPointer(actor: Actor): boolean {
-    return !!(!actor.isKilled() && actor.scene && this._actorsUnderPointer.hasOwnProperty(actor.id.toString()));
+    return !!(
+      !actor.isKilled() &&
+      actor.scene &&
+      this._actorsUnderPointer.hasOwnProperty(actor.id.toString())
+    );
   }
 
   private _onPointerMove(ev: PointerMoveEvent): void {

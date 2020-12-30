@@ -114,7 +114,11 @@ export class Polygon implements Drawable {
    * @param options
    */
   public draw(options: DrawOptions): void;
-  public draw(ctxOrOptions: CanvasRenderingContext2D | DrawOptions, x?: number, y?: number): void {
+  public draw(
+    ctxOrOptions: CanvasRenderingContext2D | DrawOptions,
+    x?: number,
+    y?: number
+  ): void {
     if (ctxOrOptions instanceof CanvasRenderingContext2D) {
       this._drawWithOptions({ ctx: ctxOrOptions, x, y });
     } else {
@@ -123,7 +127,19 @@ export class Polygon implements Drawable {
   }
 
   private _drawWithOptions(options: DrawOptions) {
-    const { ctx, x, y, rotation, drawWidth, drawHeight, anchor, offset, opacity, flipHorizontal, flipVertical } = {
+    const {
+      ctx,
+      x,
+      y,
+      rotation,
+      drawWidth,
+      drawHeight,
+      anchor,
+      offset,
+      opacity,
+      flipHorizontal,
+      flipVertical,
+    } = {
       ...options,
       rotation: options.rotation ?? this.rotation,
       drawWidth: options.drawWidth ?? this.drawWidth,
@@ -132,7 +148,7 @@ export class Polygon implements Drawable {
       flipVertical: options.flipVertical ?? this.flipVertical,
       anchor: options.anchor ?? this.anchor,
       offset: options.offset ?? this.offset,
-      opacity: options.opacity ?? this.opacity
+      opacity: options.opacity ?? this.opacity,
     };
 
     const xpoint = drawWidth * anchor.x + offset.x + x;

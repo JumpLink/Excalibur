@@ -8,7 +8,7 @@ describe('A spritesheet', () => {
     jasmine.addMatchers(ExcaliburMatchers);
     engine = TestUtils.engine({
       width: 96,
-      height: 96
+      height: 96,
     });
   });
   afterEach(() => {
@@ -17,14 +17,17 @@ describe('A spritesheet', () => {
   });
 
   it('should have props set by the constructor', (done) => {
-    const texture = new ex.Texture('base/src/spec/images/SpriteSheetSpec/PlayerRun.png', true);
+    const texture = new ex.Texture(
+      'base/src/spec/images/SpriteSheetSpec/PlayerRun.png',
+      true
+    );
     texture.load().then(() => {
       const ss = new ex.SpriteSheet({
         image: texture,
         columns: 21,
         rows: 1,
         spWidth: 96,
-        spHeight: 96
+        spHeight: 96,
       });
 
       expect(ss.image.isLoaded());
@@ -37,7 +40,10 @@ describe('A spritesheet', () => {
 
       ss.getSprite(0).draw(engine.ctx, 0, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSheetSpec/PlayerRun0.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSheetSpec/PlayerRun0.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -45,14 +51,17 @@ describe('A spritesheet', () => {
   });
 
   it('should getAnimationByIndices', () => {
-    const texture = new ex.Texture('base/src/spec/images/SpriteSheetSpec/PlayerRun.png', true);
+    const texture = new ex.Texture(
+      'base/src/spec/images/SpriteSheetSpec/PlayerRun.png',
+      true
+    );
     texture.load().then(() => {
       const ss = new ex.SpriteSheet({
         image: texture,
         columns: 21,
         rows: 1,
         spWidth: 96,
-        spHeight: 96
+        spHeight: 96,
       });
 
       const frames = [0, 1, 2, 3, 4, 5, 5, 5, 5];
@@ -65,14 +74,17 @@ describe('A spritesheet', () => {
   });
 
   it('should getAnimationBetween', () => {
-    const texture = new ex.Texture('base/src/spec/images/SpriteSheetSpec/PlayerRun.png', true);
+    const texture = new ex.Texture(
+      'base/src/spec/images/SpriteSheetSpec/PlayerRun.png',
+      true
+    );
     texture.load().then(() => {
       const ss = new ex.SpriteSheet({
         image: texture,
         columns: 21,
         rows: 1,
         spWidth: 96,
-        spHeight: 96
+        spHeight: 96,
       });
 
       const anim = ss.getAnimationBetween(engine, 0, 5, 50);
@@ -84,14 +96,17 @@ describe('A spritesheet', () => {
   });
 
   it('should getAnimationForAll', () => {
-    const texture = new ex.Texture('base/src/spec/images/SpriteSheetSpec/PlayerRun.png', true);
+    const texture = new ex.Texture(
+      'base/src/spec/images/SpriteSheetSpec/PlayerRun.png',
+      true
+    );
     texture.load().then(() => {
       const ss = new ex.SpriteSheet({
         image: texture,
         columns: 21,
         rows: 1,
         spWidth: 96,
-        spHeight: 96
+        spHeight: 96,
       });
 
       const anim = ss.getAnimationForAll(engine, 50);
@@ -103,14 +118,17 @@ describe('A spritesheet', () => {
   });
 
   it('should getSprite at an index', (done) => {
-    const texture = new ex.Texture('base/src/spec/images/SpriteSheetSpec/PlayerRun.png', true);
+    const texture = new ex.Texture(
+      'base/src/spec/images/SpriteSheetSpec/PlayerRun.png',
+      true
+    );
     texture.load().then(() => {
       const ss = new ex.SpriteSheet({
         image: texture,
         columns: 21,
         rows: 1,
         spWidth: 96,
-        spHeight: 96
+        spHeight: 96,
       });
 
       expect(ss.image.isLoaded());
@@ -123,7 +141,10 @@ describe('A spritesheet', () => {
 
       ss.getSprite(20).draw(engine.ctx, 0, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSheetSpec/PlayerRun20.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSheetSpec/PlayerRun20.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -133,16 +154,19 @@ describe('A spritesheet', () => {
   it('should getAnimationByBespokeCoords', (done) => {
     engine = TestUtils.engine({
       width: 162 + 89,
-      height: 94
+      height: 94,
     });
-    const texture = new ex.Texture('base/src/spec/images/SpriteSheetSpec/genericItems_spritesheet_colored.png', true);
+    const texture = new ex.Texture(
+      'base/src/spec/images/SpriteSheetSpec/genericItems_spritesheet_colored.png',
+      true
+    );
     texture.load().then(() => {
       const ss = new ex.SpriteSheet({
         image: texture,
         columns: 0,
         rows: 0,
         spWidth: 96,
-        spHeight: 96
+        spHeight: 96,
       });
 
       const anim = ss.getAnimationByCoords(
@@ -152,14 +176,14 @@ describe('A spritesheet', () => {
             x: 0,
             y: 322,
             width: 162,
-            height: 94
+            height: 94,
           },
           {
             x: 130,
             y: 1791,
             width: 89,
-            height: 45
-          }
+            height: 45,
+          },
         ],
         20
       );
@@ -167,7 +191,10 @@ describe('A spritesheet', () => {
       anim.sprites[0].draw(engine.ctx, 0, 0);
       anim.sprites[1].draw(engine.ctx, 162, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSheetSpec/drillandcup.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSheetSpec/drillandcup.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -177,9 +204,12 @@ describe('A spritesheet', () => {
   it('should getSprite at an index with spacing', (done) => {
     engine = TestUtils.engine({
       width: 32,
-      height: 32
+      height: 32,
     });
-    const texture = new ex.Texture('base/src/spec/images/SpriteSheetSpec/SpriteSheetSpacing.png', true);
+    const texture = new ex.Texture(
+      'base/src/spec/images/SpriteSheetSpec/SpriteSheetSpacing.png',
+      true
+    );
     texture.load().then(() => {
       const ss = new ex.SpriteSheet({
         image: texture,
@@ -187,7 +217,7 @@ describe('A spritesheet', () => {
         rows: 2,
         spWidth: 32,
         spHeight: 32,
-        spacing: 1
+        spacing: 1,
       });
 
       expect(ss.image.isLoaded());
@@ -200,7 +230,10 @@ describe('A spritesheet', () => {
 
       ss.getSprite(2).draw(engine.ctx, 0, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSheetSpec/SpriteSheetSpacing2.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSheetSpec/SpriteSheetSpacing2.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -209,7 +242,10 @@ describe('A spritesheet', () => {
 
   it('should throw Error SpriteSheet specified is wider than image width', (done) => {
     let error: any;
-    const texture = new ex.Texture('base/src/spec/images/SpriteSheetSpec/PlayerRun.png', true);
+    const texture = new ex.Texture(
+      'base/src/spec/images/SpriteSheetSpec/PlayerRun.png',
+      true
+    );
     texture.load().then(() => {
       try {
         const ss = new ex.SpriteSheet({
@@ -217,13 +253,15 @@ describe('A spritesheet', () => {
           columns: 22,
           rows: 1,
           spWidth: 96,
-          spHeight: 96
+          spHeight: 96,
         });
         expect(ss.image.isLoaded());
       } catch (e) {
         error = e;
       }
-      const expectedError = new RangeError('SpriteSheet specified is wider, 22 cols x 96 pixels > 2016 pixels than image width');
+      const expectedError = new RangeError(
+        'SpriteSheet specified is wider, 22 cols x 96 pixels > 2016 pixels than image width'
+      );
       expect(error).toEqual(expectedError);
       done();
     });
@@ -231,7 +269,10 @@ describe('A spritesheet', () => {
 
   it('should throw Error SpriteSheet specified is higher than image height', (done) => {
     let error: any;
-    const texture = new ex.Texture('base/src/spec/images/SpriteSheetSpec/PlayerRun.png', true);
+    const texture = new ex.Texture(
+      'base/src/spec/images/SpriteSheetSpec/PlayerRun.png',
+      true
+    );
     texture.load().then(() => {
       try {
         const ss = new ex.SpriteSheet({
@@ -239,13 +280,15 @@ describe('A spritesheet', () => {
           columns: 21,
           rows: 2,
           spWidth: 96,
-          spHeight: 96
+          spHeight: 96,
         });
         expect(ss.image.isLoaded());
       } catch (e) {
         error = e;
       }
-      const expectedError = new RangeError('SpriteSheet specified is taller, 2 rows x 96 pixels > 96 pixels than image height');
+      const expectedError = new RangeError(
+        'SpriteSheet specified is taller, 2 rows x 96 pixels > 96 pixels than image height'
+      );
       expect(error).toEqual(expectedError);
       done();
     });

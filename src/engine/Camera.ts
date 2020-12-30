@@ -4,7 +4,12 @@ import { Vector } from './Algebra';
 import { Actor } from './Actor';
 import { removeItemFromArray } from './Util/Util';
 import { CanUpdate, CanInitialize } from './Interfaces/LifecycleEvents';
-import { PreUpdateEvent, PostUpdateEvent, GameEvent, InitializeEvent } from './Events';
+import {
+  PreUpdateEvent,
+  PostUpdateEvent,
+  GameEvent,
+  InitializeEvent,
+} from './Events';
 import { Class } from './Class';
 import { BoundingBox } from './Collision/BoundingBox';
 import { Logger } from './Util/Log';
@@ -62,8 +67,14 @@ export class StrategyContainer {
    * @param cameraElasticity [0 - 1.0] The higher the elasticity the more force that will drive the camera towards the target
    * @param cameraFriction [0 - 1.0] The higher the friction the more that the camera will resist motion towards the target
    */
-  public elasticToActor(actor: Actor, cameraElasticity: number, cameraFriction: number) {
-    this.camera.addStrategy(new ElasticToActorStrategy(actor, cameraElasticity, cameraFriction));
+  public elasticToActor(
+    actor: Actor,
+    cameraElasticity: number,
+    cameraFriction: number
+  ) {
+    this.camera.addStrategy(
+      new ElasticToActorStrategy(actor, cameraElasticity, cameraFriction)
+    );
   }
 
   /**
@@ -89,7 +100,7 @@ export class StrategyContainer {
  */
 export enum Axis {
   X,
-  Y
+  Y,
 }
 
 /**
@@ -97,7 +108,12 @@ export enum Axis {
  */
 export class LockCameraToActorStrategy implements CameraStrategy<Actor> {
   constructor(public target: Actor) {}
-  public action = (target: Actor, _cam: Camera, _eng: Engine, _delta: number) => {
+  public action = (
+    target: Actor,
+    _cam: Camera,
+    _eng: Engine,
+    _delta: number
+  ) => {
     const center = target.center;
     return center;
   };
@@ -108,7 +124,12 @@ export class LockCameraToActorStrategy implements CameraStrategy<Actor> {
  */
 export class LockCameraToActorAxisStrategy implements CameraStrategy<Actor> {
   constructor(public target: Actor, public axis: Axis) {}
-  public action = (target: Actor, cam: Camera, _eng: Engine, _delta: number) => {
+  public action = (
+    target: Actor,
+    cam: Camera,
+    _eng: Engine,
+    _delta: number
+  ) => {
     const center = target.center;
     const currentFocus = cam.getFocus();
     if (this.axis === Axis.X) {
@@ -132,8 +153,17 @@ export class ElasticToActorStrategy implements CameraStrategy<Actor> {
    * @param cameraElasticity [0 - 1.0] The higher the elasticity the more force that will drive the camera towards the target
    * @param cameraFriction [0 - 1.0] The higher the friction the more that the camera will resist motion towards the target
    */
-  constructor(public target: Actor, public cameraElasticity: number, public cameraFriction: number) {}
-  public action = (target: Actor, cam: Camera, _eng: Engine, _delta: number) => {
+  constructor(
+    public target: Actor,
+    public cameraElasticity: number,
+    public cameraFriction: number
+  ) {}
+  public action = (
+    target: Actor,
+    cam: Camera,
+    _eng: Engine,
+    _delta: number
+  ) => {
     const position = target.center;
     let focus = cam.getFocus();
     let cameraVel = cam.vel.clone();
@@ -164,7 +194,12 @@ export class RadiusAroundActorStrategy implements CameraStrategy<Actor> {
    * @param radius Number of pixels away before the camera will follow
    */
   constructor(public target: Actor, public radius: number) {}
-  public action = (target: Actor, cam: Camera, _eng: Engine, _delta: number) => {
+  public action = (
+    target: Actor,
+    cam: Camera,
+    _eng: Engine,
+    _delta: number
+  ) => {
     const position = target.center;
     const focus = cam.getFocus();
 
@@ -198,12 +233,22 @@ export class LimitCameraBoundsStrategy implements CameraStrategy<BoundingBox> {
 
   constructor(public target: BoundingBox) {}
 
-  public action = (target: BoundingBox, cam: Camera, _eng: Engine, _delta: number) => {
+  public action = (
+    target: BoundingBox,
+    cam: Camera,
+    _eng: Engine,
+    _delta: number
+  ) => {
     const focus = cam.getFocus();
 
     if (!this.boundSizeChecked) {
-      if (target.bottom - target.top < _eng.drawHeight || target.right - target.left < _eng.drawWidth) {
-        Logger.getInstance().warn('Camera bounds should not be smaller than the engine viewport');
+      if (
+        target.bottom - target.top < _eng.drawHeight ||
+        target.right - target.left < _eng.drawWidth
+      ) {
+        Logger.getInstance().warn(
+          'Camera bounds should not be smaller than the engine viewport'
+        );
       }
       this.boundSizeChecked = true;
     }
@@ -408,7 +453,11 @@ export class Camera extends Class implements CanUpdate, CanInitialize {
    * @returns A [[Promise]] that resolves when movement is finished, including if it's interrupted.
    *          The [[Promise]] value is the [[Vector]] of the target position. It will be rejected if a move cannot be made.
    */
-  public move(pos: Vector, duration: number, easingFn: EasingFunction = EasingFunctions.EaseInOutCubic): Promise<Vector> {
+  public move(
+    pos: Vector,
+    duration: number,
+    easingFn: EasingFunction = EasingFunctions.EaseInOutCubic
+  ): Promise<Vector> {
     if (typeof easingFn !== 'function') {
       throw 'Please specify an EasingFunction';
     }
@@ -455,7 +504,11 @@ export class Camera extends Class implements CanUpdate, CanInitialize {
    * @param scale    The scale of the zoom
    * @param duration The duration of the zoom in milliseconds
    */
-  public zoom(scale: number, duration: number = 0, easingFn: EasingFunction = EasingFunctions.EaseInOutCubic): Promise<boolean> {
+  public zoom(
+    scale: number,
+    duration: number = 0,
+    easingFn: EasingFunction = EasingFunctions.EaseInOutCubic
+  ): Promise<boolean> {
     this._zoomPromise = new Promise<boolean>((resolve) => {
       this._zoomResolve = resolve;
     });
@@ -491,7 +544,12 @@ export class Camera extends Class implements CanUpdate, CanInitialize {
       const halfWidth = this._engine.halfDrawWidth;
       const halfHeight = this._engine.halfDrawHeight;
 
-      return new BoundingBox(this.x - halfWidth, this.y - halfHeight, this.x + halfWidth, this.y + halfHeight);
+      return new BoundingBox(
+        this.x - halfWidth,
+        this.y - halfHeight,
+        this.x + halfWidth,
+        this.y + halfHeight
+      );
     }
     return new BoundingBox(0, 0, 0, 0);
   }
@@ -583,25 +641,58 @@ export class Camera extends Class implements CanUpdate, CanInitialize {
     // Overridable
   }
 
-  public on(eventName: 'initialize', handler: (event: InitializeEvent) => void): void;
-  public on(eventName: 'preupdate', handler: (event: PreUpdateEvent) => void): void;
-  public on(eventName: 'postupdate', handler: (event: PostUpdateEvent) => void): void;
+  public on(
+    eventName: 'initialize',
+    handler: (event: InitializeEvent) => void
+  ): void;
+  public on(
+    eventName: 'preupdate',
+    handler: (event: PreUpdateEvent) => void
+  ): void;
+  public on(
+    eventName: 'postupdate',
+    handler: (event: PostUpdateEvent) => void
+  ): void;
   public on(eventName: any, handler: any) {
     super.on(eventName, handler);
   }
 
-  public off(eventName: 'initialize', handler?: (event: InitializeEvent) => void): void;
-  public off(eventName: 'preupdate', handler?: (event: PreUpdateEvent) => void): void;
-  public off(eventName: 'postupdate', handler?: (event: PostUpdateEvent) => void): void;
-  public off(eventName: string, handler: (event: GameEvent<Camera>) => void): void;
+  public off(
+    eventName: 'initialize',
+    handler?: (event: InitializeEvent) => void
+  ): void;
+  public off(
+    eventName: 'preupdate',
+    handler?: (event: PreUpdateEvent) => void
+  ): void;
+  public off(
+    eventName: 'postupdate',
+    handler?: (event: PostUpdateEvent) => void
+  ): void;
+  public off(
+    eventName: string,
+    handler: (event: GameEvent<Camera>) => void
+  ): void;
   public off(eventName: string, handler: (event: any) => void): void {
     super.off(eventName, handler);
   }
 
-  public once(eventName: 'initialize', handler: (event: InitializeEvent) => void): void;
-  public once(eventName: 'preupdate', handler: (event: PreUpdateEvent) => void): void;
-  public once(eventName: 'postupdate', handler: (event: PostUpdateEvent) => void): void;
-  public once(eventName: string, handler: (event: GameEvent<Camera>) => void): void;
+  public once(
+    eventName: 'initialize',
+    handler: (event: InitializeEvent) => void
+  ): void;
+  public once(
+    eventName: 'preupdate',
+    handler: (event: PreUpdateEvent) => void
+  ): void;
+  public once(
+    eventName: 'postupdate',
+    handler: (event: PostUpdateEvent) => void
+  ): void;
+  public once(
+    eventName: string,
+    handler: (event: GameEvent<Camera>) => void
+  ): void;
   public once(eventName: string, handler: (event: any) => void): void {
     super.once(eventName, handler);
   }
@@ -622,7 +713,12 @@ export class Camera extends Class implements CanUpdate, CanInitialize {
     if (this._isZooming) {
       if (this._currentZoomTime < this._zoomDuration) {
         const zoomEasing = this._zoomEasing;
-        const newZoom = zoomEasing(this._currentZoomTime, this._zoomStart, this._zoomEnd, this._zoomDuration);
+        const newZoom = zoomEasing(
+          this._currentZoomTime,
+          this._zoomStart,
+          this._zoomEnd,
+          this._zoomDuration
+        );
 
         this.z = newZoom;
         this._currentZoomTime += delta;
@@ -636,9 +732,16 @@ export class Camera extends Class implements CanUpdate, CanInitialize {
 
     if (this._cameraMoving) {
       if (this._currentLerpTime < this._lerpDuration) {
-        const moveEasing = EasingFunctions.CreateVectorEasingFunction(this._easing);
+        const moveEasing = EasingFunctions.CreateVectorEasingFunction(
+          this._easing
+        );
 
-        const lerpPoint = moveEasing(this._currentLerpTime, this._lerpStart, this._lerpEnd, this._lerpDuration);
+        const lerpPoint = moveEasing(
+          this._currentLerpTime,
+          this._lerpStart,
+          this._lerpEnd,
+          this._lerpDuration
+        );
 
         this.pos = lerpPoint;
 
@@ -685,14 +788,19 @@ export class Camera extends Class implements CanUpdate, CanInitialize {
     const focus = this.getFocus();
     const canvasWidth = ctx.canvas.width;
     const canvasHeight = ctx.canvas.height;
-    const pixelRatio = this._engine ? this._engine.pixelRatio : window.devicePixelRatio;
+    const pixelRatio = this._engine
+      ? this._engine.pixelRatio
+      : window.devicePixelRatio;
     const zoom = this.getZoom();
 
     const newCanvasWidth = canvasWidth / zoom / pixelRatio;
     const newCanvasHeight = canvasHeight / zoom / pixelRatio;
 
     ctx.scale(zoom, zoom);
-    ctx.translate(-focus.x + newCanvasWidth / 2 + this._xShake, -focus.y + newCanvasHeight / 2 + this._yShake);
+    ctx.translate(
+      -focus.x + newCanvasWidth / 2 + this._xShake,
+      -focus.y + newCanvasHeight / 2 + this._yShake
+    );
   }
 
   /* istanbul ignore next */
@@ -715,7 +823,12 @@ export class Camera extends Class implements CanUpdate, CanInitialize {
     ctx.setLineDash([5, 15]);
     ctx.lineWidth = 5;
     ctx.strokeStyle = 'white';
-    ctx.strokeRect(this.viewport.left, this.viewport.top, this.viewport.width, this.viewport.height);
+    ctx.strokeRect(
+      this.viewport.left,
+      this.viewport.top,
+      this.viewport.width,
+      this.viewport.height
+    );
     ctx.closePath();
   }
 

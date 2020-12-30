@@ -2,7 +2,11 @@ import { ExcaliburMatchers, ensureImagesLoaded } from 'excalibur-jasmine';
 import * as ex from '@excalibur';
 import { TestUtils } from './util/TestUtils';
 
-const drawWithTransform = (ctx: CanvasRenderingContext2D, actor: ex.Actor, delta: number = 1) => {
+const drawWithTransform = (
+  ctx: CanvasRenderingContext2D,
+  actor: ex.Actor,
+  delta: number = 1
+) => {
   ctx.save();
   ctx.translate(actor.pos.x, actor.pos.y);
   ctx.rotate(actor.rotation);
@@ -18,10 +22,13 @@ describe('A particle', () => {
     jasmine.addMatchers(ExcaliburMatchers);
     engine = TestUtils.engine({
       width: 800,
-      height: 200
+      height: 200,
     });
 
-    texture = new ex.Texture('base/src/spec/images/SpriteFontSpec/SpriteFont.png', true);
+    texture = new ex.Texture(
+      'base/src/spec/images/SpriteFontSpec/SpriteFont.png',
+      true
+    );
   });
   afterEach(() => {
     engine.stop();
@@ -56,7 +63,7 @@ describe('A particle', () => {
       radius: 20,
       particleRotationalVelocity: 3,
       randomRotation: false,
-      random: new ex.Random(1337)
+      random: new ex.Random(1337),
     });
 
     expect(emitter.pos.x).toBe(400);
@@ -66,7 +73,9 @@ describe('A particle', () => {
     expect(emitter.isEmitting).toBe(true);
     expect(emitter.minVel).toBe(40);
     expect(emitter.maxVel).toBe(50);
-    expect(emitter.acceleration.toString()).toBe(ex.Vector.Zero.clone().toString());
+    expect(emitter.acceleration.toString()).toBe(
+      ex.Vector.Zero.clone().toString()
+    );
     expect(emitter.minAngle).toBe(0);
     expect(emitter.maxAngle).toBe(Math.PI / 2);
     expect(emitter.emitRate).toBe(3);
@@ -115,7 +124,7 @@ describe('A particle', () => {
       radius: 20,
       particleRotationalVelocity: 3,
       randomRotation: false,
-      random: new ex.Random(1337)
+      random: new ex.Random(1337),
     });
 
     emitter.emitParticles(10);
@@ -125,7 +134,10 @@ describe('A particle', () => {
 
     drawWithTransform(engine.ctx, emitter, 100);
 
-    ensureImagesLoaded(engine.canvas, 'src/spec/images/ParticleSpec/Particles.png').then(([canvas, image]) => {
+    ensureImagesLoaded(
+      engine.canvas,
+      'src/spec/images/ParticleSpec/Particles.png'
+    ).then(([canvas, image]) => {
       expect(canvas).toEqualImage(image);
       done();
     });

@@ -62,9 +62,18 @@ export interface ColliderOptions {
 export class Collider implements Eventable, Clonable<Collider> {
   private _shape: CollisionShape;
   public useShapeInertia: boolean;
-  private _events: EventDispatcher<Collider> = new EventDispatcher<Collider>(this);
+  private _events: EventDispatcher<Collider> = new EventDispatcher<Collider>(
+    this
+  );
 
-  constructor({ body, type, group, shape, offset, useShapeInertia = true }: ColliderOptions) {
+  constructor({
+    body,
+    type,
+    group,
+    shape,
+    offset,
+    useShapeInertia = true,
+  }: ColliderOptions) {
     // If shape is not supplied see if the body has an existing collider with a shape
     if (body && body.collider && !shape) {
       this._shape = body.collider.shape;
@@ -88,7 +97,7 @@ export class Collider implements Eventable, Clonable<Collider> {
       type: this.type,
       shape: this._shape.clone(),
       group: this.group,
-      offset: this.offset
+      offset: this.offset,
     });
   }
 
@@ -125,7 +134,9 @@ export class Collider implements Eventable, Clonable<Collider> {
     this._shape = shape;
     this._shape.collider = this;
     if (this.useShapeInertia) {
-      this.inertia = isNaN(this._shape.inertia) ? this.inertia : this._shape.inertia;
+      this.inertia = isNaN(this._shape.inertia)
+        ? this.inertia
+        : this._shape.inertia;
     }
   }
 
@@ -275,7 +286,12 @@ export class Collider implements Eventable, Clonable<Collider> {
   public debugDraw(ctx: CanvasRenderingContext2D) {
     // Draw motion vectors
     if (Physics.showMotionVectors) {
-      DrawUtil.vector(ctx, Color.Yellow, this.body.pos, this.body.acc.add(Physics.acc));
+      DrawUtil.vector(
+        ctx,
+        Color.Yellow,
+        this.body.pos,
+        this.body.acc.add(Physics.acc)
+      );
       DrawUtil.vector(ctx, Color.Red, this.body.pos, this.body.vel);
       DrawUtil.point(ctx, Color.Red, this.body.pos);
     }

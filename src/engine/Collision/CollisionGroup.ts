@@ -91,6 +91,8 @@ export class CollisionGroup {
    * @param other  CollisionGroup
    */
   public canCollide(other: CollisionGroup): boolean {
-    return (this.category & other.mask) !== 0 && (other.category & this.mask) !== 0;
+    return (
+      (this.category & other.mask) !== 0 && (other.category & this.mask) !== 0
+    );
   }
 }

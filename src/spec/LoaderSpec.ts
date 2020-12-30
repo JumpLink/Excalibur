@@ -46,7 +46,10 @@ describe('A loader', () => {
     (loader as any)._image.onload = () => {
       loader.wireEngine(engine);
       loader.draw(engine.ctx);
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/LoaderSpec/zero.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/LoaderSpec/zero.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -61,7 +64,10 @@ describe('A loader', () => {
 
       loader.wireEngine(engine);
       loader.draw(engine.ctx);
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/LoaderSpec/fifty.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/LoaderSpec/fifty.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -78,7 +84,10 @@ describe('A loader', () => {
 
       loader.wireEngine(engine);
       loader.draw(engine.ctx);
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/LoaderSpec/100.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/LoaderSpec/100.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -96,7 +105,10 @@ describe('A loader', () => {
       loader.showPlayButton();
 
       loader.draw(engine.ctx);
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/LoaderSpec/playbuttonshown-noprogressbar.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/LoaderSpec/playbuttonshown-noprogressbar.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -122,7 +134,10 @@ describe('A loader', () => {
       loader.logoPosition = ex.vec(0, 0);
       loader.showPlayButton();
       loader.draw(engine.ctx);
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/LoaderSpec/logo-position.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/LoaderSpec/logo-position.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -140,7 +155,10 @@ describe('A loader', () => {
       loader.markResourceComplete();
       loader.wireEngine(engine);
       loader.draw(engine.ctx);
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/LoaderSpec/loader-position-color.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/LoaderSpec/loader-position-color.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });

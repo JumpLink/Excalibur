@@ -66,7 +66,7 @@ export class Circle implements CollisionShape {
     return new Circle({
       offset: this.offset.clone(),
       radius: this.radius,
-      collider: null
+      collider: null,
     });
   }
 
@@ -105,7 +105,11 @@ export class Circle implements CollisionShape {
     const dir = ray.dir;
     const orig = ray.pos;
 
-    const discriminant = Math.sqrt(Math.pow(dir.dot(orig.sub(c)), 2) - Math.pow(orig.sub(c).distance(), 2) + Math.pow(this.radius, 2));
+    const discriminant = Math.sqrt(
+      Math.pow(dir.dot(orig.sub(c)), 2) -
+        Math.pow(orig.sub(c).distance(), 2) +
+        Math.pow(this.radius, 2)
+    );
 
     if (discriminant < 0) {
       // no intersection
@@ -148,7 +152,9 @@ export class Circle implements CollisionShape {
     } else if (shape instanceof Edge) {
       return ClosestLineJumpTable.CircleEdgeClosestLine(this, shape).flip();
     } else {
-      throw new Error(`Polygon could not collide with unknown CollisionShape ${typeof shape}`);
+      throw new Error(
+        `Polygon could not collide with unknown CollisionShape ${typeof shape}`
+      );
     }
   }
 
@@ -163,7 +169,9 @@ export class Circle implements CollisionShape {
     } else if (shape instanceof Edge) {
       return CollisionJumpTable.CollideCircleEdge(this, shape);
     } else {
-      throw new Error(`Circle could not collide with unknown CollisionShape ${typeof shape}`);
+      throw new Error(
+        `Circle could not collide with unknown CollisionShape ${typeof shape}`
+      );
     }
   }
 
@@ -266,10 +274,17 @@ export class Circle implements CollisionShape {
     scalars.push(dotProduct);
     scalars.push(dotProduct + this.radius);
     scalars.push(dotProduct - this.radius);
-    return new Projection(Math.min.apply(Math, scalars), Math.max.apply(Math, scalars));
+    return new Projection(
+      Math.min.apply(Math, scalars),
+      Math.max.apply(Math, scalars)
+    );
   }
 
-  public draw(ctx: CanvasRenderingContext2D, color: Color = Color.Green, pos: Vector = Vector.Zero) {
+  public draw(
+    ctx: CanvasRenderingContext2D,
+    color: Color = Color.Green,
+    pos: Vector = Vector.Zero
+  ) {
     const newPos = pos.add(this.offset);
     ctx.beginPath();
     ctx.fillStyle = color.toString();
@@ -291,7 +306,10 @@ export class Circle implements CollisionShape {
     ctx.stroke();
     ctx.beginPath();
     ctx.moveTo(pos.x, pos.y);
-    ctx.lineTo(Math.cos(rotation) * this.radius + pos.x, Math.sin(rotation) * this.radius + pos.y);
+    ctx.lineTo(
+      Math.cos(rotation) * this.radius + pos.x,
+      Math.sin(rotation) * this.radius + pos.y
+    );
     ctx.closePath();
     ctx.stroke();
   }

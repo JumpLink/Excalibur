@@ -74,7 +74,12 @@ export class Vector implements Clonable<Vector> {
       return false;
     }
 
-    if (vec.x === Infinity || vec.y === Infinity || vec.x === -Infinity || vec.y === -Infinity) {
+    if (
+      vec.x === Infinity ||
+      vec.y === Infinity ||
+      vec.x === -Infinity ||
+      vec.y === -Infinity
+    ) {
       return false;
     }
 
@@ -87,7 +92,9 @@ export class Vector implements Clonable<Vector> {
    * @param vec2
    */
   public static distance(vec1: Vector, vec2: Vector) {
-    return Math.sqrt(Math.pow(vec1.x - vec2.x, 2) + Math.pow(vec1.y - vec2.y, 2));
+    return Math.sqrt(
+      Math.pow(vec1.x - vec2.x, 2) + Math.pow(vec1.y - vec2.y, 2)
+    );
   }
 
   /**
@@ -110,7 +117,10 @@ export class Vector implements Clonable<Vector> {
    * @param tolerance Amount of euclidean distance off we are willing to tolerate
    */
   public equals(vector: Vector, tolerance: number = 0.001): boolean {
-    return Math.abs(this.x - vector.x) <= tolerance && Math.abs(this.y - vector.y) <= tolerance;
+    return (
+      Math.abs(this.x - vector.x) <= tolerance &&
+      Math.abs(this.y - vector.y) <= tolerance
+    );
   }
 
   /**
@@ -128,7 +138,9 @@ export class Vector implements Clonable<Vector> {
    * The magnitude (size) of the Vector
    * @obsolete magnitude will be removed in favour of '.size' in version 0.25.0
    */
-  @obsolete({ message: 'will be removed in favour of `.size` in version 0.25.0' })
+  @obsolete({
+    message: 'will be removed in favour of `.size` in version 0.25.0',
+  })
   public magnitude(): number {
     return this.distance();
   }
@@ -288,8 +300,14 @@ export class Vector implements Clonable<Vector> {
     }
     const sinAngle = Math.sin(angle);
     const cosAngle = Math.cos(angle);
-    const x = cosAngle * (this.x - anchor.x) - sinAngle * (this.y - anchor.y) + anchor.x;
-    const y = sinAngle * (this.x - anchor.x) + cosAngle * (this.y - anchor.y) + anchor.y;
+    const x =
+      cosAngle * (this.x - anchor.x) -
+      sinAngle * (this.y - anchor.y) +
+      anchor.x;
+    const y =
+      sinAngle * (this.x - anchor.x) +
+      cosAngle * (this.y - anchor.y) +
+      anchor.y;
     return new Vector(x, y);
   }
 
@@ -333,7 +351,10 @@ export class Ray {
     const numerator = line.begin.sub(this.pos);
 
     // Test is line and ray are parallel and non intersecting
-    if (this.dir.cross(line.getSlope()) === 0 && numerator.cross(this.dir) !== 0) {
+    if (
+      this.dir.cross(line.getSlope()) === 0 &&
+      numerator.cross(this.dir) !== 0
+    ) {
       return -1;
     }
 
@@ -449,7 +470,13 @@ export class Line {
 
     const dy = this.end.y - this.begin.y;
     const dx = this.end.x - this.begin.x;
-    const distance = Math.abs(dy * x0 - dx * y0 + this.end.x * this.begin.y - this.end.y * this.begin.x) / l;
+    const distance =
+      Math.abs(
+        dy * x0 -
+          dx * y0 +
+          this.end.x * this.begin.y -
+          this.end.y * this.begin.x
+      ) / l;
     return distance;
   }
 
@@ -536,9 +563,13 @@ export class Line {
 
     // check whether point lies in-between start and end
     if (Math.abs(dx1) >= Math.abs(dy1)) {
-      return dx1 > 0 ? this.begin.x <= currPoint.x && currPoint.x <= this.end.x : this.end.x <= currPoint.x && currPoint.x <= this.begin.x;
+      return dx1 > 0
+        ? this.begin.x <= currPoint.x && currPoint.x <= this.end.x
+        : this.end.x <= currPoint.x && currPoint.x <= this.begin.x;
     } else {
-      return dy1 > 0 ? this.begin.y <= currPoint.y && currPoint.y <= this.end.y : this.end.y <= currPoint.y && currPoint.y <= this.begin.y;
+      return dy1 > 0
+        ? this.begin.y <= currPoint.y && currPoint.y <= this.end.y
+        : this.end.y <= currPoint.y && currPoint.y <= this.begin.y;
     }
   }
 }
@@ -565,9 +596,20 @@ export class Projection {
 }
 
 export class GlobalCoordinates {
-  public static fromPagePosition(x: number, y: number, engine: Engine): GlobalCoordinates;
-  public static fromPagePosition(pos: Vector, engine: Engine): GlobalCoordinates;
-  public static fromPagePosition(xOrPos: number | Vector, yOrEngine: number | Engine, engineOrUndefined?: Engine): GlobalCoordinates {
+  public static fromPagePosition(
+    x: number,
+    y: number,
+    engine: Engine
+  ): GlobalCoordinates;
+  public static fromPagePosition(
+    pos: Vector,
+    engine: Engine
+  ): GlobalCoordinates;
+  public static fromPagePosition(
+    xOrPos: number | Vector,
+    yOrEngine: number | Engine,
+    engineOrUndefined?: Engine
+  ): GlobalCoordinates {
     let pageX: number;
     let pageY: number;
     let pagePos: Vector;
@@ -593,7 +635,11 @@ export class GlobalCoordinates {
     return new GlobalCoordinates(worldPos, pagePos, screenPos);
   }
 
-  constructor(public worldPos: Vector, public pagePos: Vector, public screenPos: Vector) {}
+  constructor(
+    public worldPos: Vector,
+    public pagePos: Vector,
+    public screenPos: Vector
+  ) {}
 }
 
 /**

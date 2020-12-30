@@ -2,10 +2,19 @@ import { EX_VERSION } from './';
 import { Flags } from './Flags';
 import { polyfill } from './Polyfill';
 polyfill();
-import { CanUpdate, CanDraw, CanInitialize } from './Interfaces/LifecycleEvents';
+import {
+  CanUpdate,
+  CanDraw,
+  CanInitialize,
+} from './Interfaces/LifecycleEvents';
 import { Loadable } from './Interfaces/Loadable';
 import { Vector } from './Algebra';
-import { Screen, DisplayMode, AbsolutePosition, ScreenDimension } from './Screen';
+import {
+  Screen,
+  DisplayMode,
+  AbsolutePosition,
+  ScreenDimension,
+} from './Screen';
 import { ScreenElement } from './ScreenElement';
 import { Actor } from './Actor';
 import { Timer } from './Timer';
@@ -27,7 +36,7 @@ import {
   ActivateEvent,
   PreDrawEvent,
   PostDrawEvent,
-  InitializeEvent
+  InitializeEvent,
 } from './Events';
 import { Logger, LogLevel } from './Util/Log';
 import { Color } from './Drawing/Color';
@@ -55,7 +64,7 @@ export enum ScrollPreventionMode {
   /**
    * Prevent all page scrolling via mouse wheel
    */
-  All
+  All,
 }
 
 /**
@@ -376,50 +385,155 @@ export class Engine extends Class implements CanInitialize, CanUpdate, CanDraw {
 
   private _isInitialized: boolean = false;
 
-  public on(eventName: Events.initialize, handler: (event: Events.InitializeEvent<Engine>) => void): void;
-  public on(eventName: Events.visible, handler: (event: VisibleEvent) => void): void;
-  public on(eventName: Events.hidden, handler: (event: HiddenEvent) => void): void;
-  public on(eventName: Events.start, handler: (event: GameStartEvent) => void): void;
-  public on(eventName: Events.stop, handler: (event: GameStopEvent) => void): void;
-  public on(eventName: Events.preupdate, handler: (event: PreUpdateEvent<Engine>) => void): void;
-  public on(eventName: Events.postupdate, handler: (event: PostUpdateEvent<Engine>) => void): void;
-  public on(eventName: Events.preframe, handler: (event: PreFrameEvent) => void): void;
-  public on(eventName: Events.postframe, handler: (event: PostFrameEvent) => void): void;
-  public on(eventName: Events.predraw, handler: (event: PreDrawEvent) => void): void;
-  public on(eventName: Events.postdraw, handler: (event: PostDrawEvent) => void): void;
+  public on(
+    eventName: Events.initialize,
+    handler: (event: Events.InitializeEvent<Engine>) => void
+  ): void;
+  public on(
+    eventName: Events.visible,
+    handler: (event: VisibleEvent) => void
+  ): void;
+  public on(
+    eventName: Events.hidden,
+    handler: (event: HiddenEvent) => void
+  ): void;
+  public on(
+    eventName: Events.start,
+    handler: (event: GameStartEvent) => void
+  ): void;
+  public on(
+    eventName: Events.stop,
+    handler: (event: GameStopEvent) => void
+  ): void;
+  public on(
+    eventName: Events.preupdate,
+    handler: (event: PreUpdateEvent<Engine>) => void
+  ): void;
+  public on(
+    eventName: Events.postupdate,
+    handler: (event: PostUpdateEvent<Engine>) => void
+  ): void;
+  public on(
+    eventName: Events.preframe,
+    handler: (event: PreFrameEvent) => void
+  ): void;
+  public on(
+    eventName: Events.postframe,
+    handler: (event: PostFrameEvent) => void
+  ): void;
+  public on(
+    eventName: Events.predraw,
+    handler: (event: PreDrawEvent) => void
+  ): void;
+  public on(
+    eventName: Events.postdraw,
+    handler: (event: PostDrawEvent) => void
+  ): void;
   public on(eventName: string, handler: (event: GameEvent<any>) => void): void;
   public on(eventName: string, handler: (event: any) => void): void {
     super.on(eventName, handler);
   }
 
-  public once(eventName: Events.initialize, handler: (event: Events.InitializeEvent<Engine>) => void): void;
-  public once(eventName: Events.visible, handler: (event: VisibleEvent) => void): void;
-  public once(eventName: Events.hidden, handler: (event: HiddenEvent) => void): void;
-  public once(eventName: Events.start, handler: (event: GameStartEvent) => void): void;
-  public once(eventName: Events.stop, handler: (event: GameStopEvent) => void): void;
-  public once(eventName: Events.preupdate, handler: (event: PreUpdateEvent<Engine>) => void): void;
-  public once(eventName: Events.postupdate, handler: (event: PostUpdateEvent<Engine>) => void): void;
-  public once(eventName: Events.preframe, handler: (event: PreFrameEvent) => void): void;
-  public once(eventName: Events.postframe, handler: (event: PostFrameEvent) => void): void;
-  public once(eventName: Events.predraw, handler: (event: PreDrawEvent) => void): void;
-  public once(eventName: Events.postdraw, handler: (event: PostDrawEvent) => void): void;
-  public once(eventName: string, handler: (event: GameEvent<any>) => void): void;
+  public once(
+    eventName: Events.initialize,
+    handler: (event: Events.InitializeEvent<Engine>) => void
+  ): void;
+  public once(
+    eventName: Events.visible,
+    handler: (event: VisibleEvent) => void
+  ): void;
+  public once(
+    eventName: Events.hidden,
+    handler: (event: HiddenEvent) => void
+  ): void;
+  public once(
+    eventName: Events.start,
+    handler: (event: GameStartEvent) => void
+  ): void;
+  public once(
+    eventName: Events.stop,
+    handler: (event: GameStopEvent) => void
+  ): void;
+  public once(
+    eventName: Events.preupdate,
+    handler: (event: PreUpdateEvent<Engine>) => void
+  ): void;
+  public once(
+    eventName: Events.postupdate,
+    handler: (event: PostUpdateEvent<Engine>) => void
+  ): void;
+  public once(
+    eventName: Events.preframe,
+    handler: (event: PreFrameEvent) => void
+  ): void;
+  public once(
+    eventName: Events.postframe,
+    handler: (event: PostFrameEvent) => void
+  ): void;
+  public once(
+    eventName: Events.predraw,
+    handler: (event: PreDrawEvent) => void
+  ): void;
+  public once(
+    eventName: Events.postdraw,
+    handler: (event: PostDrawEvent) => void
+  ): void;
+  public once(
+    eventName: string,
+    handler: (event: GameEvent<any>) => void
+  ): void;
   public once(eventName: string, handler: (event: any) => void): void {
     super.once(eventName, handler);
   }
 
-  public off(eventName: Events.initialize, handler?: (event: Events.InitializeEvent<Engine>) => void): void;
-  public off(eventName: Events.visible, handler?: (event: VisibleEvent) => void): void;
-  public off(eventName: Events.hidden, handler?: (event: HiddenEvent) => void): void;
-  public off(eventName: Events.start, handler?: (event: GameStartEvent) => void): void;
-  public off(eventName: Events.stop, handler?: (event: GameStopEvent) => void): void;
-  public off(eventName: Events.preupdate, handler?: (event: PreUpdateEvent<Engine>) => void): void;
-  public off(eventName: Events.postupdate, handler?: (event: PostUpdateEvent<Engine>) => void): void;
-  public off(eventName: Events.preframe, handler?: (event: PreFrameEvent) => void): void;
-  public off(eventName: Events.postframe, handler?: (event: PostFrameEvent) => void): void;
-  public off(eventName: Events.predraw, handler?: (event: PreDrawEvent) => void): void;
-  public off(eventName: Events.postdraw, handler?: (event: PostDrawEvent) => void): void;
-  public off(eventName: string, handler?: (event: GameEvent<any>) => void): void;
+  public off(
+    eventName: Events.initialize,
+    handler?: (event: Events.InitializeEvent<Engine>) => void
+  ): void;
+  public off(
+    eventName: Events.visible,
+    handler?: (event: VisibleEvent) => void
+  ): void;
+  public off(
+    eventName: Events.hidden,
+    handler?: (event: HiddenEvent) => void
+  ): void;
+  public off(
+    eventName: Events.start,
+    handler?: (event: GameStartEvent) => void
+  ): void;
+  public off(
+    eventName: Events.stop,
+    handler?: (event: GameStopEvent) => void
+  ): void;
+  public off(
+    eventName: Events.preupdate,
+    handler?: (event: PreUpdateEvent<Engine>) => void
+  ): void;
+  public off(
+    eventName: Events.postupdate,
+    handler?: (event: PostUpdateEvent<Engine>) => void
+  ): void;
+  public off(
+    eventName: Events.preframe,
+    handler?: (event: PreFrameEvent) => void
+  ): void;
+  public off(
+    eventName: Events.postframe,
+    handler?: (event: PostFrameEvent) => void
+  ): void;
+  public off(
+    eventName: Events.predraw,
+    handler?: (event: PreDrawEvent) => void
+  ): void;
+  public off(
+    eventName: Events.postdraw,
+    handler?: (event: PostDrawEvent) => void
+  ): void;
+  public off(
+    eventName: string,
+    handler?: (event: GameEvent<any>) => void
+  ): void;
   public off(eventName: string, handler?: (event: any) => void): void {
     super.off(eventName, handler);
   }
@@ -439,7 +553,7 @@ export class Engine extends Class implements CanInitialize, CanUpdate, CanDraw {
     suppressHiDPIScaling: null,
     suppressPlayButton: null,
     scrollPreventionMode: ScrollPreventionMode.Canvas,
-    backgroundColor: Color.fromHex('#2185d0') // Excalibur blue
+    backgroundColor: Color.fromHex('#2185d0'), // Excalibur blue
   };
 
   /**
@@ -478,9 +592,13 @@ export class Engine extends Class implements CanInitialize, CanUpdate, CanDraw {
 
     // Check compatibility
     const detector = new Detector();
-    if (!options.suppressMinimumBrowserFeatureDetection && !(this._compatible = detector.test())) {
+    if (
+      !options.suppressMinimumBrowserFeatureDetection &&
+      !(this._compatible = detector.test())
+    ) {
       const message = document.createElement('div');
-      message.innerText = 'Sorry, your browser does not support all the features needed for Excalibur';
+      message.innerText =
+        'Sorry, your browser does not support all the features needed for Excalibur';
       document.body.appendChild(message);
 
       detector.failedTests.forEach(function (test) {
@@ -510,10 +628,12 @@ export class Engine extends Class implements CanInitialize, CanUpdate, CanDraw {
         'background: #176BAA; color: white; border-radius: 5px; padding: 15px; font-size: 1.5em; line-height: 80px;'
       );
       // eslint-disable-next-line no-console
-      console.log('\n\
+      console.log(
+        '\n\
       /| ________________\n\
 O|===|* >________________>\n\
-      \\|');
+      \\|'
+      );
       // eslint-disable-next-line no-console
       console.log('Visit', 'http://excaliburjs.com', 'for more information');
     }
@@ -535,10 +655,17 @@ O|===|* >________________>\n\
     this.canvasElementId = options.canvasElementId;
 
     if (options.canvasElementId) {
-      this._logger.debug('Using Canvas element specified: ' + options.canvasElementId);
-      this.canvas = <HTMLCanvasElement>document.getElementById(options.canvasElementId);
+      this._logger.debug(
+        'Using Canvas element specified: ' + options.canvasElementId
+      );
+      this.canvas = <HTMLCanvasElement>(
+        document.getElementById(options.canvasElementId)
+      );
     } else if (options.canvasElement) {
-      this._logger.debug('Using Canvas element specified:', options.canvasElement);
+      this._logger.debug(
+        'Using Canvas element specified:',
+        options.canvasElement
+      );
       this.canvas = options.canvasElement;
     } else {
       this._logger.debug('Using generated canvas element');
@@ -550,7 +677,9 @@ O|===|* >________________>\n\
       if (options.displayMode === undefined) {
         displayMode = DisplayMode.Fixed;
       }
-      this._logger.debug('Engine viewport is size ' + options.width + ' x ' + options.height);
+      this._logger.debug(
+        'Engine viewport is size ' + options.width + ' x ' + options.height
+      );
     } else if (!options.displayMode) {
       this._logger.debug('Engine viewport is fullscreen');
       displayMode = DisplayMode.FullScreen;
@@ -564,11 +693,14 @@ O|===|* >________________>\n\
       context: this.ctx,
       antialiasing: options.antialiasing ?? true,
       browser: this.browser,
-      viewport: options.viewport ?? { width: options.width, height: options.height },
+      viewport: options.viewport ?? {
+        width: options.width,
+        height: options.height,
+      },
       resolution: options.resolution,
       displayMode,
       position: options.position,
-      pixelRatio: options.suppressHiDPIScaling ? 1 : null
+      pixelRatio: options.suppressHiDPIScaling ? 1 : null,
     });
 
     this.screen.applyResolutionAndViewport();
@@ -611,7 +743,9 @@ O|===|* >________________>\n\
    */
   public set timescale(value: number) {
     if (value <= 0) {
-      Logger.getInstance().error('Cannot set engine.timescale to a value of 0 or less than 0.');
+      Logger.getInstance().error(
+        'Cannot set engine.timescale to a value of 0 or less than 0.'
+      );
       return;
     }
 
@@ -813,8 +947,14 @@ O|===|* >________________>\n\
 
       // only deactivate when initialized
       if (this.currentScene.isInitialized) {
-        this.currentScene._deactivate.call(this.currentScene, [oldScene, newScene]);
-        this.currentScene.eventDispatcher.emit('deactivate', new DeactivateEvent(newScene, this.currentScene));
+        this.currentScene._deactivate.call(this.currentScene, [
+          oldScene,
+          newScene,
+        ]);
+        this.currentScene.eventDispatcher.emit(
+          'deactivate',
+          new DeactivateEvent(newScene, this.currentScene)
+        );
       }
 
       // set current scene to new one
@@ -825,7 +965,10 @@ O|===|* >________________>\n\
       this.currentScene._initialize(this);
 
       this.currentScene._activate.call(this.currentScene, [oldScene, newScene]);
-      this.currentScene.eventDispatcher.emit('activate', new ActivateEvent(oldScene, this.currentScene));
+      this.currentScene.eventDispatcher.emit(
+        'activate',
+        new ActivateEvent(oldScene, this.currentScene)
+      );
     } else {
       this._logger.error('Scene', key, 'does not exist!');
     }
@@ -857,10 +1000,14 @@ O|===|* >________________>\n\
     this.input = {
       keyboard: new Input.Keyboard(),
       pointers: new Input.Pointers(this),
-      gamepads: new Input.Gamepads()
+      gamepads: new Input.Gamepads(),
     };
     this.input.keyboard.init();
-    this.input.pointers.init(options && options.pointerScope === Input.PointerScope.Document ? document : this.canvas);
+    this.input.pointers.init(
+      options && options.pointerScope === Input.PointerScope.Document
+        ? document
+        : this.canvas
+    );
     this.input.gamepads.init();
 
     // Issue #385 make use of the visibility api
@@ -1014,7 +1161,11 @@ O|===|* >________________>\n\
     let a = 0;
     const len = this._animations.length;
     for (a; a < len; a++) {
-      this._animations[a].animation.draw(ctx, this._animations[a].x, this._animations[a].y);
+      this._animations[a].animation.draw(
+        ctx,
+        this._animations[a].x,
+        this._animations[a].y
+      );
     }
 
     // Draw debug information
@@ -1023,15 +1174,28 @@ O|===|* >________________>\n\
       this.ctx.fillStyle = this.debugColor.toString();
       const keys = this.input.keyboard.getKeys();
       for (let j = 0; j < keys.length; j++) {
-        this.ctx.fillText(keys[j].toString() + ' : ' + (Input.Keys[keys[j]] ? Input.Keys[keys[j]] : 'Not Mapped'), 100, 10 * j + 10);
+        this.ctx.fillText(
+          keys[j].toString() +
+            ' : ' +
+            (Input.Keys[keys[j]] ? Input.Keys[keys[j]] : 'Not Mapped'),
+          100,
+          10 * j + 10
+        );
       }
 
-      this.ctx.fillText('FPS:' + this.stats.currFrame.fps.toFixed(2).toString(), 10, 10);
+      this.ctx.fillText(
+        'FPS:' + this.stats.currFrame.fps.toFixed(2).toString(),
+        10,
+        10
+      );
     }
 
     // Post processing
     for (let i = 0; i < this.postProcessors.length; i++) {
-      this.postProcessors[i].process(this.ctx.getImageData(0, 0, this.canvasWidth, this.canvasHeight), this.ctx);
+      this.postProcessors[i].process(
+        this.ctx.getImageData(0, 0, this.canvasWidth, this.canvasHeight),
+        this.ctx
+      );
     }
 
     this._postdraw(ctx, delta);
@@ -1095,7 +1259,8 @@ O|===|* >________________>\n\
     let loadingComplete: Promise<any>;
     if (loader) {
       this._loader = loader;
-      this._loader.suppressPlayButton = this._suppressPlayButton || this._loader.suppressPlayButton;
+      this._loader.suppressPlayButton =
+        this._suppressPlayButton || this._loader.suppressPlayButton;
       this._loader.wireEngine(this);
       loadingComplete = this.load(this._loader);
     } else {
@@ -1121,7 +1286,11 @@ O|===|* >________________>\n\
     return loadingComplete;
   }
 
-  public static createMainLoop(game: Engine, raf: (func: Function) => number, nowFn: () => number) {
+  public static createMainLoop(
+    game: Engine,
+    raf: (func: Function) => number,
+    nowFn: () => number
+  ) {
     let lastTime = nowFn();
 
     return function mainloop() {
@@ -1236,5 +1405,9 @@ O|===|* >________________>\n\
  */
 @obsolete({ message: 'Will be removed in excalibur v0.26.0' })
 class AnimationNode {
-  constructor(public animation: Animation, public x: number, public y: number) {}
+  constructor(
+    public animation: Animation,
+    public x: number,
+    public y: number
+  ) {}
 }

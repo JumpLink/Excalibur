@@ -30,7 +30,9 @@ export class WebAudio {
         return resolve(true);
       }
       const unlockTimeoutTimer = setTimeout(() => {
-        Logger.getInstance().warn('Excalibur was unable to unlock the audio context, audio probably will not play in this browser.');
+        Logger.getInstance().warn(
+          'Excalibur was unable to unlock the audio context, audio probably will not play in this browser.'
+        );
         resolve();
       }, 200);
 
@@ -51,7 +53,10 @@ export class WebAudio {
           // by checking the play state after some time, we know if we're really unlocked
           setTimeout(() => {
             if (isLegacyWebAudioSource(source)) {
-              if (source.playbackState === source.PLAYING_STATE || source.playbackState === source.FINISHED_STATE) {
+              if (
+                source.playbackState === source.PLAYING_STATE ||
+                source.playbackState === source.FINISHED_STATE
+              ) {
                 WebAudio._UNLOCKED = true;
               }
             } else {

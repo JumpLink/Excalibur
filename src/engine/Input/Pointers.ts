@@ -9,7 +9,7 @@ import {
   WheelDeltaMode,
   createPointerEventByName,
   PointerLeaveEvent,
-  PointerEnterEvent
+  PointerEnterEvent,
 } from './PointerEvents';
 import { GameEvent } from '../Events';
 
@@ -78,12 +78,30 @@ export class Pointers extends Class {
   }
 
   public on(eventName: Events.up, handler: (event: PointerEvent) => void): void;
-  public on(eventName: Events.down, handler: (event: PointerEvent) => void): void;
-  public on(eventName: Events.move, handler: (event: PointerEvent) => void): void;
-  public on(eventName: Events.enter, handler: (event: PointerEvent) => void): void;
-  public on(eventName: Events.leave, handler: (event: PointerEvent) => void): void;
-  public on(eventName: Events.cancel, handler: (event: PointerEvent) => void): void;
-  public on(eventName: Events.wheel, handler: (event: WheelEvent) => void): void;
+  public on(
+    eventName: Events.down,
+    handler: (event: PointerEvent) => void
+  ): void;
+  public on(
+    eventName: Events.move,
+    handler: (event: PointerEvent) => void
+  ): void;
+  public on(
+    eventName: Events.enter,
+    handler: (event: PointerEvent) => void
+  ): void;
+  public on(
+    eventName: Events.leave,
+    handler: (event: PointerEvent) => void
+  ): void;
+  public on(
+    eventName: Events.cancel,
+    handler: (event: PointerEvent) => void
+  ): void;
+  public on(
+    eventName: Events.wheel,
+    handler: (event: WheelEvent) => void
+  ): void;
   public on(eventName: string, handler: (event: GameEvent<any>) => void): void;
   public on(eventName: string, handler: (event: any) => void): void {
     super.on(eventName, handler);
@@ -101,32 +119,77 @@ export class Pointers extends Class {
     target = target || this._engine.canvas;
 
     // Touch Events
-    target.addEventListener('touchstart', this._handleTouchEvent('down', this._pointerDown));
-    target.addEventListener('touchend', this._handleTouchEvent('up', this._pointerUp));
-    target.addEventListener('touchmove', this._handleTouchEvent('move', this._pointerMove));
-    target.addEventListener('touchcancel', this._handleTouchEvent('cancel', this._pointerCancel));
+    target.addEventListener(
+      'touchstart',
+      this._handleTouchEvent('down', this._pointerDown)
+    );
+    target.addEventListener(
+      'touchend',
+      this._handleTouchEvent('up', this._pointerUp)
+    );
+    target.addEventListener(
+      'touchmove',
+      this._handleTouchEvent('move', this._pointerMove)
+    );
+    target.addEventListener(
+      'touchcancel',
+      this._handleTouchEvent('cancel', this._pointerCancel)
+    );
 
     // W3C Pointer Events
     // Current: IE11, IE10
     if ((<any>window).PointerEvent) {
       // IE11
       this._engine.canvas.style.touchAction = 'none';
-      target.addEventListener('pointerdown', this._handlePointerEvent('down', this._pointerDown));
-      target.addEventListener('pointerup', this._handlePointerEvent('up', this._pointerUp));
-      target.addEventListener('pointermove', this._handlePointerEvent('move', this._pointerMove));
-      target.addEventListener('pointercancel', this._handlePointerEvent('cancel', this._pointerCancel));
+      target.addEventListener(
+        'pointerdown',
+        this._handlePointerEvent('down', this._pointerDown)
+      );
+      target.addEventListener(
+        'pointerup',
+        this._handlePointerEvent('up', this._pointerUp)
+      );
+      target.addEventListener(
+        'pointermove',
+        this._handlePointerEvent('move', this._pointerMove)
+      );
+      target.addEventListener(
+        'pointercancel',
+        this._handlePointerEvent('cancel', this._pointerCancel)
+      );
     } else if ((<any>window).MSPointerEvent) {
       // IE10
       (this._engine.canvas.style as any).msTouchAction = 'none';
-      target.addEventListener('MSPointerDown', this._handlePointerEvent('down', this._pointerDown));
-      target.addEventListener('MSPointerUp', this._handlePointerEvent('up', this._pointerUp));
-      target.addEventListener('MSPointerMove', this._handlePointerEvent('move', this._pointerMove));
-      target.addEventListener('MSPointerCancel', this._handlePointerEvent('cancel', this._pointerCancel));
+      target.addEventListener(
+        'MSPointerDown',
+        this._handlePointerEvent('down', this._pointerDown)
+      );
+      target.addEventListener(
+        'MSPointerUp',
+        this._handlePointerEvent('up', this._pointerUp)
+      );
+      target.addEventListener(
+        'MSPointerMove',
+        this._handlePointerEvent('move', this._pointerMove)
+      );
+      target.addEventListener(
+        'MSPointerCancel',
+        this._handlePointerEvent('cancel', this._pointerCancel)
+      );
     } else {
       // Mouse Events
-      target.addEventListener('mousedown', this._handleMouseEvent('down', this._pointerDown));
-      target.addEventListener('mouseup', this._handleMouseEvent('up', this._pointerUp));
-      target.addEventListener('mousemove', this._handleMouseEvent('move', this._pointerMove));
+      target.addEventListener(
+        'mousedown',
+        this._handleMouseEvent('down', this._pointerDown)
+      );
+      target.addEventListener(
+        'mouseup',
+        this._handleMouseEvent('up', this._pointerUp)
+      );
+      target.addEventListener(
+        'mousemove',
+        this._handleMouseEvent('move', this._pointerMove)
+      );
     }
 
     // MDN MouseWheelEvent
@@ -134,17 +197,29 @@ export class Pointers extends Class {
       passive: !(
         this._engine.pageScrollPreventionMode === ScrollPreventionMode.All ||
         this._engine.pageScrollPreventionMode === ScrollPreventionMode.Canvas
-      )
+      ),
     };
     if ('onwheel' in document.createElement('div')) {
       // Modern Browsers
-      target.addEventListener('wheel', this._handleWheelEvent('wheel', this._wheel), wheelOptions);
+      target.addEventListener(
+        'wheel',
+        this._handleWheelEvent('wheel', this._wheel),
+        wheelOptions
+      );
     } else if (document.onmousewheel !== undefined) {
       // Webkit and IE
-      target.addEventListener('mousewheel', this._handleWheelEvent('wheel', this._wheel), wheelOptions);
+      target.addEventListener(
+        'mousewheel',
+        this._handleWheelEvent('wheel', this._wheel),
+        wheelOptions
+      );
     } else {
       // Remaining browser and older Firefox
-      target.addEventListener('MozMousePixelScroll', this._handleWheelEvent('wheel', this._wheel), wheelOptions);
+      target.addEventListener(
+        'MozMousePixelScroll',
+        this._handleWheelEvent('wheel', this._wheel),
+        wheelOptions
+      );
     }
   }
 
@@ -181,25 +256,43 @@ export class Pointers extends Class {
       button: button,
       preventDefault: () => {
         /* do nothing */
-      }
+      },
     };
 
     switch (eventName) {
       case 'move':
-        this._handlePointerEvent(eventName, this._pointerMove, coords)(eventish as MSPointerEvent);
+        this._handlePointerEvent(
+          eventName,
+          this._pointerMove,
+          coords
+        )(eventish as MSPointerEvent);
         break;
       case 'down':
-        this._handlePointerEvent(eventName, this._pointerDown, coords)(eventish as MSPointerEvent);
+        this._handlePointerEvent(
+          eventName,
+          this._pointerDown,
+          coords
+        )(eventish as MSPointerEvent);
         break;
       case 'up':
-        this._handlePointerEvent(eventName, this._pointerUp, coords)(eventish as MSPointerEvent);
+        this._handlePointerEvent(
+          eventName,
+          this._pointerUp,
+          coords
+        )(eventish as MSPointerEvent);
         break;
       case 'cancel':
-        this._handlePointerEvent(eventName, this._pointerCancel, coords)(eventish as MSPointerEvent);
+        this._handlePointerEvent(
+          eventName,
+          this._pointerCancel,
+          coords
+        )(eventish as MSPointerEvent);
         break;
     }
     for (const actor of this._engine.currentScene.actors) {
-      const capturePointer = actor.traits.filter((t) => t instanceof CapturePointer)[0];
+      const capturePointer = actor.traits.filter(
+        (t) => t instanceof CapturePointer
+      )[0];
       if (capturePointer) {
         capturePointer.update(actor, this._engine, 1);
       }
@@ -269,7 +362,9 @@ export class Pointers extends Class {
   }
 
   private _dispatchPointerLeaveEvents() {
-    const lastMoveEventPerPointerPerActor: { [pointerId: string]: PointerEvent } = {};
+    const lastMoveEventPerPointerPerActor: {
+      [pointerId: string]: PointerEvent;
+    } = {};
     const pointerLeave: PointerLeaveEvent[] = [];
 
     for (const evt of this._pointerMove) {
@@ -280,7 +375,9 @@ export class Pointers extends Class {
           evt.pointer.wasActorUnderPointer(actor) &&
           !evt.pointer.isActorAliveUnderPointer(actor)
         ) {
-          lastMoveEventPerPointerPerActor[evt.pointer.id + '+' + actor.id] = evt;
+          lastMoveEventPerPointerPerActor[
+            evt.pointer.id + '+' + actor.id
+          ] = evt;
           const pe = createPointerEventByName(
             'leave',
             new GlobalCoordinates(evt.worldPos, evt.pagePos, evt.screenPos),
@@ -367,7 +464,11 @@ export class Pointers extends Class {
       e.preventDefault();
 
       const pointer = this.at(0);
-      const coordinates = GlobalCoordinates.fromPagePosition(e.pageX, e.pageY, this._engine);
+      const coordinates = GlobalCoordinates.fromPagePosition(
+        e.pageX,
+        e.pageY,
+        this._engine
+      );
       const pe = createPointerEventByName(
         eventName,
         coordinates,
@@ -387,14 +488,29 @@ export class Pointers extends Class {
     return (e: TouchEvent) => {
       e.preventDefault();
       for (let i = 0, len = e.changedTouches.length; i < len; i++) {
-        const index = this._pointers.length > 1 ? this._getPointerIndex(e.changedTouches[i].identifier) : 0;
+        const index =
+          this._pointers.length > 1
+            ? this._getPointerIndex(e.changedTouches[i].identifier)
+            : 0;
         if (index === -1) {
           continue;
         }
 
         const pointer = this.at(index);
-        const coordinates = GlobalCoordinates.fromPagePosition(e.changedTouches[i].pageX, e.changedTouches[i].pageY, this._engine);
-        const pe = createPointerEventByName(eventName, coordinates, pointer, index, PointerType.Touch, PointerButton.Unknown, e);
+        const coordinates = GlobalCoordinates.fromPagePosition(
+          e.changedTouches[i].pageX,
+          e.changedTouches[i].pageY,
+          this._engine
+        );
+        const pe = createPointerEventByName(
+          eventName,
+          coordinates,
+          pointer,
+          index,
+          PointerType.Touch,
+          PointerButton.Unknown,
+          e
+        );
 
         eventArr.push(pe);
         pointer.eventDispatcher.emit(eventName, pe);
@@ -412,18 +528,25 @@ export class Pointers extends Class {
     };
   }
 
-  private _handlePointerEvent(eventName: string, eventArr: PointerEvent[], coords?: GlobalCoordinates) {
+  private _handlePointerEvent(
+    eventName: string,
+    eventArr: PointerEvent[],
+    coords?: GlobalCoordinates
+  ) {
     return (e: MSPointerEvent) => {
       e.preventDefault();
 
       // get the index for this pointer ID if multi-pointer is asked for
-      const index = this._pointers.length > 1 ? this._getPointerIndex(e.pointerId) : 0;
+      const index =
+        this._pointers.length > 1 ? this._getPointerIndex(e.pointerId) : 0;
       if (index === -1) {
         return;
       }
 
       const pointer = this.at(index);
-      const coordinates = coords || GlobalCoordinates.fromPagePosition(e.pageX, e.pageY, this._engine);
+      const coordinates =
+        coords ||
+        GlobalCoordinates.fromPagePosition(e.pageX, e.pageY, this._engine);
       const pe = createPointerEventByName(
         eventName,
         coordinates,
@@ -455,22 +578,31 @@ export class Pointers extends Class {
       // Should we prevent page scroll because of this event
       if (
         this._engine.pageScrollPreventionMode === ScrollPreventionMode.All ||
-        (this._engine.pageScrollPreventionMode === ScrollPreventionMode.Canvas && e.target === this._engine.canvas)
+        (this._engine.pageScrollPreventionMode ===
+          ScrollPreventionMode.Canvas &&
+          e.target === this._engine.canvas)
       ) {
         e.preventDefault();
       }
 
       const x: number = e.pageX - Util.getPosition(this._engine.canvas).x;
       const y: number = e.pageY - Util.getPosition(this._engine.canvas).y;
-      const transformedPoint = this._engine.screenToWorldCoordinates(new Vector(x, y));
+      const transformedPoint = this._engine.screenToWorldCoordinates(
+        new Vector(x, y)
+      );
 
       // deltaX, deltaY, and deltaZ are the standard modern properties
       // wheelDeltaX, wheelDeltaY, are legacy properties in webkit browsers and older IE
       // e.detail is only used in opera
 
-      const deltaX = e.deltaX || e.wheelDeltaX * ScrollWheelNormalizationFactor || 0;
+      const deltaX =
+        e.deltaX || e.wheelDeltaX * ScrollWheelNormalizationFactor || 0;
       const deltaY =
-        e.deltaY || e.wheelDeltaY * ScrollWheelNormalizationFactor || e.wheelDelta * ScrollWheelNormalizationFactor || e.detail || 0;
+        e.deltaY ||
+        e.wheelDeltaY * ScrollWheelNormalizationFactor ||
+        e.wheelDelta * ScrollWheelNormalizationFactor ||
+        e.detail ||
+        0;
       const deltaZ = e.deltaZ || 0;
       let deltaMode = WheelDeltaMode.Pixel;
 
@@ -482,7 +614,20 @@ export class Pointers extends Class {
         }
       }
 
-      const we = new WheelEvent(transformedPoint.x, transformedPoint.y, e.pageX, e.pageY, x, y, 0, deltaX, deltaY, deltaZ, deltaMode, e);
+      const we = new WheelEvent(
+        transformedPoint.x,
+        transformedPoint.y,
+        e.pageX,
+        e.pageY,
+        x,
+        y,
+        0,
+        deltaX,
+        deltaY,
+        deltaZ,
+        deltaMode,
+        e
+      );
 
       eventArr.push(we);
       this.at(0).eventDispatcher.emit(eventName, we);

@@ -18,7 +18,7 @@ describe('A webaudio instance', () => {
     mockGainNode = jasmine.createSpyObj('GainNode', ['connect']);
 
     mockGainNode.gain = {
-      setTargetAtTime: jasmine.createSpy('setTargetAtTime')
+      setTargetAtTime: jasmine.createSpy('setTargetAtTime'),
     };
 
     mockBufferSource = {
@@ -30,27 +30,29 @@ describe('A webaudio instance', () => {
       playbackRate: {
         setValueAtTime: () => {
           /*empty*/
-        }
+        },
       },
       start: () => {
         /*empty*/
       },
       stop: () => {
         /*empty*/
-      }
+      },
     };
 
     mockAudioContext = {
       currentTime: 0,
       createGain: jasmine.createSpy('createGain'),
-      createBufferSource: jasmine.createSpy('createBufferSource')
+      createBufferSource: jasmine.createSpy('createBufferSource'),
     };
     mockAudioContext.createGain.and.returnValue(mockGainNode);
     mockAudioContext.createBufferSource.and.returnValue(mockBufferSource);
 
     (<any>ex.AudioContextFactory.create).and.returnValue(mockAudioContext);
 
-    webaudio = new ex.WebAudioInstance(RealAudioContext.createBuffer(1, 1, 22050));
+    webaudio = new ex.WebAudioInstance(
+      RealAudioContext.createBuffer(1, 1, 22050)
+    );
   });
 
   it('should be defined', () => {
@@ -66,6 +68,10 @@ describe('A webaudio instance', () => {
   it('should ramp volume when set during playback', () => {
     webaudio.play();
     webaudio.volume = 0.25;
-    expect(mockGainNode.gain.setTargetAtTime).toHaveBeenCalledWith(webaudio.volume, 0, 0.1);
+    expect(mockGainNode.gain.setTargetAtTime).toHaveBeenCalledWith(
+      webaudio.volume,
+      0,
+      0.1
+    );
   });
 });

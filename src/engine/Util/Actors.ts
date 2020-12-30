@@ -9,7 +9,11 @@ import { Trigger } from '../Trigger';
  * @param actor
  */
 export function isVanillaActor(actor: Actor) {
-  return !(actor instanceof ScreenElement) && !(actor instanceof Trigger) && !(actor instanceof Label);
+  return (
+    !(actor instanceof ScreenElement) &&
+    !(actor instanceof Trigger) &&
+    !(actor instanceof Label)
+  );
 }
 
 /**

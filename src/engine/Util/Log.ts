@@ -7,7 +7,7 @@ export enum LogLevel {
   Info,
   Warn,
   Error,
-  Fatal
+  Fatal,
 }
 
 /**

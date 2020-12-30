@@ -16,7 +16,7 @@ describe('A ScreenElement', () => {
       pos: new ex.Vector(50, 50),
       width: 100,
       height: 50,
-      color: ex.Color.Blue
+      color: ex.Color.Blue,
     });
     screenElement.body.collider.type = ex.CollisionType.Active;
     engine = TestUtils.engine();
@@ -57,7 +57,10 @@ describe('A ScreenElement', () => {
     scene.add(screenElement);
     scene.draw(engine.ctx, 100);
 
-    ensureImagesLoaded(engine.canvas, 'src/spec/images/ScreenElementSpec/actordraws.png').then(([canvas, image]) => {
+    ensureImagesLoaded(
+      engine.canvas,
+      'src/spec/images/ScreenElementSpec/actordraws.png'
+    ).then(([canvas, image]) => {
       expect(canvas).toEqualImage(image);
       done();
     });
@@ -68,7 +71,10 @@ describe('A ScreenElement', () => {
     scene.add(screenElement);
     scene.draw(engine.ctx, 100);
 
-    ensureImagesLoaded(engine.canvas, 'src/spec/images/ScreenElementSpec/actordoesnotdraw.png').then(([canvas, image]) => {
+    ensureImagesLoaded(
+      engine.canvas,
+      'src/spec/images/ScreenElementSpec/actordoesnotdraw.png'
+    ).then(([canvas, image]) => {
       expect(canvas).toEqualImage(image);
       done();
     });
@@ -79,7 +85,7 @@ describe('A ScreenElement', () => {
       x: 0,
       y: 0,
       width: 100,
-      height: 100
+      height: 100,
     });
     scene.add(screenElement);
     scene.update(engine, 0);
@@ -90,7 +96,10 @@ describe('A ScreenElement', () => {
 
   it('is drawn on the top left with empty constructor', (done) => {
     const game = TestUtils.engine({ width: 720, height: 480 });
-    const bg = new ex.Texture('base/src/spec/images/ScreenElementSpec/emptyctor.png', true);
+    const bg = new ex.Texture(
+      'base/src/spec/images/ScreenElementSpec/emptyctor.png',
+      true
+    );
 
     game.start(new ex.Loader([bg])).then(() => {
       const screenElement = new ex.ScreenElement();
@@ -100,7 +109,10 @@ describe('A ScreenElement', () => {
       screenElement.on('postdraw', (ev: ex.PostDrawEvent) => {
         game.stop();
 
-        ensureImagesLoaded(game.canvas, 'src/spec/images/ScreenElementSpec/emptyctor.png').then(([canvas, image]) => {
+        ensureImagesLoaded(
+          game.canvas,
+          'src/spec/images/ScreenElementSpec/emptyctor.png'
+        ).then(([canvas, image]) => {
           expect(canvas).toEqualImage(image);
           done();
         });

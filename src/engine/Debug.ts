@@ -170,7 +170,7 @@ export class Debug implements DebugFlags {
      * Previous frame statistics. Engine reuses this instance, use [[FrameStats.clone]] to copy frame stats.
      * Best accessed on [[preframe]] event. Best inspected on engine event `preframe`. See [[FrameStats]]
      */
-    prevFrame: new FrameStats()
+    prevFrame: new FrameStats(),
   };
 
   /**
@@ -197,14 +197,14 @@ export class FrameStats implements FrameStatistics {
     },
     get total() {
       return this.remaining + this.ui;
-    }
+    },
   };
   private _durationStats: FrameDurationStats = {
     update: 0,
     draw: 0,
     get total() {
       return this.update + this.draw;
-    }
+    },
   };
 
   private _physicsStats: PhysicsStats = new PhysicsStats();

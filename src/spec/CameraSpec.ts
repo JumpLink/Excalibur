@@ -17,7 +17,7 @@ describe('A camera', () => {
     // mock engine
     engine = TestUtils.engine({
       width: 500,
-      height: 500
+      height: 500,
     });
 
     engine.setAntialiasing(false);
@@ -289,16 +289,20 @@ describe('A camera', () => {
   });
 
   it('can lerp over time', (done) => {
-    engine.currentScene.camera.move(new ex.Vector(100, 100), 1000, ex.EasingFunctions.EaseOutCubic).then(() => {
-      engine.currentScene.camera.move(new ex.Vector(200, 200), 1000, ex.EasingFunctions.Linear).then(() => {
-        expect(engine.currentScene.camera.pos.x).toBe(200);
-        expect(engine.currentScene.camera.pos.y).toBe(200);
-        done();
+    engine.currentScene.camera
+      .move(new ex.Vector(100, 100), 1000, ex.EasingFunctions.EaseOutCubic)
+      .then(() => {
+        engine.currentScene.camera
+          .move(new ex.Vector(200, 200), 1000, ex.EasingFunctions.Linear)
+          .then(() => {
+            expect(engine.currentScene.camera.pos.x).toBe(200);
+            expect(engine.currentScene.camera.pos.y).toBe(200);
+            done();
+          });
+        engine.currentScene.camera.update(engine, 999);
+        engine.currentScene.camera.update(engine, 1);
+        engine.currentScene.camera.update(engine, 1);
       });
-      engine.currentScene.camera.update(engine, 999);
-      engine.currentScene.camera.update(engine, 1);
-      engine.currentScene.camera.update(engine, 1);
-    });
 
     engine.currentScene.camera.update(engine, 999);
     engine.currentScene.camera.update(engine, 1);
@@ -308,7 +312,10 @@ describe('A camera', () => {
   xit('can zoom in over time', (done) => {
     engine.start().then(() => {
       engine.currentScene.camera.zoom(5, 1000).then(() => {
-        ensureImagesLoaded(engine.canvas, 'src/spec/images/CameraSpec/zoomin.png').then(([canvas, image]) => {
+        ensureImagesLoaded(
+          engine.canvas,
+          'src/spec/images/CameraSpec/zoomin.png'
+        ).then(([canvas, image]) => {
           expect(canvas).toEqualImage(image, 0.995);
           done();
         });
@@ -319,7 +326,10 @@ describe('A camera', () => {
   xit('can zoom out over time', (done) => {
     engine.start().then(() => {
       engine.currentScene.camera.zoom(0.2, 1000).then(() => {
-        ensureImagesLoaded(engine.canvas, 'src/spec/images/CameraSpec/zoomout.png').then(([canvas, image]) => {
+        ensureImagesLoaded(
+          engine.canvas,
+          'src/spec/images/CameraSpec/zoomout.png'
+        ).then(([canvas, image]) => {
           expect(canvas).toEqualImage(image, 0.995);
           done();
         });

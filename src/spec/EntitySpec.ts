@@ -67,7 +67,7 @@ describe('An entity', () => {
         expect(change.data.entity).toBe(entity);
         expect(change.data.component).toBe(typeA);
         done();
-      }
+      },
     });
     entity.addComponent(typeA);
   });
@@ -83,7 +83,7 @@ describe('An entity', () => {
         expect(change.data.entity).toBe(entity);
         expect(change.data.component).toBe(typeA);
         done();
-      }
+      },
     });
     entity.removeComponent(typeA);
     entity.processComponentRemoval();

@@ -26,7 +26,7 @@ describe('A Screen', () => {
       canvas,
       context,
       browser,
-      viewport: { width: 400, height: 400 }
+      viewport: { width: 400, height: 400 },
     });
     expect(sut).toBeDefined();
   });
@@ -36,7 +36,7 @@ describe('A Screen', () => {
       canvas,
       context,
       browser,
-      viewport: { width: 400, height: 400 }
+      viewport: { width: 400, height: 400 },
     });
 
     expect(sut.pixelRatio).toEqual(window.devicePixelRatio);
@@ -48,7 +48,7 @@ describe('A Screen', () => {
       context,
       browser,
       viewport: { width: 400, height: 400 },
-      pixelRatio: 10
+      pixelRatio: 10,
     });
 
     expect(sut.pixelRatio).not.toEqual(window.devicePixelRatio);
@@ -60,7 +60,7 @@ describe('A Screen', () => {
       context,
       browser,
       viewport: { width: 800, height: 600 },
-      pixelRatio: 1
+      pixelRatio: 1,
     });
     sut.applyResolutionAndViewport();
     expect(sut.canvas.width).toBe(800);
@@ -79,7 +79,7 @@ describe('A Screen', () => {
       context,
       browser,
       viewport: { width: 800, height: 600 },
-      pixelRatio: 2
+      pixelRatio: 2,
     });
     sut.applyResolutionAndViewport();
     // Internal resolution is scaled for hi dpi
@@ -102,7 +102,7 @@ describe('A Screen', () => {
       browser,
       viewport: { width: 800, height: 600 },
       pixelRatio: 2,
-      antialiasing: false
+      antialiasing: false,
     });
 
     sut.applyResolutionAndViewport();
@@ -125,7 +125,7 @@ describe('A Screen', () => {
           object[property] = value;
 
           return true;
-        }
+        },
       }
     );
     const canvasStub = { ...canvas, style: styleProxy } as HTMLCanvasElement;
@@ -136,7 +136,7 @@ describe('A Screen', () => {
       browser,
       viewport: { width: 800, height: 600 },
       pixelRatio: 2,
-      antialiasing: false
+      antialiasing: false,
     });
 
     sut.applyResolutionAndViewport();
@@ -152,7 +152,7 @@ describe('A Screen', () => {
       browser,
       viewport: { width: 800, height: 600 },
       pixelRatio: 2,
-      antialiasing: true
+      antialiasing: true,
     });
 
     sut.applyResolutionAndViewport();
@@ -167,7 +167,7 @@ describe('A Screen', () => {
       context,
       browser,
       viewport: { width: 800, height: 600 },
-      pixelRatio: 2
+      pixelRatio: 2,
     });
     sut.pushResolutionAndViewport();
     sut.resolution = { width: 200, height: 100 };
@@ -193,17 +193,27 @@ describe('A Screen', () => {
       context,
       browser,
       viewport: { width: 800, height: 600 },
-      pixelRatio: 2
+      pixelRatio: 2,
     });
     sut.applyResolutionAndViewport();
 
     // The camera is always center screen
     // The absense of a camera is treated like a camera at (0, 0) in world space
-    expect(sut.screenToWorldCoordinates(ex.vec(400, 300))).toBeVector(ex.vec(0, 0));
-    expect(sut.screenToWorldCoordinates(ex.vec(0, 0))).toBeVector(ex.vec(-400, -300));
-    expect(sut.screenToWorldCoordinates(ex.vec(800, 0))).toBeVector(ex.vec(400, -300));
-    expect(sut.screenToWorldCoordinates(ex.vec(0, 600))).toBeVector(ex.vec(-400, 300));
-    expect(sut.screenToWorldCoordinates(ex.vec(800, 600))).toBeVector(ex.vec(400, 300));
+    expect(sut.screenToWorldCoordinates(ex.vec(400, 300))).toBeVector(
+      ex.vec(0, 0)
+    );
+    expect(sut.screenToWorldCoordinates(ex.vec(0, 0))).toBeVector(
+      ex.vec(-400, -300)
+    );
+    expect(sut.screenToWorldCoordinates(ex.vec(800, 0))).toBeVector(
+      ex.vec(400, -300)
+    );
+    expect(sut.screenToWorldCoordinates(ex.vec(0, 600))).toBeVector(
+      ex.vec(-400, 300)
+    );
+    expect(sut.screenToWorldCoordinates(ex.vec(800, 600))).toBeVector(
+      ex.vec(400, 300)
+    );
   });
 
   it('can calculate screen coordinates from world coordinates without a camera', () => {
@@ -212,17 +222,27 @@ describe('A Screen', () => {
       context,
       browser,
       viewport: { width: 800, height: 600 },
-      pixelRatio: 2
+      pixelRatio: 2,
     });
     sut.applyResolutionAndViewport();
 
     // The camera is always center screen
     // The absense of a camera is treated like a camera at (0, 0) in world space
-    expect(sut.worldToScreenCoordinates(ex.vec(0, 0))).toBeVector(ex.vec(400, 300));
-    expect(sut.worldToScreenCoordinates(ex.vec(-400, -300))).toBeVector(ex.vec(0, 0));
-    expect(sut.worldToScreenCoordinates(ex.vec(400, -300))).toBeVector(ex.vec(800, 0));
-    expect(sut.worldToScreenCoordinates(ex.vec(-400, 300))).toBeVector(ex.vec(0, 600));
-    expect(sut.worldToScreenCoordinates(ex.vec(400, 300))).toBeVector(ex.vec(800, 600));
+    expect(sut.worldToScreenCoordinates(ex.vec(0, 0))).toBeVector(
+      ex.vec(400, 300)
+    );
+    expect(sut.worldToScreenCoordinates(ex.vec(-400, -300))).toBeVector(
+      ex.vec(0, 0)
+    );
+    expect(sut.worldToScreenCoordinates(ex.vec(400, -300))).toBeVector(
+      ex.vec(800, 0)
+    );
+    expect(sut.worldToScreenCoordinates(ex.vec(-400, 300))).toBeVector(
+      ex.vec(0, 600)
+    );
+    expect(sut.worldToScreenCoordinates(ex.vec(400, 300))).toBeVector(
+      ex.vec(800, 600)
+    );
   });
 
   it('can calculate world coordinates from screen coordinates with a camera', () => {
@@ -231,7 +251,7 @@ describe('A Screen', () => {
       context,
       browser,
       viewport: { width: 800, height: 600 },
-      pixelRatio: 2
+      pixelRatio: 2,
     });
     const camera = new Camera();
     camera.x = 400;
@@ -244,11 +264,21 @@ describe('A Screen', () => {
 
     // The camera is always center screen
     // The absense of a camera is treated like a camera at (0, 0) in world space
-    expect(sut.screenToWorldCoordinates(ex.vec(400, 300))).toBeVector(ex.vec(400, 300));
-    expect(sut.screenToWorldCoordinates(ex.vec(0, 0))).toBeVector(ex.vec(200, 150));
-    expect(sut.screenToWorldCoordinates(ex.vec(800, 0))).toBeVector(ex.vec(600, 150));
-    expect(sut.screenToWorldCoordinates(ex.vec(0, 600))).toBeVector(ex.vec(200, 450));
-    expect(sut.screenToWorldCoordinates(ex.vec(800, 600))).toBeVector(ex.vec(600, 450));
+    expect(sut.screenToWorldCoordinates(ex.vec(400, 300))).toBeVector(
+      ex.vec(400, 300)
+    );
+    expect(sut.screenToWorldCoordinates(ex.vec(0, 0))).toBeVector(
+      ex.vec(200, 150)
+    );
+    expect(sut.screenToWorldCoordinates(ex.vec(800, 0))).toBeVector(
+      ex.vec(600, 150)
+    );
+    expect(sut.screenToWorldCoordinates(ex.vec(0, 600))).toBeVector(
+      ex.vec(200, 450)
+    );
+    expect(sut.screenToWorldCoordinates(ex.vec(800, 600))).toBeVector(
+      ex.vec(600, 450)
+    );
   });
 
   it('can calculate screen coordinates from world coordinates with a camera', () => {
@@ -257,7 +287,7 @@ describe('A Screen', () => {
       context,
       browser,
       viewport: { width: 800, height: 600 },
-      pixelRatio: 2
+      pixelRatio: 2,
     });
     const camera = new Camera();
     camera.x = 400;
@@ -270,11 +300,21 @@ describe('A Screen', () => {
 
     // The camera is always center screen
     // The absense of a camera is treated like a camera at (0, 0) in world space
-    expect(sut.worldToScreenCoordinates(ex.vec(400, 300))).toBeVector(ex.vec(400, 300));
-    expect(sut.worldToScreenCoordinates(ex.vec(200, 150))).toBeVector(ex.vec(0, 0));
-    expect(sut.worldToScreenCoordinates(ex.vec(600, 150))).toBeVector(ex.vec(800, 0));
-    expect(sut.worldToScreenCoordinates(ex.vec(200, 450))).toBeVector(ex.vec(0, 600));
-    expect(sut.worldToScreenCoordinates(ex.vec(600, 450))).toBeVector(ex.vec(800, 600));
+    expect(sut.worldToScreenCoordinates(ex.vec(400, 300))).toBeVector(
+      ex.vec(400, 300)
+    );
+    expect(sut.worldToScreenCoordinates(ex.vec(200, 150))).toBeVector(
+      ex.vec(0, 0)
+    );
+    expect(sut.worldToScreenCoordinates(ex.vec(600, 150))).toBeVector(
+      ex.vec(800, 0)
+    );
+    expect(sut.worldToScreenCoordinates(ex.vec(200, 450))).toBeVector(
+      ex.vec(0, 600)
+    );
+    expect(sut.worldToScreenCoordinates(ex.vec(600, 450))).toBeVector(
+      ex.vec(800, 600)
+    );
   });
 
   it('can return world bounds', () => {
@@ -283,7 +323,7 @@ describe('A Screen', () => {
       context,
       browser,
       viewport: { width: 800, height: 600 },
-      pixelRatio: 2
+      pixelRatio: 2,
     });
     const camera = new Camera();
     camera.x = 400;

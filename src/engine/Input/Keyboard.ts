@@ -149,7 +149,7 @@ export enum Keys {
   // OTHER
   Space = 'Space',
   Esc = 'Escape',
-  Escape = 'Escape'
+  Escape = 'Escape',
 }
 
 /**
@@ -177,9 +177,15 @@ export class Keyboard extends Class {
   }
 
   public on(eventName: Events.press, handler: (event: KeyEvent) => void): void;
-  public on(eventName: Events.release, handler: (event: KeyEvent) => void): void;
+  public on(
+    eventName: Events.release,
+    handler: (event: KeyEvent) => void
+  ): void;
   public on(eventName: Events.hold, handler: (event: KeyEvent) => void): void;
-  public on(eventName: string, handler: (event: Events.GameEvent<any>) => void): void;
+  public on(
+    eventName: string,
+    handler: (event: Events.GameEvent<any>) => void
+  ): void;
   public on(eventName: string, handler: (event: any) => void): void {
     super.on(eventName, handler);
   }

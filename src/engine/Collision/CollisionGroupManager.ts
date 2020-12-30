@@ -9,7 +9,10 @@ export class CollisionGroupManager {
   private static _MAX_GROUPS = 32;
   private static _CURRENT_GROUP = 1;
   private static _CURRENT_BIT = CollisionGroupManager._STARTING_BIT;
-  private static _GROUPS: Map<string, CollisionGroup> = new Map<string, CollisionGroup>();
+  private static _GROUPS: Map<string, CollisionGroup> = new Map<
+    string,
+    CollisionGroup
+  >();
 
   /**
    * Create a new named collision group up to a max of 32.
@@ -18,12 +21,18 @@ export class CollisionGroupManager {
    */
   public static create(name: string, mask?: number) {
     if (this._CURRENT_GROUP > this._MAX_GROUPS) {
-      throw new Error(`Cannot have more than ${this._MAX_GROUPS} collision groups`);
+      throw new Error(
+        `Cannot have more than ${this._MAX_GROUPS} collision groups`
+      );
     }
     if (this._GROUPS.get(name)) {
       throw new Error(`Collision group ${name} already exists`);
     }
-    const group = new CollisionGroup(name, this._CURRENT_BIT, mask !== undefined ? mask : ~this._CURRENT_BIT);
+    const group = new CollisionGroup(
+      name,
+      this._CURRENT_BIT,
+      mask !== undefined ? mask : ~this._CURRENT_BIT
+    );
     this._CURRENT_BIT = (this._CURRENT_BIT << 1) | 0;
     this._CURRENT_GROUP++;
     this._GROUPS.set(name, group);

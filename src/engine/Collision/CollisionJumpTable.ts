@@ -19,10 +19,19 @@ export const CollisionJumpTable = {
 
     const pointOfCollision = circleA.getFurthestPoint(axisOfCollision);
 
-    return new CollisionContact(circleA.collider, circleB.collider, mvt, pointOfCollision, axisOfCollision);
+    return new CollisionContact(
+      circleA.collider,
+      circleB.collider,
+      mvt,
+      pointOfCollision,
+      axisOfCollision
+    );
   },
 
-  CollideCirclePolygon(circle: Circle, polygon: ConvexPolygon): CollisionContact {
+  CollideCirclePolygon(
+    circle: Circle,
+    polygon: ConvexPolygon
+  ): CollisionContact {
     let minAxis = circle.testSeparatingAxisTheorem(polygon);
     if (!minAxis) {
       return null;
@@ -121,7 +130,13 @@ export const CollisionJumpTable = {
     n = n.normalize();
 
     const mvt = n.scale(Math.abs(circle.radius - Math.sqrt(dd)));
-    return new CollisionContact(circle.collider, edge.collider, mvt.negate(), pointOnEdge, n.negate());
+    return new CollisionContact(
+      circle.collider,
+      edge.collider,
+      mvt.negate(),
+      pointOnEdge,
+      n.negate()
+    );
   },
 
   CollideEdgeEdge(): CollisionContact {
@@ -141,14 +156,26 @@ export const CollisionJumpTable = {
     if (polygon.contains(edge.begin)) {
       const { distance: mtv, face } = polygon.getClosestFace(edge.begin);
       if (mtv) {
-        return new CollisionContact(polygon.collider, edge.collider, mtv.negate(), edge.begin.add(mtv.negate()), face.normal().negate());
+        return new CollisionContact(
+          polygon.collider,
+          edge.collider,
+          mtv.negate(),
+          edge.begin.add(mtv.negate()),
+          face.normal().negate()
+        );
       }
     }
 
     if (polygon.contains(edge.end)) {
       const { distance: mtv, face } = polygon.getClosestFace(edge.end);
       if (mtv) {
-        return new CollisionContact(polygon.collider, edge.collider, mtv.negate(), edge.end.add(mtv.negate()), face.normal().negate());
+        return new CollisionContact(
+          polygon.collider,
+          edge.collider,
+          mtv.negate(),
+          edge.end.add(mtv.negate()),
+          face.normal().negate()
+        );
       }
     }
 
@@ -159,7 +186,12 @@ export const CollisionJumpTable = {
     // build a temporary polygon from the edge to use SAT
     const linePoly = new ConvexPolygon({
       collider: edge.collider,
-      points: [edge.begin, edge.end, edge.end.add(dir.scale(30)), edge.begin.add(dir.scale(30))]
+      points: [
+        edge.begin,
+        edge.end,
+        edge.end.add(dir.scale(30)),
+        edge.begin.add(dir.scale(30)),
+      ],
     });
 
     let minAxis = polygon.testSeparatingAxisTheorem(linePoly);
@@ -173,10 +205,19 @@ export const CollisionJumpTable = {
     edgeNormal = edgeNormal.dot(dir) < 0 ? edgeNormal.negate() : edgeNormal;
     minAxis = minAxis.dot(dir) < 0 ? minAxis.negate() : minAxis;
 
-    return new CollisionContact(polygon.collider, edge.collider, minAxis, polygon.getFurthestPoint(edgeNormal), edgeNormal);
+    return new CollisionContact(
+      polygon.collider,
+      edge.collider,
+      minAxis,
+      polygon.getFurthestPoint(edgeNormal),
+      edgeNormal
+    );
   },
 
-  CollidePolygonPolygon(polyA: ConvexPolygon, polyB: ConvexPolygon): CollisionContact {
+  CollidePolygonPolygon(
+    polyA: ConvexPolygon,
+    polyB: ConvexPolygon
+  ): CollisionContact {
     // do a SAT test to find a min axis if it exists
     let minAxis = polyA.testSeparatingAxisTheorem(polyB);
 
@@ -207,8 +248,15 @@ export const CollisionJumpTable = {
       verts.push(pointB);
     }
 
-    const contact = verts.length === 2 ? verts[0].add(verts[1]).scale(0.5) : verts[0];
+    const contact =
+      verts.length === 2 ? verts[0].add(verts[1]).scale(0.5) : verts[0];
 
-    return new CollisionContact(polyA.collider, polyB.collider, minAxis, contact, minAxis.normalize());
-  }
+    return new CollisionContact(
+      polyA.collider,
+      polyB.collider,
+      minAxis,
+      contact,
+      minAxis.normalize()
+    );
+  },
 };

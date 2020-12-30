@@ -36,7 +36,13 @@ export class CollisionContact {
    */
   normal: Vector;
 
-  constructor(colliderA: Collider, colliderB: Collider, mtv: Vector, point: Vector, normal: Vector) {
+  constructor(
+    colliderA: Collider,
+    colliderB: Collider,
+    mtv: Vector,
+    point: Vector,
+    normal: Vector
+  ) {
     this.colliderA = colliderA;
     this.colliderB = colliderB;
     this.mtv = mtv;
@@ -54,10 +60,20 @@ export class CollisionContact {
     }
   }
 
-  private _applyBoxImpulse(colliderA: Collider, colliderB: Collider, mtv: Vector) {
-    if (colliderA.type === CollisionType.Active && colliderB.type !== CollisionType.Passive) {
+  private _applyBoxImpulse(
+    colliderA: Collider,
+    colliderB: Collider,
+    mtv: Vector
+  ) {
+    if (
+      colliderA.type === CollisionType.Active &&
+      colliderB.type !== CollisionType.Passive
+    ) {
       // Resolve overlaps
-      if (colliderA.type === CollisionType.Active && colliderB.type === CollisionType.Active) {
+      if (
+        colliderA.type === CollisionType.Active &&
+        colliderB.type === CollisionType.Active
+      ) {
         // split overlaps if both are Active
         mtv = mtv.scale(0.5);
       }
@@ -75,7 +91,15 @@ export class CollisionContact {
         colliderA.body.vel = colliderA.body.vel.add(velAdj);
       }
 
-      colliderA.emit('postcollision', new PostCollisionEvent(colliderA, colliderB, Util.getSideFromDirection(mtv), mtv));
+      colliderA.emit(
+        'postcollision',
+        new PostCollisionEvent(
+          colliderA,
+          colliderB,
+          Util.getSideFromDirection(mtv),
+          mtv
+        )
+      );
     }
   }
 
@@ -83,8 +107,19 @@ export class CollisionContact {
     const side = Util.getSideFromDirection(this.mtv);
     const mtv = this.mtv.negate();
     // Publish collision events on both participants
-    this.colliderA.emit('precollision', new PreCollisionEvent(this.colliderA, this.colliderB, side, mtv));
-    this.colliderB.emit('precollision', new PreCollisionEvent(this.colliderB, this.colliderA, Util.getOppositeSide(side), mtv.negate()));
+    this.colliderA.emit(
+      'precollision',
+      new PreCollisionEvent(this.colliderA, this.colliderB, side, mtv)
+    );
+    this.colliderB.emit(
+      'precollision',
+      new PreCollisionEvent(
+        this.colliderB,
+        this.colliderA,
+        Util.getOppositeSide(side),
+        mtv.negate()
+      )
+    );
 
     this._applyBoxImpulse(this.colliderA, this.colliderB, mtv);
     this._applyBoxImpulse(this.colliderB, this.colliderA, mtv.negate());
@@ -103,27 +138,52 @@ export class CollisionContact {
 
     // Publish collision events on both participants
     const side = Util.getSideFromDirection(this.mtv);
-    this.colliderA.emit('precollision', new PreCollisionEvent(this.colliderA, this.colliderB, side, this.mtv));
+    this.colliderA.emit(
+      'precollision',
+      new PreCollisionEvent(this.colliderA, this.colliderB, side, this.mtv)
+    );
     this.colliderB.emit(
       'precollision',
-      new PreCollisionEvent(this.colliderB, this.colliderA, Util.getOppositeSide(side), this.mtv.negate())
+      new PreCollisionEvent(
+        this.colliderB,
+        this.colliderA,
+        Util.getOppositeSide(side),
+        this.mtv.negate()
+      )
     );
 
     // If any of the participants are passive then short circuit
-    if (this.colliderA.type === CollisionType.Passive || this.colliderB.type === CollisionType.Passive) {
+    if (
+      this.colliderA.type === CollisionType.Passive ||
+      this.colliderB.type === CollisionType.Passive
+    ) {
       return;
     }
 
-    const invMassA = this.colliderA.type === CollisionType.Fixed ? 0 : 1 / this.colliderA.mass;
-    const invMassB = this.colliderB.type === CollisionType.Fixed ? 0 : 1 / this.colliderB.mass;
+    const invMassA =
+      this.colliderA.type === CollisionType.Fixed ? 0 : 1 / this.colliderA.mass;
+    const invMassB =
+      this.colliderB.type === CollisionType.Fixed ? 0 : 1 / this.colliderB.mass;
 
-    const invMoiA = this.colliderA.type === CollisionType.Fixed ? 0 : 1 / this.colliderA.inertia;
-    const invMoiB = this.colliderB.type === CollisionType.Fixed ? 0 : 1 / this.colliderB.inertia;
+    const invMoiA =
+      this.colliderA.type === CollisionType.Fixed
+        ? 0
+        : 1 / this.colliderA.inertia;
+    const invMoiB =
+      this.colliderB.type === CollisionType.Fixed
+        ? 0
+        : 1 / this.colliderB.inertia;
 
     // average restitution more realistic
-    const coefRestitution = Math.min(this.colliderA.bounciness, this.colliderB.bounciness);
+    const coefRestitution = Math.min(
+      this.colliderA.bounciness,
+      this.colliderB.bounciness
+    );
 
-    const coefFriction = Math.min(this.colliderA.friction, this.colliderB.friction);
+    const coefFriction = Math.min(
+      this.colliderA.friction,
+      this.colliderB.friction
+    );
 
     normal = normal.normalize();
     const tangent = normal.normal().normalize();
@@ -133,7 +193,9 @@ export class CollisionContact {
 
     // Relative velocity in linear terms
     // Angular to linear velocity formula -> omega = v/r
-    const rv = bodyB.vel.add(rb.cross(-bodyB.rx)).sub(bodyA.vel.sub(ra.cross(bodyA.rx)));
+    const rv = bodyB.vel
+      .add(rb.cross(-bodyB.rx))
+      .sub(bodyA.vel.sub(ra.cross(bodyA.rx)));
     const rvNormal = rv.dot(normal);
     const rvTangent = rv.dot(tangent);
 
@@ -151,7 +213,11 @@ export class CollisionContact {
     // Collision impulse formula from Chris Hecker
     // https://en.wikipedia.org/wiki/Collision_response
     const impulse =
-      -((1 + coefRestitution) * rvNormal) / (invMassA + invMassB + invMoiA * raTangent * raTangent + invMoiB * rbTangent * rbTangent);
+      -((1 + coefRestitution) * rvNormal) /
+      (invMassA +
+        invMassB +
+        invMoiA * raTangent * raTangent +
+        invMoiB * rbTangent * rbTangent);
 
     if (this.colliderA.type === CollisionType.Fixed) {
       bodyB.vel = bodyB.vel.add(normal.scale(impulse * invMassB));
@@ -188,7 +254,12 @@ export class CollisionContact {
       const t = rv.sub(normal.scale(rv.dot(normal))).normalize();
 
       // impulse in the direction of tangent force
-      const jt = rv.dot(t) / (invMassA + invMassB + raNormal * raNormal * invMoiA + rbNormal * rbNormal * invMoiB);
+      const jt =
+        rv.dot(t) /
+        (invMassA +
+          invMassB +
+          raNormal * raNormal * invMoiA +
+          rbNormal * rbNormal * invMoiB);
 
       let frictionImpulse = new Vector(0, 0);
       if (Math.abs(jt) <= impulse * coefFriction) {
@@ -222,10 +293,18 @@ export class CollisionContact {
       }
     }
 
-    this.colliderA.emit('postcollision', new PostCollisionEvent(this.colliderA, this.colliderB, side, this.mtv));
+    this.colliderA.emit(
+      'postcollision',
+      new PostCollisionEvent(this.colliderA, this.colliderB, side, this.mtv)
+    );
     this.colliderB.emit(
       'postcollision',
-      new PostCollisionEvent(this.colliderB, this.colliderA, Util.getOppositeSide(side), this.mtv.negate())
+      new PostCollisionEvent(
+        this.colliderB,
+        this.colliderA,
+        Util.getOppositeSide(side),
+        this.mtv.negate()
+      )
     );
   }
 }

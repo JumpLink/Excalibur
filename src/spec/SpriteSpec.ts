@@ -9,7 +9,7 @@ describe('A sprite', () => {
     jasmine.addMatchers(ExcaliburMatchers);
     engine = TestUtils.engine({
       width: 62,
-      height: 64
+      height: 64,
     });
 
     texture = new ex.Texture('base/src/spec/images/SpriteSpec/icon.png', true);
@@ -31,7 +31,7 @@ describe('A sprite', () => {
         anchor: new ex.Vector(0.0, 0.0),
         scale: new ex.Vector(1, 1),
         flipVertical: false,
-        flipHorizontal: false
+        flipHorizontal: false,
       });
 
       expect(texture.isLoaded()).toBe(true);
@@ -49,7 +49,10 @@ describe('A sprite', () => {
 
       sprite.draw(engine.ctx, 0, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSpec/icon.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSpec/icon.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -63,10 +66,12 @@ describe('A sprite', () => {
         x: 1,
         y: 1,
         width: 1,
-        height: 1
+        height: 1,
       });
     } catch (e) {
-      expect(e.message).toBe('An image texture is required to construct a sprite');
+      expect(e.message).toBe(
+        'An image texture is required to construct a sprite'
+      );
     }
   });
 
@@ -79,12 +84,15 @@ describe('A sprite', () => {
         width: 62,
         height: 64,
         scale: new ex.Vector(2, 2),
-        anchor: new ex.Vector(0.5, 0.5)
+        anchor: new ex.Vector(0.5, 0.5),
       });
 
       sprite.draw(engine.ctx, 62 / 2, 64 / 2);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSpec/iconscale.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSpec/iconscale.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -100,12 +108,15 @@ describe('A sprite', () => {
         width: 62,
         height: 64,
         rotation: Math.PI / 4,
-        anchor: new ex.Vector(0.5, 0.5)
+        anchor: new ex.Vector(0.5, 0.5),
       });
 
       sprite.draw(engine.ctx, 62 / 2, 64 / 2);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSpec/iconrotate.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSpec/iconrotate.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -124,14 +135,17 @@ describe('A sprite', () => {
         anchor: new ex.Vector(0.0, 0.0),
         scale: new ex.Vector(1, 1),
         flipVertical: false,
-        flipHorizontal: false
+        flipHorizontal: false,
       });
 
       sprite.opacity(0.1);
 
       sprite.draw(engine.ctx, 0, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSpec/opacity.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSpec/opacity.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -150,12 +164,15 @@ describe('A sprite', () => {
         anchor: new ex.Vector(0.0, 0.0),
         scale: new ex.Vector(1, 1),
         flipVertical: false,
-        flipHorizontal: false
+        flipHorizontal: false,
       });
 
       sprite.draw({ ctx: engine.ctx, x: 0, y: 0, opacity: 0.1 });
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSpec/opacity.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSpec/opacity.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -174,14 +191,17 @@ describe('A sprite', () => {
         anchor: new ex.Vector(0.0, 0.0),
         scale: new ex.Vector(1, 1),
         flipVertical: false,
-        flipHorizontal: false
+        flipHorizontal: false,
       });
 
       sprite.invert();
 
       sprite.draw(engine.ctx, 0, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSpec/icon-inverted.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSpec/icon-inverted.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -200,14 +220,17 @@ describe('A sprite', () => {
         anchor: new ex.Vector(0.0, 0.0),
         scale: new ex.Vector(1, 1),
         flipVertical: false,
-        flipHorizontal: false
+        flipHorizontal: false,
       });
 
       sprite.colorize(ex.Color.Blue.clone());
 
       sprite.draw(engine.ctx, 0, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSpec/icon-colorized.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSpec/icon-colorized.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -226,14 +249,17 @@ describe('A sprite', () => {
         anchor: new ex.Vector(0.0, 0.0),
         scale: new ex.Vector(1, 1),
         flipVertical: false,
-        flipHorizontal: false
+        flipHorizontal: false,
       });
 
       sprite.lighten();
 
       sprite.draw(engine.ctx, 0, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSpec/icon-lightened.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSpec/icon-lightened.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -252,14 +278,17 @@ describe('A sprite', () => {
         anchor: new ex.Vector(0.0, 0.0),
         scale: new ex.Vector(1, 1),
         flipVertical: false,
-        flipHorizontal: false
+        flipHorizontal: false,
       });
 
       sprite.darken();
 
       sprite.draw(engine.ctx, 0, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSpec/icon-darkened.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSpec/icon-darkened.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -278,14 +307,17 @@ describe('A sprite', () => {
         anchor: new ex.Vector(0.0, 0.0),
         scale: new ex.Vector(1, 1),
         flipVertical: false,
-        flipHorizontal: false
+        flipHorizontal: false,
       });
 
       sprite.saturate();
 
       sprite.draw(engine.ctx, 0, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSpec/icon-saturated.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSpec/icon-saturated.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -304,14 +336,17 @@ describe('A sprite', () => {
         anchor: new ex.Vector(0.0, 0.0),
         scale: new ex.Vector(1, 1),
         flipVertical: false,
-        flipHorizontal: false
+        flipHorizontal: false,
       });
 
       sprite.desaturate();
 
       sprite.draw(engine.ctx, 0, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSpec/icon-desaturated.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSpec/icon-desaturated.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });
@@ -327,10 +362,12 @@ describe('A sprite', () => {
           x: 0,
           y: 0,
           width: 0,
-          height: 1
+          height: 1,
         });
       } catch (e) {
-        expect(e.message).toBe(`The width of a sprite cannot be 0 or negative, sprite width: ${sprite.width}, original width: 62`);
+        expect(e.message).toBe(
+          `The width of a sprite cannot be 0 or negative, sprite width: ${sprite.width}, original width: 62`
+        );
       }
 
       try {
@@ -339,10 +376,12 @@ describe('A sprite', () => {
           x: 0,
           y: 0,
           width: 1,
-          height: 0
+          height: 0,
         });
       } catch (e) {
-        expect(e.message).toBe(`The height of a sprite cannot be 0 or negative, sprite height: ${sprite.height}, original height: 64`);
+        expect(e.message).toBe(
+          `The height of a sprite cannot be 0 or negative, sprite height: ${sprite.height}, original height: 64`
+        );
       }
 
       done();

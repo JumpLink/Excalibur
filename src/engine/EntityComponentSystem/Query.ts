@@ -12,7 +12,9 @@ import { AddedEntity, RemovedEntity } from './System';
  * const queryAB = new ex.Query<ComponentTypeA, ComponentTypeB>(['A', 'B']);
  * ```
  */
-export class Query<T extends Component = Component> extends Observable<AddedEntity | RemovedEntity> {
+export class Query<T extends Component = Component> extends Observable<
+  AddedEntity | RemovedEntity
+> {
   private _entities: Entity<T>[] = [];
   private _key: string;
   public get key(): string {
@@ -31,7 +33,9 @@ export class Query<T extends Component = Component> extends Observable<AddedEnti
    *
    * @param sort Optional sorting function to sort entities returned from the query
    */
-  public getEntities(sort?: (a: Entity<T>, b: Entity<T>) => number): Entity<T>[] {
+  public getEntities(
+    sort?: (a: Entity<T>, b: Entity<T>) => number
+  ): Entity<T>[] {
     if (sort) {
       this._entities.sort(sort);
     }

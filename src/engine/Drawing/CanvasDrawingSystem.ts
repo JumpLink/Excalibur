@@ -4,12 +4,17 @@ import { Entity, System, SystemType } from '../EntityComponentSystem';
 import { CanvasDrawComponent } from './CanvasDrawComponent';
 import { Scene } from '../Scene';
 import { Camera } from '../Camera';
-import { CoordPlane, TransformComponent } from '../EntityComponentSystem/Components/TransformComponent';
+import {
+  CoordPlane,
+  TransformComponent,
+} from '../EntityComponentSystem/Components/TransformComponent';
 
 /**
  * Draws anything with a transform and a "draw" method
  */
-export class CanvasDrawingSystem extends System<TransformComponent | CanvasDrawComponent> {
+export class CanvasDrawingSystem extends System<
+  TransformComponent | CanvasDrawComponent
+> {
   public readonly types = ['transform', 'canvas'] as const;
   public systemType = SystemType.Draw;
   public priority = -1;
@@ -24,18 +29,27 @@ export class CanvasDrawingSystem extends System<TransformComponent | CanvasDrawC
     this._camera = scene.camera;
   }
 
-  public sort(a: Entity<TransformComponent | CanvasDrawComponent>, b: Entity<TransformComponent | CanvasDrawComponent>) {
+  public sort(
+    a: Entity<TransformComponent | CanvasDrawComponent>,
+    b: Entity<TransformComponent | CanvasDrawComponent>
+  ) {
     return a.components.transform.z - b.components.transform.z;
   }
 
-  public update(entities: Entity<TransformComponent | CanvasDrawComponent>[], delta: number) {
+  public update(
+    entities: Entity<TransformComponent | CanvasDrawComponent>[],
+    delta: number
+  ) {
     this._clearScreen();
 
     let transform: TransformComponent;
     let canvasdraw: CanvasDrawComponent;
     const length = entities.length;
     for (let i = 0; i < length; i++) {
-      if ((entities[i] as Actor).visible && !(entities[i] as Actor).isOffScreen) {
+      if (
+        (entities[i] as Actor).visible &&
+        !(entities[i] as Actor).isOffScreen
+      ) {
         transform = entities[i].components.transform;
         canvasdraw = entities[i].components.canvas;
 

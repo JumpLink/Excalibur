@@ -9,10 +9,13 @@ describe('A Gif', () => {
     jasmine.addMatchers(ExcaliburMatchers);
     engine = TestUtils.engine({
       width: 100,
-      height: 100
+      height: 100,
     });
 
-    gif = new ex.Gif('base/src/spec/images/GifSpec/sword.gif', ex.Color.Black.clone());
+    gif = new ex.Gif(
+      'base/src/spec/images/GifSpec/sword.gif',
+      ex.Color.Black.clone()
+    );
   });
   afterEach(() => {
     engine.stop();
@@ -40,7 +43,10 @@ describe('A Gif', () => {
       expect(gif.isLoaded()).toBe(true);
       sprite.draw(engine.ctx, 0, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/GifSpec/frame1.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/GifSpec/frame1.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
 
         engine.ctx.clearRect(0, 0, engine.canvas.width, engine.canvas.height);
@@ -48,7 +54,10 @@ describe('A Gif', () => {
         sprite = gif.asSprite(1);
         expect(gif.isLoaded()).toBe(true);
         sprite.draw(engine.ctx, 0, 0);
-        ensureImagesLoaded(engine.canvas, 'src/spec/images/GifSpec/frame2.png').then(([canvas, image]) => {
+        ensureImagesLoaded(
+          engine.canvas,
+          'src/spec/images/GifSpec/frame2.png'
+        ).then(([canvas, image]) => {
           expect(canvas).toEqualImage(image);
           done();
         });
@@ -64,7 +73,10 @@ describe('A Gif', () => {
       const sprite = spriteSheet.getSprite(0);
       sprite.draw(engine.ctx, 0, 0);
 
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/GifSpec/frame1.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/GifSpec/frame1.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         engine.ctx.clearRect(0, 0, engine.canvas.width, engine.canvas.height);
         done();
@@ -82,7 +94,10 @@ describe('A Gif', () => {
       const frame2 = animation.sprites[1];
 
       frame2.draw(engine.ctx, 0, 0);
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/GifSpec/frame2.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/GifSpec/frame2.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         engine.ctx.clearRect(0, 0, engine.canvas.width, engine.canvas.height);
         done();

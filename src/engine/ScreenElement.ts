@@ -22,7 +22,12 @@ export class ScreenElement extends Actor {
    * @param width   The starting width of the actor
    * @param height  The starting height of the actor
    */
-  constructor(xOrConfig?: number | ActorArgs, y?: number, width?: number, height?: number) {
+  constructor(
+    xOrConfig?: number | ActorArgs,
+    y?: number,
+    width?: number,
+    height?: number
+  ) {
     if (typeof xOrConfig !== 'object') {
       super(<number>xOrConfig, y, width, height);
     } else {

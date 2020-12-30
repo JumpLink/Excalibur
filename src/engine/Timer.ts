@@ -32,7 +32,12 @@ export class Timer {
    * @param fcn        The callback to be fired after the interval is complete.
    */
   constructor(options: TimerOptions);
-  constructor(fcn: TimerOptions | (() => void), interval?: number, repeats?: boolean, numberOfRepeats?: number) {
+  constructor(
+    fcn: TimerOptions | (() => void),
+    interval?: number,
+    repeats?: boolean,
+    numberOfRepeats?: number
+  ) {
     if (typeof fcn !== 'function') {
       const options = fcn;
       fcn = options.fcn;
@@ -44,7 +49,9 @@ export class Timer {
     if (!!numberOfRepeats && numberOfRepeats >= 0) {
       this.maxNumberOfRepeats = numberOfRepeats;
       if (!repeats) {
-        throw new Error('repeats must be set to true if numberOfRepeats is set');
+        throw new Error(
+          'repeats must be set to true if numberOfRepeats is set'
+        );
       }
     }
 
@@ -85,7 +92,10 @@ export class Timer {
       this._totalTimeAlive += delta;
       this._elapsedTime += delta;
 
-      if (this.maxNumberOfRepeats > -1 && this._numberOfTicks >= this.maxNumberOfRepeats) {
+      if (
+        this.maxNumberOfRepeats > -1 &&
+        this._numberOfTicks >= this.maxNumberOfRepeats
+      ) {
         this.complete = true;
       }
 
@@ -117,7 +127,9 @@ export class Timer {
     if (!!this.maxNumberOfRepeats && this.maxNumberOfRepeats >= 0) {
       this.maxNumberOfRepeats = newNumberOfRepeats;
       if (!this.repeats) {
-        throw new Error('repeats must be set to true if numberOfRepeats is set');
+        throw new Error(
+          'repeats must be set to true if numberOfRepeats is set'
+        );
       }
     }
 

@@ -4,7 +4,10 @@ import { obsolete } from './Decorators';
  * A sorted list implementation. NOTE: this implementation is not self-balancing
  * @deprecated
  */
-@obsolete({message: 'Will be removed in excalibur v0.26.0', alternateMethod: 'Use built in JS array.sort'})
+@obsolete({
+  message: 'Will be removed in excalibur v0.26.0',
+  alternateMethod: 'Use built in JS array.sort',
+})
 export class SortedList<T> {
   private _getComparable: (item: T) => number;
   private _root: BinaryTreeNode<T>;
@@ -52,7 +55,12 @@ export class SortedList<T> {
 
   public add(element: T): boolean {
     if (this._root == null) {
-      this._root = new BinaryTreeNode(this._getComparable(element), [element], null, null);
+      this._root = new BinaryTreeNode(
+        this._getComparable(element),
+        [element],
+        null,
+        null
+      );
       return true;
     } else {
       return this._insert(this._root, element);
@@ -70,14 +78,28 @@ export class SortedList<T> {
         }
       } else if (this._getComparable(element) < node.getKey()) {
         if (node.getLeft() == null) {
-          node.setLeft(new BinaryTreeNode(this._getComparable(element), [element], null, null));
+          node.setLeft(
+            new BinaryTreeNode(
+              this._getComparable(element),
+              [element],
+              null,
+              null
+            )
+          );
           return true;
         } else {
           return this._insert(node.getLeft(), element);
         }
       } else {
         if (node.getRight() == null) {
-          node.setRight(new BinaryTreeNode(this._getComparable(element), [element], null, null));
+          node.setRight(
+            new BinaryTreeNode(
+              this._getComparable(element),
+              [element],
+              null,
+              null
+            )
+          );
           return true;
         } else {
           return this._insert(node.getRight(), element);
@@ -131,7 +153,10 @@ export class SortedList<T> {
   }
 
   // called once we have successfully removed the element we wanted, recursively corrects the part of the tree below the removed node
-  private _cleanup(node: BinaryTreeNode<T>, element: BinaryTreeNode<T>): BinaryTreeNode<T> {
+  private _cleanup(
+    node: BinaryTreeNode<T>,
+    element: BinaryTreeNode<T>
+  ): BinaryTreeNode<T> {
     const comparable = element.getKey();
     if (node == null) {
       return null;
@@ -189,14 +214,19 @@ export class SortedList<T> {
  * A tree node part of [[SortedList]]
  * @deprecated
  */
-@obsolete({message: 'Will be removed in excalibur v0.26.0'})
+@obsolete({ message: 'Will be removed in excalibur v0.26.0' })
 export class BinaryTreeNode<T> {
   private _key: number;
   private _data: Array<T>;
   private _left: BinaryTreeNode<T>;
   private _right: BinaryTreeNode<T>;
 
-  constructor(key: number, data: Array<T>, left: BinaryTreeNode<T>, right: BinaryTreeNode<T>) {
+  constructor(
+    key: number,
+    data: Array<T>,
+    left: BinaryTreeNode<T>,
+    right: BinaryTreeNode<T>
+  ) {
     this._key = key;
     this._data = data;
     this._left = left;

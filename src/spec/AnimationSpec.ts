@@ -11,7 +11,7 @@ describe('An animation', () => {
     animation = new ex.Animation(null, null, 0);
     engine = TestUtils.engine({
       width: 500,
-      height: 500
+      height: 500,
     });
   });
 
@@ -36,7 +36,7 @@ describe('An animation', () => {
       flipVertical: true,
       flipHorizontal: true,
       width: 100,
-      height: 200
+      height: 200,
     });
 
     expect(animation.width).toBe(100);
@@ -54,7 +54,10 @@ describe('An animation', () => {
   });
 
   it('should update the animation width/height and sprite anchor, rotation, scale after tick()', (done) => {
-    const texture = new ex.Texture('base/src/spec/images/SpriteSpec/icon.png', true);
+    const texture = new ex.Texture(
+      'base/src/spec/images/SpriteSpec/icon.png',
+      true
+    );
     texture.load().then(() => {
       const sprite = new ex.Sprite({
         image: texture,
@@ -66,7 +69,7 @@ describe('An animation', () => {
         anchor: new ex.Vector(0.0, 0.0),
         scale: new ex.Vector(1, 1),
         flipVertical: false,
-        flipHorizontal: false
+        flipHorizontal: false,
       });
       const animation = new ex.Animation({
         engine: engine,
@@ -79,7 +82,7 @@ describe('An animation', () => {
         flipVertical: true,
         flipHorizontal: true,
         width: 100,
-        height: 200
+        height: 200,
       });
 
       animation.tick(10);
@@ -96,7 +99,10 @@ describe('An animation', () => {
   });
 
   it('should only tick once for an idempotency token', (done) => {
-    const texture = new ex.Texture('base/src/spec/images/SpriteSpec/icon.png', true);
+    const texture = new ex.Texture(
+      'base/src/spec/images/SpriteSpec/icon.png',
+      true
+    );
     texture.load().then(() => {
       const sprite = new ex.Sprite({
         image: texture,
@@ -108,7 +114,7 @@ describe('An animation', () => {
         anchor: new ex.Vector(0.0, 0.0),
         scale: new ex.Vector(1, 1),
         flipVertical: false,
-        flipHorizontal: false
+        flipHorizontal: false,
       });
       const animation = new ex.Animation({
         engine: engine,
@@ -121,7 +127,7 @@ describe('An animation', () => {
         flipVertical: true,
         flipHorizontal: true,
         width: 100,
-        height: 200
+        height: 200,
       });
 
       animation.tick(100, 42);
@@ -135,7 +141,10 @@ describe('An animation', () => {
   });
 
   it('should always pass "flipped" state to the current Sprite', () => {
-    const mockSprite: any = jasmine.createSpyObj('sprite', ['draw', 'drawWithOptions']);
+    const mockSprite: any = jasmine.createSpyObj('sprite', [
+      'draw',
+      'drawWithOptions',
+    ]);
     mockSprite.anchor = ex.Vector.Half;
     mockSprite.scale = ex.Vector.One;
     mockSprite.flipHorizontal = false;
@@ -160,9 +169,12 @@ describe('An animation', () => {
   it('can be drawn with opacity option', (done) => {
     engine = TestUtils.engine({
       width: 62,
-      height: 64
+      height: 64,
     });
-    const texture = new ex.Texture('base/src/spec/images/SpriteSpec/icon.png', true);
+    const texture = new ex.Texture(
+      'base/src/spec/images/SpriteSpec/icon.png',
+      true
+    );
     texture.load().then(() => {
       const sprite = new ex.Sprite({
         image: texture,
@@ -174,13 +186,16 @@ describe('An animation', () => {
         anchor: new ex.Vector(0.0, 0.0),
         scale: new ex.Vector(1, 1),
         flipVertical: false,
-        flipHorizontal: false
+        flipHorizontal: false,
       });
 
       const animation = new ex.Animation(engine, [sprite], 10, true);
 
       animation.draw({ ctx: engine.ctx, x: 0, y: 0, opacity: 0.1 });
-      ensureImagesLoaded(engine.canvas, 'src/spec/images/SpriteSpec/opacity.png').then(([canvas, image]) => {
+      ensureImagesLoaded(
+        engine.canvas,
+        'src/spec/images/SpriteSpec/opacity.png'
+      ).then(([canvas, image]) => {
         expect(canvas).toEqualImage(image);
         done();
       });

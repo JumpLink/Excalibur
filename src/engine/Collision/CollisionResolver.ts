@@ -30,7 +30,11 @@ export interface CollisionBroadphase {
   /**
    * Resolve the position and velocity of the physics bodies
    */
-  resolve(pairs: Pair[], delta: number, strategy: CollisionResolutionStrategy): Pair[];
+  resolve(
+    pairs: Pair[],
+    delta: number,
+    strategy: CollisionResolutionStrategy
+  ): Pair[];
 
   /**
    * Publish collision start/end events
